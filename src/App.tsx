@@ -11,24 +11,28 @@ import { HandAnalyzer } from "./HandUtils/HandAnalyzer";
 import reactToDOMCursor from "./HandUtils/temp";
 import { fourLetterWords } from "./data/words";
 const handAnalyzer = new HandAnalyzer();
-
 function App() {
-  const [whereIsWord, setWhereIsWord] = useState(0);
-  const [selectedWord, setSelectWord] = useState(fourLetterWords[whereIsWord]);
-  const [started, setStarted] = useState(false);
+  const [wordIndex, setWordIndex] = useState(0);
+  const [selectedWord, setSelectWord] = useState(fourLetterWords[wordIndex]);
+  const [selectedLetter, setSelectedLetter] = useState(selectedWord[0]);
   const [wordLength, setWordLength] = useState(1);
+
+  const [started, setStarted] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const videoElement = useRef(null);
   const canvasElement = useRef<HTMLCanvasElement>(null);
   let [countPrediction, setCountPrediction] = useState(0);
   const [prediction, setPrediction] = useState<boolean>(false);
-  const [selectedLetter, setSelectedLetter] = useState(selectedWord[0]);
   useEffect(() => {
     if (prediction) {
-      alert("Success");
+      //for transition state block the event loop
+      // for (let i = 0; i < 10; i++) {
+      //   const arr = Array(i);
+      // }
+      alert("success");
       if (wordLength == selectedWord.length) {
-        setSelectWord(fourLetterWords[whereIsWord + 1]);
-        setWhereIsWord(whereIsWord + 1);
+        setSelectWord(fourLetterWords[wordIndex + 1]);
+        setWordIndex(wordIndex + 1);
         setSelectedLetter(selectedWord[0]);
         setWordLength(1);
 
@@ -41,6 +45,7 @@ function App() {
       }
     }
   }, [prediction]);
+  console.log(wordLength);
   const onResults = (results) => {
     let canvasCtx = canvasElement?.current?.getContext("2d");
     setCountPrediction(countPrediction++);
@@ -84,6 +89,8 @@ function App() {
             newLandMarks[0],
             newLandMarks[5]
           ) * 10;
+        console.log(results.multiHandedness[0].label);
+
         if (handSize > 0.7) {
           drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
             color: "#ff00ff",
@@ -139,19 +146,34 @@ function App() {
   }, [started, selectedLetter]);
   if (started) {
     return (
-      <div className=" flex w-full ">
+      <div className="flex w-full">
         {loading && <Loading />}
         {!loading && (
-          <div className="flex-[1] justify-between items-center p-5 bg-primary flex flex-col">
+          <div className="flex-[1] justify-between items-center p-5 bg-white flex  flex-col">
             <div></div>
-            <h1 className="text-6xl">{selectedLetter}</h1>
-            <h1 className="text-2xl">{selectedWord}</h1>
+            <div className="flex items-center gap-10">
+              <img
+                src={`/spelling/${selectedLetter.toUpperCase()}.png`}
+                className="w-11/12 h-56 object-contain"
+              />
+              <h1 className="text-8xl text-primary">
+                {selectedLetter.toUpperCase()}
+              </h1>
+            </div>
+            <div className="flex">
+              <h1 className="text-4xl text-primary">
+                {selectedWord.slice(0, wordLength - 1)}
+              </h1>
+              <h1 className="text-4xl ">
+                {selectedWord.slice(wordLength - 1)}
+              </h1>
+            </div>
           </div>
         )}
 
-        <div className="flex-[1] bg-primary relative">
-          {/* <p ref={timerRef}>
-            {(setTimeout(() => (timerRef?.current.innderText = "1")), 1000)}
+        <div className="flex-[1]  relative">
+          {/* <p ref={timerRef} className="absolute">
+            {setTimeout(() => (timerRef?.current.innerText = "1"), 10000)}
           </p> */}
           <video ref={videoElement} className="input_video hidden"></video>
           <canvas
