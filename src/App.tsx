@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  useMemo,
-  useEffect,
-  useCallback,
-} from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import Loading from "./components/Loading";
 import { FingerPoseEstimator } from "./FingerUtils/FingerPostEstimator";
 import { HandAnalyzer } from "./HandUtils/HandAnalyzer";
@@ -19,6 +13,7 @@ function App() {
 
   const [started, setStarted] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [score, setScore] = useState(0);
   const videoElement = useRef(null);
   const canvasElement = useRef<HTMLCanvasElement>(null);
   let [countPrediction, setCountPrediction] = useState(0);
@@ -30,6 +25,7 @@ function App() {
       //   const arr = Array(i);
       // }
       alert("success");
+      setScore(score + 1);
       if (wordLength == selectedWord.length) {
         setSelectWord(fourLetterWords[wordIndex + 1]);
         setWordIndex(wordIndex + 1);
@@ -45,7 +41,7 @@ function App() {
       }
     }
   }, [prediction]);
-  console.log(wordLength);
+
   const onResults = (results) => {
     let canvasCtx = canvasElement?.current?.getContext("2d");
     setCountPrediction(countPrediction++);
@@ -133,7 +129,6 @@ function App() {
       return hands;
     }
   }, [started, selectedLetter]);
-  const timerRef = React.createRef();
   useEffect(() => {
     if (videoElement.current) {
       const camera = new window.Camera(videoElement.current, {
@@ -149,7 +144,11 @@ function App() {
       <div className="flex w-full">
         {loading && <Loading />}
         {!loading && (
-          <div className="flex-[1] justify-between items-center p-5 bg-white flex  flex-col">
+          <div className="flex-[1] justify-between items-center p-5 bg-white flex  flex-col relative">
+            <div className="absolute right-0 mr-10 text-2xl  gap-2 items-center flex">
+              <p className="font-bold ">Score : </p>
+              <span>{score}</span>
+            </div>
             <div></div>
             <div className="flex items-center gap-10">
               <img
@@ -160,13 +159,32 @@ function App() {
                 {selectedLetter.toUpperCase()}
               </h1>
             </div>
-            <div className="flex">
-              <h1 className="text-4xl text-primary">
-                {selectedWord.slice(0, wordLength - 1)}
-              </h1>
-              <h1 className="text-4xl ">
-                {selectedWord.slice(wordLength - 1)}
-              </h1>
+            <div className="flex flex-col items-center ">
+              <div className="flex">
+                <h1 className="text-4xl text-primary ">
+                  {selectedWord.slice(0, wordLength - 1)}
+                </h1>
+                <h1 className="text-4xl ">
+                  {selectedWord.slice(wordLength - 1)}
+                </h1>
+              </div>
+              <button
+                onClick={() => {
+                  if (wordLength == 3) {
+                    //this need some fixing
+                    setSelectWord(fourLetterWords[wordIndex + 1]);
+                    setWordLength(1);
+                    setSelectedLetter(selectedWord[0]);
+                  } else {
+                    setWordLength(wordLength + 1);
+                    setSelectedLetter(selectedWord[wordLength]);
+                  }
+                  setWordLength(wordLength + 1);
+                }}
+                className="btn btn-outline btn-sm round-2xl"
+              >
+                Skip Letter
+              </button>
             </div>
           </div>
         )}
