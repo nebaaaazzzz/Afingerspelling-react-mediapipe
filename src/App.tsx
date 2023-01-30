@@ -18,17 +18,12 @@ function App() {
   const canvasElement = useRef<HTMLCanvasElement>(null);
   let [countPrediction, setCountPrediction] = useState(0);
   const [prediction, setPrediction] = useState<boolean>(false);
-  console.log("selecedWord : ", selectedWord);
-  console.log("wordIndex : ", wordIndex);
-  console.log("selectedLetter : ", selectedLetter);
-  console.log("wordLength : ", wordLength);
   useEffect(() => {
     if (prediction) {
-      //for transition state block the event loop
-      // for (let i = 0; i < 10; i++) {
-      //   const arr = Array(i);
-      // }
-      alert("success");
+      //for transition state block the event loop . replacement for alert
+      for (let i = 0; i < 10; i++) {
+        const arr = Array(i);
+      }
       setScore(score + 1);
       if (wordLength == selectedWord.length) {
         setSelectWord(fourLetterWords[wordIndex + 1]);
@@ -174,7 +169,6 @@ function App() {
               <button
                 onClick={() => {
                   if (wordLength == 4) {
-                    //this need some fixing
                     setSelectWord(fourLetterWords[wordIndex + 1]);
                     setSelectedLetter(selectedWord[0]);
                     setWordLength(1);
