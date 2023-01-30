@@ -18,6 +18,10 @@ function App() {
   const canvasElement = useRef<HTMLCanvasElement>(null);
   let [countPrediction, setCountPrediction] = useState(0);
   const [prediction, setPrediction] = useState<boolean>(false);
+  console.log("selecedWord : ", selectedWord);
+  console.log("wordIndex : ", wordIndex);
+  console.log("selectedLetter : ", selectedLetter);
+  console.log("wordLength : ", wordLength);
   useEffect(() => {
     if (prediction) {
       //for transition state block the event loop
@@ -85,7 +89,6 @@ function App() {
             newLandMarks[0],
             newLandMarks[5]
           ) * 10;
-        console.log(results.multiHandedness[0].label);
 
         if (handSize > 0.7) {
           drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
@@ -128,7 +131,7 @@ function App() {
       hands.onResults(onResults);
       return hands;
     }
-  }, [started, selectedLetter]);
+  }, [started]);
   useEffect(() => {
     if (videoElement.current) {
       const camera = new window.Camera(videoElement.current, {
@@ -138,7 +141,7 @@ function App() {
       });
       camera.start();
     }
-  }, [started, selectedLetter]);
+  }, [started]);
   if (started) {
     return (
       <div className="flex w-full">
@@ -170,16 +173,16 @@ function App() {
               </div>
               <button
                 onClick={() => {
-                  if (wordLength == 3) {
+                  if (wordLength == 4) {
                     //this need some fixing
                     setSelectWord(fourLetterWords[wordIndex + 1]);
-                    setWordLength(1);
                     setSelectedLetter(selectedWord[0]);
+                    setWordLength(1);
                   } else {
                     setWordLength(wordLength + 1);
                     setSelectedLetter(selectedWord[wordLength]);
+                    setWordLength(wordLength + 1);
                   }
-                  setWordLength(wordLength + 1);
                 }}
                 className="btn btn-outline btn-sm round-2xl"
               >
