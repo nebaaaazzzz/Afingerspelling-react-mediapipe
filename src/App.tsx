@@ -1,47 +1,26 @@
-import { useState, useRef, useMemo, useEffect } from "react";
+import { useState, useRef, useMemo, useEffect, useTransition } from "react";
 import Loading from "./components/Loading";
 import { FingerPoseEstimator } from "./FingerUtils/FingerPostEstimator";
 import { HandAnalyzer } from "./HandUtils/HandAnalyzer";
 import reactToDOMCursor from "./HandUtils/temp";
 import { fourLetterWords } from "./data/words";
 const handAnalyzer = new HandAnalyzer();
+function wait() {
+  return new Promise((resolve) => setTimeout(resolve, 2000));
+}
+let ignore = false;
 function App() {
   const [wordIndex, setWordIndex] = useState(0);
   const [selectedWord, setSelectWord] = useState(fourLetterWords[wordIndex]);
   const [selectedLetter, setSelectedLetter] = useState(selectedWord[0]);
   const [wordLength, setWordLength] = useState(1);
-
   const [started, setStarted] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [score, setScore] = useState(0);
   const videoElement = useRef(null);
   const canvasElement = useRef<HTMLCanvasElement>(null);
   let [countPrediction, setCountPrediction] = useState(0);
-  const [prediction, setPrediction] = useState<boolean>(false);
-  useEffect(() => {
-    if (prediction) {
-      //for transition state block the event loop . replacement for alert
-      for (let i = 0; i < 10; i++) {
-        const arr = Array(i);
-      }
-      setScore(score + 1);
-      if (wordLength == selectedWord.length) {
-        setSelectWord(fourLetterWords[wordIndex + 1]);
-        setWordIndex(wordIndex + 1);
-        setSelectedLetter(selectedWord[0]);
-        setWordLength(1);
-
-        //setSelectedLetter(selectedWord[wordLength]);
-        //setPrediction(false)
-      } else {
-        setWordLength((wordLen) => wordLen + 1);
-        setSelectedLetter(selectedWord[wordLength]);
-        setPrediction(false);
-      }
-    }
-  }, [prediction]);
-
-  const onResults = (results) => {
+  const onResults = async (results) => {
     let canvasCtx = canvasElement?.current?.getContext("2d");
     setCountPrediction(countPrediction++);
     if (countPrediction == 1) {
@@ -94,18 +73,31 @@ function App() {
             color: "transparent",
             lineWidth: 0,
           });
-          if (selectedLetter) {
+
+          if (selectedLetter && !ignore) {
             let bool =
               5 ==
               reactToDOMCursor(fingerPoseResults, newLandMarks, selectedLetter);
-            setPrediction(bool);
+            if (bool) {
+              ignore = true;
+              setScore((prevScore) => prevScore + 1);
+              if (wordLength == 4) {
+                setSelectWord(fourLetterWords[wordIndex + 1]);
+                setSelectedLetter(selectedWord[0]);
+                setWordLength(1);
+                setWordIndex((prevWordIndex) => prevWordIndex + 1);
+                //setSelectedLetter(selectedWord[wordLength]);
+                //setPrediction(false)
+              } else {
+                setWordLength((prevwordLen) => {
+                  setSelectedLetter(() => selectedWord[prevwordLen]);
+                  return prevwordLen == 3 ? 0 : prevwordLen + 1;
+                });
+              }
+            }
           }
-        } else {
-          setPrediction(false);
         }
       }
-    } else {
-      setPrediction(false);
     }
     canvasCtx?.restore();
   };
@@ -123,10 +115,19 @@ function App() {
         minDetectionConfidence: 0.5,
         minTrackingConfidence: 0.5,
       });
-      hands.onResults(onResults);
       return hands;
     }
   }, [started]);
+  useEffect(() => {
+    if (hands) {
+      hands.onResults(onResults);
+    }
+    if (countPrediction != 0) {
+      setTimeout(() => {
+        ignore = false;
+      }, 1000);
+    }
+  }, [selectedLetter]);
   useEffect(() => {
     if (videoElement.current) {
       const camera = new window.Camera(videoElement.current, {
@@ -150,7 +151,7 @@ function App() {
             <div></div>
             <div className="flex items-center gap-10">
               <img
-                src={`/spelling/${selectedLetter.toUpperCase()}.png`}
+                src={`/spelling/${selectedLetter?.toUpperCase()}.png`}
                 className="w-11/12 h-56 object-contain"
               />
               <h1 className="text-8xl text-primary">
@@ -172,6 +173,7 @@ function App() {
                     setSelectWord(fourLetterWords[wordIndex + 1]);
                     setSelectedLetter(selectedWord[0]);
                     setWordLength(1);
+                    setWordIndex((prevWordIndex) => prevWordIndex + 1);
                   } else {
                     setWordLength(wordLength + 1);
                     setSelectedLetter(selectedWord[wordLength]);
