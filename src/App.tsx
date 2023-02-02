@@ -4,6 +4,7 @@ import { FingerPoseEstimator } from "./FingerUtils/FingerPostEstimator";
 import { HandAnalyzer } from "./HandUtils/HandAnalyzer";
 import reactToDOMCursor from "./HandUtils/temp";
 import { fourLetterWords } from "./data/words";
+import { getLevelWords } from "./utils";
 const handAnalyzer = new HandAnalyzer();
 function wait() {
   return new Promise((resolve) => setTimeout(resolve, 2000));
@@ -11,8 +12,9 @@ function wait() {
 let ignore = false;
 function App() {
   const [wordIndex, setWordIndex] = useState(0);
-  const [selectedWord, setSelectWord] = useState(fourLetterWords[wordIndex]);
-  const [selectedLetter, setSelectedLetter] = useState(selectedWord[0]);
+  const [levelWords, setLevelWords] = useState<Array<string>>([]);
+  const [selectedWord, setSelectWord] = useState();
+  const [selectedLetter, setSelectedLetter] = useState();
   const [wordLength, setWordLength] = useState(1);
   const [started, setStarted] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -82,17 +84,14 @@ function App() {
               ignore = true;
               setScore((prevScore) => prevScore + 1);
               if (wordLength == 4) {
-                setSelectWord(fourLetterWords[wordIndex + 1]);
+                setSelectWord(levelWords[wordIndex + 1]);
                 setSelectedLetter(selectedWord[0]);
                 setWordLength(1);
                 setWordIndex((prevWordIndex) => prevWordIndex + 1);
-                //setSelectedLetter(selectedWord[wordLength]);
-                //setPrediction(false)
               } else {
-                setWordLength((prevwordLen) => {
-                  setSelectedLetter(() => selectedWord[prevwordLen]);
-                  return prevwordLen == 3 ? 0 : prevwordLen + 1;
-                });
+                setWordLength(wordLength + 1);
+                setSelectedLetter(selectedWord[wordLength]);
+                setWordLength(wordLength + 1);
               }
             }
           }
@@ -101,7 +100,6 @@ function App() {
     }
     canvasCtx?.restore();
   };
-
   const hands = useMemo(() => {
     if (started) {
       let hands = new window.Hands({
@@ -170,7 +168,7 @@ function App() {
               <button
                 onClick={() => {
                   if (wordLength == 4) {
-                    setSelectWord(fourLetterWords[wordIndex + 1]);
+                    setSelectWord(levelWords[wordIndex + 1]);
                     setSelectedLetter(selectedWord[0]);
                     setWordLength(1);
                     setWordIndex((prevWordIndex) => prevWordIndex + 1);
@@ -207,19 +205,29 @@ function App() {
       </div>
     );
   }
+  const levels = [1, 2, 3, 4];
+  function handleLevelSelect(levelIndex: number) {
+    const returnedLevelWords = getLevelWords(fourLetterWords, levelIndex);
+    setLevelWords(returnedLevelWords);
+    setSelectWord(returnedLevelWords[0]);
+    setSelectedLetter(returnedLevelWords[0][0]);
+    setLoading(true);
+    setStarted(true);
+  }
   return (
     <div className="flex flex-col h-[100vh] items-center justify-center gap-10">
       <h1 className="text-5xl">Welcom to finger spelling....</h1>
       <div className="card">
-        <button
-          className="btn btn-primary"
-          onClick={() => {
-            setStarted(true);
-            setLoading(true);
-          }}
-        >
-          Start
-        </button>
+        {levels.map((item) => {
+          return (
+            <button
+              onClick={() => handleLevelSelect(item)}
+              className="btn my-2 "
+            >
+              Level {item}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
