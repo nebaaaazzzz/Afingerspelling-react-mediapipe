@@ -6,20 +6,33 @@ export const levels = [
 
   ["p", "q", "j", "z"],
 ];
-export function getLevelWords(passedWords, levelIndex) {
+export function getLevelWords(
+  passedWords: string[],
+  levelIndex: number
+): string[] {
   const words = [...passedWords];
-  let levelWords = [];
+  let levelWords: string[] = [];
   let level = levels[levelIndex - 1];
-  for (let letter of level) {
-    for (let wordIndex in words) {
-      if (words[wordIndex].includes(letter)) {
-        levelWords.push(words[wordIndex]);
-        words.splice(wordIndex, 1);
+  for (let i = 1; i < levelIndex; i++) {}
+  for (let wordIndex in words) {
+    let skip = true;
+    for (let letter of words[wordIndex]) {
+      console.log(level.includes(letter), wordIndex, letter, words[wordIndex]);
+      if (level.includes(letter)) {
+        skip = false;
       }
+    }
+    if (!skip) {
+      levelWords.push(words[wordIndex]);
+      words.splice(Number(wordIndex), 1);
     }
   }
   return levelWords;
 }
+// if (!words[wordIndex].includes(letter)) {
+//   levelWords.push(words[wordIndex]);
+//   words.splice(wordIndex, 1);
+// }
 export function getAllWordsLeveled() {
   let allLevelWords = [];
   for (let level of levels) {

@@ -4,8 +4,9 @@ import { FingerPoseEstimator } from "../FingerUtils/FingerPostEstimator";
 import reactToDOMCursor from "../HandUtils/temp";
 import { fourLetterWords } from "../data/words";
 import { getLevelWords } from "../utils";
-import { useSearchParams } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 import { HandAnalyzer } from "../HandUtils/HandAnalyzer";
+import BackButton from "../components/BackButton";
 const handAnalyzer = new HandAnalyzer();
 function wait() {
   return new Promise((resolve) => setTimeout(resolve, 2000));
@@ -14,6 +15,7 @@ let ignore = false;
 function Game() {
   const searchParams = useSearchParams();
   const [wordIndex, setWordIndex] = useState(0);
+  const [hand, setHand] = useState<"left" | "right" | null>();
   const [level, setLevel] = useState<number>();
   const [levelWords, setLevelWords] = useState<Array<string>>([]);
   const [selectedWord, setSelectWord] = useState();
@@ -26,6 +28,7 @@ function Game() {
   let [countPrediction, setCountPrediction] = useState(0);
   useEffect(() => {
     const levelIndex = Number(searchParams[0].get("level") as String);
+    setHand(searchParams[0].get("hand") as "left" | "right");
     const returnedLevelWords = getLevelWords(fourLetterWords, levelIndex);
     setLevelWords(returnedLevelWords);
     setSelectWord(returnedLevelWords[0]);
@@ -76,9 +79,12 @@ function Game() {
             currentLandmark.z,
           ]);
           // For Left hand we are reverting all the positions
-          if (results.multiHandedness[0].label === "left") {
+          if (results.multiHandedness[0].label === "Right") {
             newLandMarks[i][0] = newLandMarks[i][0] * -1;
           }
+          // if (hand == "right") {
+          //   newLandMarks[i][0] = newLandMarks[i][0] * -1;
+          // }
         }
         let fingerPoseEstimator = new FingerPoseEstimator(null);
         let fingerPoseResults = fingerPoseEstimator.estimate(newLandMarks);
@@ -148,42 +154,54 @@ function Game() {
   }, []);
   return (
     <div className="flex w-full">
-      {loading && <Loading />}
+      {loading && (
+        <>
+          <BackButton url={`/start-level?level=${level}&hand=${hand}`} />
+          <Loading word="Loading" />
+        </>
+      )}
+
       {!loading && (
-        <div className="flex-[1] justify-between items-center p-5 bg-white flex  flex-col relative">
-          <div className="absolute mr-10 text-2xl  gap-2 W-full">
-            <span className="font-bold text-black">levle : {level}</span>
-            <div className="flex absolute right-0 ">
-              <p className="font-bold ">Score : {score} </p>
+        <>
+          <BackButton black url={`/select-hand?level=${level}`} />
+          <div className="flex-[1] justify-between items-center p-5 bg-white flex  flex-col relative">
+            <div className="absolute mr-10 text-2xl flex flex-col gap-2 w-2/3">
+              <span className="font-bold text-center  text-black">
+                levle : {level}
+              </span>
+              <div className="flex absolute right-0 ">
+                <p className="font-bold ">Score : {score} </p>
+              </div>
             </div>
-          </div>
-          <div></div>
-          <div className="flex items-center gap-10">
-            <img
-              src={`/spelling/${selectedLetter?.toUpperCase()}.png`}
-              className="w-11/12 h-56 object-contain"
-            />
-            <h1 className="text-8xl text-primary">
-              {selectedLetter?.toUpperCase()}
-            </h1>
-          </div>
-          <div className="flex flex-col items-center ">
-            <div className="flex">
-              <h1 className="text-4xl text-primary ">
-                {selectedWord?.slice(0, wordLength - 1)}
-              </h1>
-              <h1 className="text-4xl ">
-                {selectedWord?.slice(wordLength - 1)}
+            <div></div>
+            <div className="flex items-center gap-10">
+              <img
+                draggable={false}
+                src={`/spelling/${selectedLetter?.toUpperCase()}.png`}
+                className="w-11/12 h-56 object-contain"
+              />
+              <h1 className="text-8xl text-primary">
+                {selectedLetter?.toUpperCase()}
               </h1>
             </div>
-            <button
-              onClick={handleSkip}
-              className="btn btn-outline btn-sm round-2xl"
-            >
-              Skip Letter
-            </button>
+            <div className="flex flex-col items-center ">
+              <div className="flex">
+                <h1 className="text-4xl text-primary ">
+                  {selectedWord?.slice(0, wordLength - 1)}
+                </h1>
+                <h1 className="text-4xl ">
+                  {selectedWord?.slice(wordLength - 1)}
+                </h1>
+              </div>
+              <button
+                onClick={handleSkip}
+                className="btn btn-outline btn-sm round-2xl"
+              >
+                Skip Letter
+              </button>
+            </div>
           </div>
-        </div>
+        </>
       )}
       <div className="flex-[1]  relative">
         <video ref={videoElement} className="input_video hidden"></video>
