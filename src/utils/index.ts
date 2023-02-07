@@ -6,6 +6,18 @@ export const levels = [
 
   ["p", "q", "j", "z"],
 ];
+function getRandomWordFromLevelWords(levelWords: string[]): string[] {
+  const levelWordsLength = levelWords.length;
+  let randomWordIndexArr: number[] = [];
+  let randomWordArr: string[] = [];
+  for (let i = 0; i < 10; i++) {
+    randomWordIndexArr.push(Math.floor(Math.random() * levelWordsLength));
+  }
+  for (let i of randomWordIndexArr) {
+    randomWordArr.push(levelWords[i]);
+  }
+  return randomWordArr;
+}
 export function getLevelWords(
   passedWords: string[],
   levelIndex: number
@@ -27,25 +39,26 @@ export function getLevelWords(
       words.splice(Number(wordIndex), 1);
     }
   }
-  return levelWords;
+
+  return getRandomWordFromLevelWords(levelWords);
 }
 // if (!words[wordIndex].includes(letter)) {
 //   levelWords.push(words[wordIndex]);
 //   words.splice(wordIndex, 1);
 // }
-export function getAllWordsLeveled() {
-  let allLevelWords = [];
-  for (let level of levels) {
-    let currentLevelWords = [];
-    for (let letter of level) {
-      for (let word in fourLetterWords) {
-        console.log(fourLetterWords[word]);
-        if (fourLetterWords[word].includes(letter)) {
-          currentLevelWords.push(fourLetterWords[word]);
-          fourLetterWords.splice(word, 1);
-        }
-      }
-    }
-    allLevelWords.push(currentLevelWords);
-  }
-}
+// export function getAllWordsLeveled() {
+//   let allLevelWords = [];
+//   for (let level of levels) {
+//     let currentLevelWords = [];
+//     for (let letter of level) {
+//       for (let word in fourLetterWords) {
+//         console.log(fourLetterWords[word]);
+//         if (fourLetterWords[word].includes(letter)) {
+//           currentLevelWords.push(fourLetterWords[word]);
+//           fourLetterWords.splice(word, 1);
+//         }
+//       }
+//     }
+//     allLevelWords.push(currentLevelWords);
+//   }
+// }

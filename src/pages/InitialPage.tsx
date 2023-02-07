@@ -12,7 +12,7 @@ function InitialPage() {
       <div className="card">
         <Link
           to="/select-hand"
-          className="btn px-10 hover:border-[#683aff] hover:bg- bg-[#fff] text-[#683aff] border-none my-2"
+          className="btn px-20 h-16 text-2xl  hover:border-[#683aff] rounded-3xl hover:bg-[#ffffa0] bg-[#fff] text-[#683aff] border-none my-2"
         >
           Let's go...
         </Link>

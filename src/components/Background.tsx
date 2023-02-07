@@ -6,8 +6,8 @@ function Background({ word }: { word: string }) {
   return (
     <div className="slide-container" style={{ width: 200 }}>
       <Fade
-        duration={200}
-        transitionDuration={500}
+        duration={700}
+        transitionDuration={100}
         arrows={false}
         canSwipe={false}
       >

@@ -29,7 +29,7 @@ function StartLevel() {
             textTransform: "none",
           }}
           to={`/game?level=${level}&hand=${hand}`}
-          className="btn border-white bg-[#683aff] my-2"
+          className="btn hover:bg-[#652ae5] rounded-3xl text-white text-2xl hover:border-white border-white bg-[#683aff] my-2"
         >
           Start Level
         </Link>

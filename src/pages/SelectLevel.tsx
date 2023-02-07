@@ -15,7 +15,7 @@ function SelectLevel() {
     <div className="flex flex-col bg-[#683aff]  h-[100vh] items-center justify-center gap-10">
       <BackButton url="/select-hand" />
       <SpellingSvg />
-      <div className="card">
+      <div className="card  flex items-center">
         {levels.map((item, i) => {
           return (
             <Link
@@ -23,9 +23,11 @@ function SelectLevel() {
                 textTransform: "none",
               }}
               to={`/start-level?level=${item}&hand=${selectedHand}`}
-              className={`btn my-4 rounded-3xl ${i == 1 ? "ml-14" : ""} ${
-                i == 2 ? "mr-14" : ""
-              } flex items-center text-white bg-transparent hover:bg-[#fff] hover:text-[#683aff] hover:border-white border-white px-28 h-16 text-2xl text-bold`}
+              className={`btn my-4 w-11/12 text-3xl  rounded-3xl ${
+                i == 1 ? "ml-20" : ""
+              } ${
+                i == 2 ? "mr-20" : ""
+              } flex items-center text-white bg-transparent hover:bg-[#fff] hover:text-[#683aff] hover:border-white border-white px-20 h-16 text-2xl text-bold`}
             >
               Level {item}
             </Link>
