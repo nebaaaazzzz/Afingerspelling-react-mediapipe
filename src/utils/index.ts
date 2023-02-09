@@ -23,14 +23,19 @@ export function getLevelWords(
   levelIndex: number
 ): string[] {
   const words = [...passedWords];
-  let levelWords: string[] = [];
-  let level = levels[levelIndex - 1];
-  for (let i = 1; i < levelIndex; i++) {}
+  let levelWords: string[] = []; //to hold all words in levelIndex
+  let levelLetters: string[] =
+    []; /*contain level word from levelIndex to 0 concatinated */
+
+  for (let i = 0; i < levelIndex; i++) {
+    levelLetters = levelLetters.concat(levels[i]);
+  }
+
   for (let wordIndex in words) {
-    let skip = true;
+    let skip = false;
     for (let letter of words[wordIndex]) {
-      if (level.includes(letter)) {
-        skip = false;
+      if (!levelLetters.includes(letter)) {
+        skip = true;
       }
     }
     if (!skip) {
