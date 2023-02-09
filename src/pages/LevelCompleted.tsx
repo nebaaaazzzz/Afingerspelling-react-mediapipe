@@ -30,12 +30,14 @@ function LevelCompleted() {
         >
           Try Again
         </Link>
-        <Link
-          to={`/start-level?hand=${hand}&level=${Number(level) + 1}`}
-          className="btn px-10 h-14 text-xl  hover:border-[#683aff] rounded-3xl hover:bg-[#ffffa0] bg-[#fff] text-[#683aff] border-none my-2"
-        >
-          Next Level
-        </Link>
+        {!(level == "4") && (
+          <Link
+            to={`/start-level?hand=${hand}&level=${Number(level) + 1}`}
+            className="btn px-10 h-14 text-xl  hover:border-[#683aff] rounded-3xl hover:bg-[#ffffa0] bg-[#fff] text-[#683aff] border-none my-2"
+          >
+            Next Level
+          </Link>
+        )}
       </div>
     </div>
   );
