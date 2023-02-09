@@ -29,7 +29,6 @@ export function getLevelWords(
   for (let wordIndex in words) {
     let skip = true;
     for (let letter of words[wordIndex]) {
-      console.log(level.includes(letter), wordIndex, letter, words[wordIndex]);
       if (level.includes(letter)) {
         skip = false;
       }

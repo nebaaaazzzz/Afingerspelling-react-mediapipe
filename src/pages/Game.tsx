@@ -8,7 +8,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { HandAnalyzer } from "../HandUtils/HandAnalyzer";
 import BackButton from "../components/BackButton";
 import moment from "moment";
-import Modals from "../components/Mod/Modals";
+import Modal from "../components/Modal";
+import ImageAndWordContainer from "../components/ImageAndWordContainer";
+import LeftBottomContainer from "../components/LeftBottomContainer";
 const handAnalyzer = new HandAnalyzer();
 let ignore = false;
 function Game() {
@@ -28,7 +30,7 @@ function Game() {
   const videoElement = useRef(null);
   const canvasElement = useRef<HTMLCanvasElement>(null);
   let [countPrediction, setCountPrediction] = useState(0);
-  const [showModal , setShowModal] = useState(false) ;
+  const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     const levelIndex = Number(searchParams[0].get("level") as String);
     setHand(searchParams[0].get("hand") as "left" | "right");
@@ -39,7 +41,7 @@ function Game() {
     setLoading(true);
     setLevel(levelIndex);
   }, []);
- 
+
   const handleSkip = () => {
     //level compelted go to level completed page
     if (wordIndex == 9) {
@@ -56,21 +58,21 @@ function Game() {
       setWordLength(wordLength + 1);
     }
   };
-  useEffect(()=>{
-    if(wordIndex!==0 && wordIndex !==9){
+  useEffect(() => {
+    if (wordIndex !== 0 && wordIndex !== 9) {
       setShowModal(true);
-      setTimeout(()=>{
-        setShowModal(false) ;
-      } ,1000)
+      setTimeout(() => {
+        setShowModal(false);
+      }, 1000);
     }
-  },[wordIndex])
+  }, [wordIndex]);
   const onResults = async (results) => {
     let canvasCtx = canvasElement?.current?.getContext("2d");
     setCountPrediction(countPrediction++);
     if (countPrediction == 1) {
       setLoading(false);
     }
-    
+
     canvasCtx?.save();
     canvasCtx?.clearRect(
       0,
@@ -186,54 +188,24 @@ function Game() {
 
       {!loading && (
         <>
-        {
-       showModal&&<Modals /> 
-        }
+          {showModal && <Modal nextWord={selectedWord} />}
           <BackButton black url={`/select-hand?level=${level}`} />
           <div className="flex-[1] justify-between items-center p-5 bg-[#fff6df] flex  flex-col relative">
             <div className="absolute mr-10 text-2xl flex flex-col gap-2 w-2/3">
-            
-             
-              {/* <span className="font-bold text-center  text-black">
+              <span className="font-bold text-center  text-black">
                 words : {wordIndex + 1}/10
-              </span> */}
-              {/* <g clip-path="url(#clip0)">
-					<path d="M14.1889 28L16.4525 25.8092L5.53712 15.5313L34 15.5313L34 12.4687L5.57684 12.4687L16.4525 2.22994L14.1889 2.08275e-06L-2.59273e-06 14.0224L14.1889 28Z" fill="#683AFF"></path>
-				</g> */}
+              </span>
             </div>
             <div></div>
-            <div className="flex items-center gap-10">
-              <img
-                draggable={false}
-                src={`/spelling/${selectedLetter?.toUpperCase()}.png`}
-                className="w-11/12 h-96 object-contain w-2/3" />
-              <h1 className="text-8xl text-primary font-black leading-10 ">
-                {selectedLetter?.toUpperCase()}
-              </h1>
-            </div>
-            
-            <div className="flex flex-col items-center ">
-              <div className="flex">
-                <h1 className="text-6xl text-primary ">
-                  {selectedWord?.slice(0, wordLength - 1).toUpperCase()}
-                  
-                </h1>
-                
-                <h1 className="text-6xl  text-[#ffe090] ">
-                
-                  {selectedWord?.slice(wordLength - 1).toUpperCase()}
-                 
-                </h1>
-               
-              </div>
-              
-              <button
-                onClick={handleSkip}
-                className="btn my-2 text-xl hover:bg-white  hover:text-[#683aff] rounded-3xl bg-[#683aff] border-none px-20 text-white"
-                >
-                Skip Letter
-              </button>
-            </div>
+            <ImageAndWordContainer
+              selectedLetter={selectedLetter?.toUpperCase()}
+              imgPath={selectedLetter?.toUpperCase()}
+            />
+            <LeftBottomContainer
+              selectedWord={selectedWord}
+              handleSkip={handleSkip}
+              wordLength={wordLength}
+            />
           </div>
         </>
       )}
@@ -243,16 +215,22 @@ function Game() {
             ? moment(currentTime - startTime).format("mm : ss")
             : ""}
         </span>
-        <div className="flex absolute right-0 ">
-                <p className="font-bold ">Score : {score} </p>
-              </div>
-        
-        <video ref={videoElement} className="input_video hidden"></video>
+        {!loading && (
+          <div className="flex absolute right-0 ">
+            <p className="font-bold text-black m-2 text-xl">Score : {score} </p>
+          </div>
+        )}
+
+        <video
+          style={{ width: "50%", height: "100vh" }}
+          ref={videoElement}
+          className="input_video hidden"
+        ></video>
         <canvas
           className="output_canvas"
           style={{
             width: "100%",
-            objectFit: "cover",
+            objectFit: "fill",
             height: "100vh",
             display: loading ? "none" : "block",
           }}

@@ -12,7 +12,6 @@ function Background({ word }: { word: string }) {
         canSwipe={false}
       >
         {word.split("").map((letter) => {
-          console.log(`/spelling` + letter.toUpperCase() + ".png");
           return (
             <div className="each-fade">
               <img src={`/spelling/` + letter.toUpperCase() + ".png"} alt="F" />
