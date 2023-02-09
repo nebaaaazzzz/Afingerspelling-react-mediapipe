@@ -7,7 +7,7 @@ function LevelCompleted() {
   const searchParams = useSearchParams()[0];
   const [hand, setHand] = useState<string | null>();
   const [level, setLevel] = useState<string | null>();
-  const [points, setPoints] = useState(string | null);
+  const [points, setPoints] = useState<string | null>();
   useEffect(() => {
     setHand(searchParams.get("hand"));
     setLevel(searchParams.get("level"));

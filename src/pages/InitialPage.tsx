@@ -5,10 +5,15 @@ import SpellingSvg from "../components/SpellingSvg";
 
 function InitialPage() {
   return (
-    <div className="flex flex-col h-[100vh] items-center justify-center bg-[#683aff] gap-1">
-      <Background word="fingerspelling" />
+    <div className="flex flex-col h-[100vh] items-center justify-center bg-[#683aff] bg[url('<Background/>')] gap-1">
+      {/* <Background word="fingerspelling" /> */}
       <SpellingSvg />
+      <div className="text-[#ffe090] text-center">
+        <p>
+Learn the ABC in American Sign Languge </p>
+<h1>with machine Languge</h1>
 
+</div>
       <div className="card">
         <Link
           to="/select-hand"

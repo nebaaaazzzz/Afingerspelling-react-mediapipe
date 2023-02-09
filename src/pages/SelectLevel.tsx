@@ -2,6 +2,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import { useEffect, useState } from "react";
 import SpellingSvg from "../components/SpellingSvg";
+import Background from "../components/Background";
 const levels = [1, 2, 3, 4];
 function SelectLevel() {
   const [selectedHand, setSelectedHand] = useState<string>("");
@@ -12,8 +13,10 @@ function SelectLevel() {
     }
   }, []);
   return (
-    <div className="flex flex-col bg-[#683aff]  h-[100vh] items-center justify-center gap-10">
+    <div className="flex flex-col bg-[#683aff] bg-[url('/spelling/B.png')] hover:bg-[url('/spelling/U.png')] bg-no-repeat  bg-top h-[100vh] items-center justify-center gap-10">
       <BackButton url="/select-hand" />
+      
+     
       <SpellingSvg />
       <div className="card  flex items-center">
         {levels.map((item, i) => {
