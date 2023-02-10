@@ -1,28 +1,97 @@
-import React, { useEffect, useState } from "react";
+import React, { createRef, useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import SpellingSvg from "../components/SpellingSvg";
 import Background from "../components/Background";
 
 function SelectHand() {
-  const searchParams = useSearchParams();
-
+  const [isLeftMouseOver, setIsLeftMouseOver] = useState(false);
+  const [iseRightMouseOver, setIsRightMouseOver] = useState(false);
+  const leftAnchorRef = createRef<HTMLAnchorElement>();
+  const rightAnchorRef = createRef<HTMLAnchorElement>();
+  const mouseEnterHandler = (e: MouseEvent, handDir: "LEFT" | "RIGHT") => {
+    if (handDir == "LEFT") {
+      setIsLeftMouseOver(true);
+    } else {
+      setIsRightMouseOver(true);
+    }
+  };
+  const mouseLeaveHandler = (e: MouseEvent, handDir: "LEFT" | "RIGHT") => {
+    if (handDir == "LEFT") {
+      setIsLeftMouseOver(false);
+    } else {
+      setIsRightMouseOver(false);
+    }
+  };
+  useEffect(() => {
+    leftAnchorRef.current?.addEventListener("mouseover", (e) =>
+      mouseEnterHandler(e, "LEFT")
+    );
+    rightAnchorRef.current?.addEventListener("mouseover", (e) =>
+      mouseEnterHandler(e, "RIGHT")
+    );
+    leftAnchorRef.current?.addEventListener("mouseleave", (e) =>
+      mouseLeaveHandler(e, "LEFT")
+    );
+    rightAnchorRef.current?.addEventListener("mouseleave", (e) =>
+      mouseLeaveHandler(e, "RIGHT")
+    );
+    return () => {
+      [leftAnchorRef, rightAnchorRef].map((anchorElement) => {
+        anchorElement.current?.removeEventListener(
+          "mouseover",
+          mouseEnterHandler
+        );
+        anchorElement.current?.removeEventListener(
+          "mouseleave",
+          mouseEnterHandler
+        );
+      });
+    };
+  });
+  // bg-[url('/Screenshot_2023-02-08_at_07-07-59_Fingerspelling_with_Machine_Learning-removebg-preview(1).png')]
   return (
-    <div className="flex flex-col h-[100vh] bg-[#ffe090] bg-[url('/Screenshot_2023-02-08_at_07-07-59_Fingerspelling_with_Machine_Learning-removebg-preview(1).png')]  bg-top   bg-no-repeat bg-center items-center justify-center gap-10">
-     <div className="circleTop bg-[#ffebb8] w-[230px] h-[432px] rounded-tr-full rounded-br-full absolute inset-x-0"></div> 
-     <div className="circleTop bg-[#ffebb8] w-[230px] h-[432px] rounded-tl-full rounded-bl-full absolute right-0 "></div> 
+    <div className="flex flex-col relative h-[100vh] bg-[#ffe090]  bg-top   bg-no-repeat bg-center items-center justify-center gap-10">
+      {!isLeftMouseOver && !iseRightMouseOver && (
+        <img
+          src="Screenshot_2023-02-08_at_07-07-59_Fingerspelling_with_Machine_Learning-removebg-preview(1).png"
+          width={400}
+          height={400}
+          className="absolute top-0"
+        />
+      )}
+      {isLeftMouseOver && (
+        <video
+          width={400}
+          height={400}
+          className="absolute top-0"
+          src="/left.webm"
+          autoPlay
+        ></video>
+      )}
+      {iseRightMouseOver && (
+        <video
+          width={600}
+          height={600}
+          className="absolute top-10"
+          src="/right.webm"
+          autoPlay
+        ></video>
+      )}
+      <div className="circleTop bg-[#ffebb8] w-[230px] h-[432px] rounded-tr-full rounded-br-full absolute inset-x-0"></div>
+      <div className="circleTop bg-[#ffebb8] w-[230px] h-[432px] rounded-tl-full rounded-bl-full absolute right-0 "></div>
       <BackButton url="/" />
-      
-      
-      <h1 className="text-[#683aff] text-4xl text-bold text-center leading-8 mb-3.5">
+
+      <h1 className="text-[#683aff] z-30 text-4xl text-bold text-center leading-8 mb-3.5">
         Are left or right handed?
       </h1>
-      <h1 className="text-white text-lg w-96 text-center text-[#683aff] inset-11">
+      <h1 className="text-lg w-96 text-center z-30 text-[#683aff] inset-11">
         Choose the hand you want to use for fingerspelling You Should use your
         dominant hand
       </h1>
-      <div className="flex gap-10">
+      <div className="flex gap-10 z-30">
         <Link
+          ref={leftAnchorRef}
           style={{
             textTransform: "none",
           }}
@@ -32,6 +101,7 @@ function SelectHand() {
           Left
         </Link>
         <Link
+          ref={rightAnchorRef}
           style={{
             textTransform: "none",
           }}
