@@ -14,7 +14,7 @@ function ImageAndWordContainer({
         src={`/spelling/${imgPath}.png`}
         className="w-11/12 h-96 object-contain "
       />
-      <h1 className="text-[10rem] text-primary font-black leading-10 ">
+      <h1 className="text-[20rem] text-primary font-black leading-10 ">
         {selectedLetter}
       </h1>
     </div>

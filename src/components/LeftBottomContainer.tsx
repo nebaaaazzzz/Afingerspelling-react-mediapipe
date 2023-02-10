@@ -12,18 +12,18 @@ function LeftBottomContainer({
   return (
     <div className="flex flex-col items-center ">
       <div className="flex">
-        <h1 className="text-4xl text-primary ">
-          {selectedWord?.slice(0, wordLength - 1).toUpperCase()}
+        <h1 className="text-6xl text-[#683aff]  capitalize ">
+          {selectedWord?.slice(0, wordLength - 1)}
         </h1>
 
-        <h1 className="text-4xl text-[#c29f48] ">
-          {selectedWord?.slice(wordLength - 1).toUpperCase()}
+        <h1 className="text-6xl text-[#683aff] opacity-70 ">
+          {selectedWord?.slice(wordLength - 1)}
         </h1>
       </div>
 
       <button
         onClick={handleSkip}
-        className="btn my-2 text-xl hover:border-2 hover:border-black hover:bg-white  hover:text-[#683aff] rounded-3xl bg-[#683aff] border-none px-20 text-white"
+        className="btn w-52 rounded-3xl hover:text-white hover:bg-[#683aff] hover:border-none bg-white mt-5 text-[#683aff] border-[1px] border-[#683aff]"
       >
         Skip Letter
       </button>

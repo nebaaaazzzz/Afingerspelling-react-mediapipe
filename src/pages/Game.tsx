@@ -8,12 +8,15 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { HandAnalyzer } from "../HandUtils/HandAnalyzer";
 import BackButton from "../components/BackButton";
 import moment from "moment";
-import Modal from "../components/Modal";
+import Modal from "../components/Modal/Modal";
 import ImageAndWordContainer from "../components/ImageAndWordContainer";
 import LeftBottomContainer from "../components/LeftBottomContainer";
+import StartingVideoOverLay from "../components/StartingVideoOverLay";
+import WavingVideo from "../components/WavingVideo";
 const handAnalyzer = new HandAnalyzer();
 let ignore = false;
 function Game() {
+  const [started, setStarted] = useState(false);
   const navigate = useNavigate();
   const [startTime, setStartTime] = useState<Date | undefined>();
   const [currentTime, setCurrentTime] = useState<Date | undefined>();
@@ -32,14 +35,8 @@ function Game() {
   let [countPrediction, setCountPrediction] = useState(0);
   const [showModal, setShowModal] = useState(false);
   useEffect(() => {
-    const levelIndex = Number(searchParams[0].get("level") as String);
     setHand(searchParams[0].get("hand") as "left" | "right");
-    const returnedLevelWords = getLevelWords(fourLetterWords, levelIndex);
-    setLevelWords(returnedLevelWords);
-    setSelectWord(returnedLevelWords[0]);
-    setSelectedLetter(returnedLevelWords[0][0]);
     setLoading(true);
-    setLevel(levelIndex);
   }, []);
 
   const handleSkip = () => {
@@ -122,6 +119,7 @@ function Game() {
             color: "transparent",
             lineWidth: 0,
           });
+          setStarted(true);
           if (selectedLetter && !ignore) {
             let bool =
               5 ==
@@ -176,7 +174,59 @@ function Game() {
       });
       camera.start();
     }
-  }, []);
+    if (started) {
+      const levelIndex = Number(searchParams[0].get("level") as String);
+      setStartTime(new Date().getTime());
+      setShowModal(true);
+      setLevel(levelIndex);
+      const returnedLevelWords = getLevelWords(fourLetterWords, levelIndex);
+      setLevelWords(returnedLevelWords);
+      setSelectWord(returnedLevelWords[0]);
+      setSelectedLetter(returnedLevelWords[0][0]);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 1000);
+    }
+  }, [started]);
+  if (!started) {
+    return (
+      <div className="flex w-full">
+        {loading && (
+          <>
+            <BackButton url={`/start-level?level=${level}&hand=${hand}`} />
+            <Loading word="Loading" />
+          </>
+        )}
+
+        {!loading && (
+          <>
+            <BackButton url={`/start-level?level=${level}&hand=${hand}`} />
+            <div className="flex-[1] justify-between items-center p-5 bg-[#fff6df] flex  flex-col relative">
+              <WavingVideo />
+            </div>
+          </>
+        )}
+        <div className="flex-[1]  relative">
+          {!loading && <StartingVideoOverLay />}
+          <video
+            style={{ width: "50%", height: "100vh" }}
+            ref={videoElement}
+            className="input_video hidden"
+          ></video>
+          <canvas
+            className="output_canvas"
+            style={{
+              width: "100%",
+              objectFit: "fill",
+              height: "100vh",
+              display: loading ? "none" : "block",
+            }}
+            ref={canvasElement}
+          ></canvas>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="flex w-full">
       {loading && (
@@ -188,11 +238,11 @@ function Game() {
 
       {!loading && (
         <>
-          {showModal && <Modal nextWord={selectedWord} />}
-          <BackButton black url={`/select-hand?level=${level}`} />
+          {showModal && <Modal wordIndex={wordIndex} nextWord={selectedWord} />}
+          <BackButton url={`/start-level?level=${level}&hand=${hand}`} />
           <div className="flex-[1] justify-between items-center p-5 bg-[#fff6df] flex  flex-col relative">
             <div className="absolute mr-10 text-2xl flex flex-col gap-2 w-2/3">
-              <span className="font-bold text-center  text-black">
+              <span className="font-bold text-center  text-[#683aff] ">
                 words : {wordIndex + 1}/10
               </span>
             </div>
@@ -210,14 +260,16 @@ function Game() {
         </>
       )}
       <div className="flex-[1]  relative">
-        <span className="absolute text-black font-bold text-xl m-10">
+        <span className="absolute text-white text-lg m-10">
           {currentTime && startTime
             ? moment(currentTime - startTime).format("mm : ss")
             : ""}
         </span>
         {!loading && (
-          <div className="flex absolute right-0 ">
-            <p className="font-bold text-black m-2 text-xl">Score : {score} </p>
+          <div className="flex absolute left-1/2 mt-5">
+            <p className="font-medium text-white m-2 text-2xl">
+              {score} Points
+            </p>
           </div>
         )}
 
