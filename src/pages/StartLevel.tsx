@@ -9,12 +9,9 @@ function StartLevel() {
   const buttonRef = createRef<HTMLButtonElement>();
   useEffect(() => {
     const mouseEnterHandler = async (e: MouseEvent) => {
-      console.log("entering the button");
-
       setIsMouseOver(true);
     };
     const mouseLeaveHandler = async (e: MouseEvent) => {
-      console.log("leaving the button");
       setIsMouseOver(false);
     };
     buttonRef.current?.addEventListener("mouseenter", mouseEnterHandler);

@@ -3,6 +3,7 @@ import React from "react";
 function SpellingSvg() {
   return (
     <svg
+      className="z-20"
       width="670"
       height="138"
       viewBox="0 0 670 138"

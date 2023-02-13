@@ -1,8 +1,6 @@
-import React, { createRef, useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { createRef, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import BackButton from "../components/BackButton";
-import SpellingSvg from "../components/SpellingSvg";
-import Background from "../components/Background";
 
 function SelectHand() {
   const [isLeftMouseOver, setIsLeftMouseOver] = useState(false);
@@ -55,24 +53,24 @@ function SelectHand() {
       {!isLeftMouseOver && !iseRightMouseOver && (
         <img
           src="Screenshot_2023-02-08_at_07-07-59_Fingerspelling_with_Machine_Learning-removebg-preview(1).png"
-          width={400}
-          height={400}
+          width={450}
+          height={450}
           className="absolute top-0"
         />
       )}
       {isLeftMouseOver && (
         <video
-          width={400}
-          height={400}
-          className="absolute top-0"
+          width={450}
+          height={450}
+          className="absolute top-10"
           src="/left.webm"
           autoPlay
         ></video>
       )}
       {iseRightMouseOver && (
         <video
-          width={600}
-          height={600}
+          width={500}
+          height={500}
           className="absolute top-10"
           src="/right.webm"
           autoPlay

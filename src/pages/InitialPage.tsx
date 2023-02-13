@@ -26,11 +26,20 @@ function InitialPage() {
   }, []);
   return (
     <div className="flex flex-col h-[100vh] items-center justify-center bg-[#683aff]  gap-1 ">
-      <div className="absolute inset-x-auto inset-y-32 z-0 w-96 h-96">
+      <div className="absolute  z-0 ">
         {isMouseOver ? (
           <img src="/hover.png" width="670" height="138" />
         ) : (
-          <Background word="fingerspelling" />
+          <video
+            src="/inital.webm"
+            autoPlay
+            className="relative -top-14 -left-16"
+            style={{
+              width: 700,
+              height: 700,
+            }}
+          />
+          // <Background word="fingerspelling" />
         )}
       </div>
       <div className="absolute inset-x-auto inset-y-60 z-40 ">

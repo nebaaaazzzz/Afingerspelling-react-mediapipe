@@ -154,6 +154,8 @@ function Game() {
       setStartTime(new Date().getTime());
       hands.onResults(onResults);
     }
+  }, [selectedLetter, wordLength]);
+  useEffect(() => {
     if (countPrediction != 0) {
       setTimeout(() => {
         ignore = false;
@@ -164,7 +166,7 @@ function Game() {
         setCurrentTime(new Date());
       }
     }, 1000);
-  }, [selectedLetter]);
+  }, [selectedLetter, wordLength]);
   useEffect(() => {
     if (videoElement.current) {
       const camera = new window.Camera(videoElement.current, {
@@ -174,10 +176,13 @@ function Game() {
       });
       camera.start();
     }
+    //1121019492052017
+
     if (started) {
       const levelIndex = Number(searchParams[0].get("level") as String);
       setStartTime(new Date().getTime());
       setShowModal(true);
+
       setLevel(levelIndex);
       const returnedLevelWords = getLevelWords(fourLetterWords, levelIndex);
       setLevelWords(returnedLevelWords);
@@ -193,14 +198,22 @@ function Game() {
       <div className="flex w-full">
         {loading && (
           <>
-            <BackButton url={`/start-level?level=${level}&hand=${hand}`} />
+            <BackButton
+              url={`/start-level?level=${searchParams[0].get(
+                "level"
+              )}&hand=${hand}`}
+            />
             <Loading word="Loading" />
           </>
         )}
 
         {!loading && (
           <>
-            <BackButton url={`/start-level?level=${level}&hand=${hand}`} />
+            <BackButton
+              url={`/start-level?level=${searchParams[0].get(
+                "level"
+              )}&hand=${hand}`}
+            />
             <div className="flex-[1] justify-between items-center p-5 bg-[#fff6df] flex  flex-col relative">
               <WavingVideo />
             </div>
@@ -242,9 +255,9 @@ function Game() {
           <BackButton url={`/start-level?level=${level}&hand=${hand}`} />
           <div className="flex-[1] justify-between items-center p-5 bg-[#fff6df] flex  flex-col relative">
             <div className="absolute mr-10 text-2xl flex flex-col gap-2 w-2/3">
-              <span className="font-bold text-center  text-[#683aff] ">
+              {/* <span className="font-bold text-center  text-[#683aff] ">
                 words : {wordIndex + 1}/10
-              </span>
+              </span> */}
             </div>
             <div></div>
             <ImageAndWordContainer
