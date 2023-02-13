@@ -25,18 +25,17 @@ function InitialPage() {
     };
   }, []);
   return (
-    <div className="flex flex-col h-[100vh] items-center justify-center bg-[#683aff]  gap-1 ">
+    <div className="flex flex-col h-[100vh] overflow-hidden items-center justify-center bg-[#683aff]  gap-1 ">
       <div className="absolute  z-0 ">
         {isMouseOver ? (
-          <img src="/hover.png" width="670" height="138" />
+          <img src="/hover.png" width="470" height="100" />
         ) : (
-          <video
-            src="/inital.webm"
-            autoPlay
+          <img
+            src="/inital.gif"
             className="relative -top-14 -left-16"
             style={{
-              width: 700,
-              height: 700,
+              width: 500,
+              height: 500,
             }}
           />
           // <Background word="fingerspelling" />
@@ -59,7 +58,7 @@ function InitialPage() {
             >
               Let's go
             </Link>
-            <div className="text-[14px] absolute top-64 left-40 font-[LabilGroteskRegular sans-serif] leading-5">
+            <div className="text-[14px] absolute top-32 left-40 font-[LabilGroteskRegular sans-serif] leading-5">
               <p>This game will using your webcam and machine learning to</p>
               <p>
                 analyze your handshapes.Everything is processed locally and
