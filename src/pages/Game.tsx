@@ -13,6 +13,7 @@ import ImageAndWordContainer from "../components/ImageAndWordContainer";
 import LeftBottomContainer from "../components/LeftBottomContainer";
 import StartingVideoOverLay from "../components/StartingVideoOverLay";
 import WavingVideo from "../components/WavingVideo";
+import Background from "../components/Background";
 const handAnalyzer = new HandAnalyzer();
 let ignore = false;
 function Game() {
@@ -176,7 +177,7 @@ function Game() {
       });
       camera.start();
     }
-    //1121019492052017
+   
 
     if (started) {
       const levelIndex = Number(searchParams[0].get("level") as String);
@@ -222,16 +223,17 @@ function Game() {
         <div className="flex-[1]  relative">
           {!loading && <StartingVideoOverLay />}
           <video
-            style={{ width: "50%", height: "100vh" }}
+            style={{ width: "50%", height: "100vh",backgroundColor: "rgba(0,0,0,0.7)"}}
             ref={videoElement}
-            className="input_video hidden"
+            className="input_video hidden bg-[rgba(0,0,0,0.7)]" 
           ></video>
           <canvas
-            className="output_canvas"
+            className="output_canvas bg-[rgba(0,0,0,0.7)]"
             style={{
               width: "100%",
               objectFit: "fill",
               height: "100vh",
+              color:"green",
               display: loading ? "none" : "block",
             }}
             ref={canvasElement}
@@ -287,7 +289,7 @@ function Game() {
         )}
 
         <video
-          style={{ width: "50%", height: "100vh" }}
+          style={{ width: "50%", height: "100vh", color: "black"}}
           ref={videoElement}
           className="input_video hidden"
         ></video>
@@ -297,6 +299,7 @@ function Game() {
             width: "100%",
             objectFit: "fill",
             height: "100vh",
+            color: "black",
             display: loading ? "none" : "block",
           }}
           ref={canvasElement}
