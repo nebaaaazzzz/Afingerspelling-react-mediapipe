@@ -13,12 +13,16 @@ import ImageAndWordContainer from '../components/ImageAndWordContainer';
 import LeftBottomContainer from '../components/LeftBottomContainer';
 import StartingVideoOverLay from '../components/StartingVideoOverLay';
 import WavingVideo from '../components/WavingVideo';
+import { AlphabetDefinationI } from '../type';
+import { Alphabet } from '../data/Alphabet';
+import Percentage from '../components/Percentage';
 const handAnalyzer = new HandAnalyzer();
 let ignore = false;
 type handDirection = 'left' | 'right';
 function Game() {
   const navigate = useNavigate();
   const searchParams = useSearchParams();
+  const [lookForLetter, setLookForLetter] = useState<AlphabetDefinationI>();
   const hand = searchParams[0].get('hand') as handDirection;
   const [level, setLevel] = useState<number>();
   const [started, setStarted] = useState(false);
@@ -102,6 +106,7 @@ function Game() {
             newLandMarks[5]
           ) * 10;
         if (handSize > 0.7) {
+          console.log('have hand');
           setStarted(true);
           drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
             color: '#ff00ff',
@@ -119,14 +124,23 @@ function Game() {
             );
 
             if (response.countCorrectFingers == 5) {
-              ignore = true;
+              ignore = true; //stop detecting hand this value change after a delay
+
+              //this time out to delay change of current letter after detecting the hand
               setTimeout(() => {
                 setScore((prevScore) => prevScore + 1);
                 handleSkip();
               }, 500);
             } else if (response.message) {
-              console.log(response.message);
+              // console.log(response.message);
             }
+            if (response.lookForLetter) {
+              setLookForLetter(response.lookForLetter);
+            }
+          }
+        } else {
+          if (selectedLetter) {
+            setLookForLetter(new Alphabet().getSpecificLetter(selectedLetter));
           }
         }
       }
@@ -292,6 +306,7 @@ function Game() {
             </p>
           </div>
         )}
+        {lookForLetter && <Percentage lookForLetter={lookForLetter} />}
 
         <video
           style={{ width: '50%', height: '100vh' }}

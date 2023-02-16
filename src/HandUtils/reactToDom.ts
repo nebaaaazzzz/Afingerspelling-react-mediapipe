@@ -1,18 +1,27 @@
 import { Coords3D } from '@tensorflow-models/handpose/dist/pipeline';
 import { Alphabet } from '../data/Alphabet';
-import { FingerDefinationI } from '../type';
+import { AlphabetDefinationI, FingerDefinationI } from '../type';
 import { HandAnalyzer } from './HandAnalyzer';
 
 const handAnalyzer = new HandAnalyzer();
 const alphabet = new Alphabet();
+const fingers = ['thumb', 'index', 'middle', 'ring', 'little'];
 const reactToDOMCursor = (
   fingerPoseResults: any,
   result: Coords3D,
   letter: any
-): { countCorrectFingers: number; message: string } => {
+): {
+  countCorrectFingers: number;
+  message: string;
+  lookForLetter?: AlphabetDefinationI;
+} => {
   let lookForLetter = alphabet.getSpecificLetter(letter);
   if (!lookForLetter) {
-    return { countCorrectFingers: 0, message: 'Letter not founnd' };
+    return {
+      countCorrectFingers: 0,
+      lookForLetter,
+      message: 'Letter not founnd'
+    };
   }
   let fingerData = {
     handSize: 0,
@@ -25,6 +34,7 @@ const reactToDOMCursor = (
   fingerData.handRotation = handAnalyzer.getHandRotationFromIndex(result);
   if (fingerData.handSize < 0.7) {
     return {
+      lookForLetter,
       countCorrectFingers: 0,
       message: 'put your hand close to the camera'
     };
@@ -50,6 +60,7 @@ const reactToDOMCursor = (
       isHandAngleCorrect = true;
     } else {
       return {
+        lookForLetter,
         countCorrectFingers: 0,
         message: 'your hand rotation must be up'
       };
@@ -61,6 +72,7 @@ const reactToDOMCursor = (
       isHandAngleCorrect = true;
     } else {
       return {
+        lookForLetter,
         countCorrectFingers: 0,
         message: 'your hand rotation must be down'
       };
@@ -72,6 +84,7 @@ const reactToDOMCursor = (
       isHandAngleCorrect = true;
     } else {
       return {
+        lookForLetter,
         countCorrectFingers: 0,
         message: 'your hand rotation must be side'
       };
@@ -79,18 +92,7 @@ const reactToDOMCursor = (
   }
   if (isHandAngleCorrect === true) {
     for (let i = 0; i < 5; i++) {
-      let lookFor;
-      if (i == 0) {
-        lookFor = lookForLetter.thumb;
-      } else if (i == 1) {
-        lookFor = lookForLetter.index;
-      } else if (i == 2) {
-        lookFor = lookForLetter.middle;
-      } else if (i == 3) {
-        lookFor = lookForLetter.ring;
-      } else if (i == 4) {
-        lookFor = lookForLetter.little;
-      }
+      let lookFor = lookForLetter[fingers[i]];
 
       let angle = lookFor.currentAngle;
 
@@ -140,19 +142,9 @@ const reactToDOMCursor = (
               lookFor.percentageCorrect = 1;
             }
           } else if (lookFor.special === 'thumbBendOverOtherFingers') {
-            //	console.log('result[4][0] ; ' + result[4][0]);
-            //	console.log('result[5][0] ; ' + result[5][0]);
-            //if (Globals.IS_MOBILE === true) {
-            // && result[4][0] < result[17][0]
             if (result[4][0] > result[8][0] - 0.03 * fingerData.handSize) {
               lookFor.percentageCorrect = 1;
             }
-            /*	}
-						else {
-							if (result[4][0] > result[5][0] + 0.01 * fingerData.handSize && result[4][0] < result[17][0] + 0.0 * fingerData.handSize) {
-								lookFor.percentageCorrect = 1;
-							}
-						}*/
           } else if (
             lookFor.special === 'thumbBendOverOtherFingersAndUnderOtherFingers'
           ) {
@@ -319,21 +311,7 @@ const reactToDOMCursor = (
     lookForLetter.ring.percentageCorrect = 0;
     lookForLetter.thumb.percentageCorrect = 0;
   }
-  if (lookForLetter.thumb.percentageCorrect === 1) {
-  } else if (lookForLetter.thumb.percentageCorrect !== 1) {
-  }
-  if (lookForLetter.index.percentageCorrect === 1) {
-  } else if (lookForLetter.index.percentageCorrect !== 1) {
-  }
-  if (lookForLetter.middle.percentageCorrect === 1) {
-  } else if (lookForLetter.middle.percentageCorrect !== 1) {
-  }
-  if (lookForLetter.ring.percentageCorrect === 1) {
-  } else if (lookForLetter.ring.percentageCorrect !== 1) {
-  }
-  if (lookForLetter.little.percentageCorrect === 1) {
-  } else if (lookForLetter.little.percentageCorrect !== 1) {
-  }
-  return { countCorrectFingers, message: '' };
+
+  return { countCorrectFingers, lookForLetter, message: '' };
 };
 export default reactToDOMCursor;

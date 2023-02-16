@@ -1,4 +1,3 @@
-import Left from '../components/Lefthand';
 import { AlphabetDefinationI } from '../type';
 
 export class Alphabet {
