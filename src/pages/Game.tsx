@@ -22,7 +22,8 @@ type handDirection = 'left' | 'right';
 function Game() {
   const navigate = useNavigate();
   const searchParams = useSearchParams();
-  const [lookForLetter, setLookForLetter] = useState<AlphabetDefinationI>();
+  const [lookForLetter, setLookForLetter] =
+    useState<AlphabetDefinationI | null>(null);
   const hand = searchParams[0].get('hand') as handDirection;
   const [level, setLevel] = useState<number>();
   const [started, setStarted] = useState(false);
@@ -79,7 +80,7 @@ function Game() {
       canvasElement.current.width,
       canvasElement.current.height
     );
-    if (results.multiHandLandmarks && results.multiHandedness) {
+    if (results.multiHandLandmarks.length && results.multiHandedness.length) {
       let newLandMarks = [];
       for (const landmarks of results.multiHandLandmarks) {
         for (var i = 0; i < 21; i++) {
@@ -106,7 +107,6 @@ function Game() {
             newLandMarks[5]
           ) * 10;
         if (handSize > 0.7) {
-          console.log('have hand');
           setStarted(true);
           drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
             color: '#ff00ff',
@@ -139,11 +139,11 @@ function Game() {
             }
           }
         } else {
-          if (selectedLetter) {
-            setLookForLetter(new Alphabet().getSpecificLetter(selectedLetter));
-          }
+          setLookForLetter(null);
         }
       }
+    } else {
+      setLookForLetter(null);
     }
     canvasCtx?.restore();
   };
@@ -306,7 +306,7 @@ function Game() {
             </p>
           </div>
         )}
-        {lookForLetter && <Percentage lookForLetter={lookForLetter} />}
+        <Percentage lookForLetter={lookForLetter} />
 
         <video
           style={{ width: '50%', height: '100vh' }}
