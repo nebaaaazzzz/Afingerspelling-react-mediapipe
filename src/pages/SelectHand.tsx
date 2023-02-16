@@ -60,8 +60,8 @@ function SelectHand() {
       )}
       {isLeftMouseOver && (
         <video
-          width={450}
-          height={450}
+          width={350}
+          height={350}
           className="absolute top-10"
           src="/left.webm"
           autoPlay

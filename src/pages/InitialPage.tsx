@@ -36,7 +36,11 @@ function InitialPage() {
             className="relative -top-14 -left-16"
             style={{
               width: 700,
+<<<<<<< Updated upstream
               height: 700,
+=======
+              height: 700
+>>>>>>> Stashed changes
             }}
           />
           // <Background word="fingerspelling" />
@@ -52,7 +56,7 @@ function InitialPage() {
             <Link
               ref={buttonRef}
               to="/select-hand"
-              className="btn rounded-full w-80 h-16 absolute left-48 inset-y-7 bg-[#FFE090] text-[#683aff] hover:bg-white text-3xl leading-8 normal-case font-normal
+              className="btn rounded-full w-80 h-16 absolute left-48 inset-y-7 bg-[#FFE090] text-[#683aff] hover:bg-white text-3xl leading-8 normal-case font-normal border-none
           
           
           "
