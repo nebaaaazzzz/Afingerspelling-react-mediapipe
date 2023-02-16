@@ -34,8 +34,8 @@ function InitialPage() {
             src="/inital.gif"
             className="relative -top-14 -left-16"
             style={{
-              width: 500,
-              height: 500
+              width: 700,
+              height: 700
             }}
           />
           // <Background word="fingerspelling" />
