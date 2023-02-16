@@ -1,9 +1,9 @@
-import React, { MouseEventHandler } from "react";
+import React, { MouseEventHandler } from 'react';
 
 function LeftBottomContainer({
   selectedWord,
   wordLength,
-  handleSkip,
+  handleSkip
 }: {
   selectedWord: string;
   wordLength: number;

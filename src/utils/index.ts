@@ -1,10 +1,10 @@
 export const levels = [
-  ["a", "b", "c", "e", "l", "o", "v", "w", "u", "y"],
-  ["d", "f", "k", "r", "s", "i", "t"],
+  ['a', 'b', 'c', 'e', 'l', 'o', 'v', 'w', 'u', 'y'],
+  ['d', 'f', 'k', 'r', 's', 'i', 't'],
 
-  ["g", "h", "m", "n", "x"],
+  ['g', 'h', 'm', 'n', 'x'],
 
-  ["p", "q", "j", "z"],
+  ['p', 'q', 'j', 'z']
 ];
 function getRandomWordFromLevelWords(levelWords: string[]): string[] {
   const levelWordsLength = levelWords.length;

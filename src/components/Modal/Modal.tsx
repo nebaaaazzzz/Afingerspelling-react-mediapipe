@@ -1,25 +1,25 @@
-import React, { useEffect, createRef } from "react";
-import "./index.css";
+import React, { useEffect, createRef } from 'react';
+import './index.css';
 function Modal({
   nextWord,
-  wordIndex,
+  wordIndex
 }: {
   nextWord: string;
   wordIndex: number;
 }) {
   const loadingRef = createRef<HTMLParagraphElement>();
   useEffect(() => {
-    loadingRef.current?.classList.add("changing-width");
+    loadingRef.current?.classList.add('changing-width');
     return () => {
-      loadingRef.current?.classList.remove("changing-width");
+      loadingRef.current?.classList.remove('changing-width');
     };
   }, []);
   return (
     <div
       style={{
-        width: "100vw",
-        height: "100vh",
-        backgroundColor: "rgba(0,0,0,0.6)",
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: 'rgba(0,0,0,0.6)'
       }}
       className="absolute z-40   flex items-center justify-center"
     >

@@ -1,27 +1,27 @@
-import React, { createRef, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Background from "../components/Background";
-import SpellingSvg from "../components/SpellingSvg";
+import React, { createRef, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import Background from '../components/Background';
+import SpellingSvg from '../components/SpellingSvg';
 
 function InitialPage() {
   const [isMouseOver, setIsMouseOver] = useState(false);
   const buttonRef = createRef<HTMLButtonElement>();
   useEffect(() => {
     const mouseEnterHandler = async (e: MouseEvent) => {
-      console.log("entering the button");
+      console.log('entering the button');
 
       setIsMouseOver(true);
     };
     const mouseLeaveHandler = async (e: MouseEvent) => {
-      console.log("leaving the button");
+      console.log('leaving the button');
       setIsMouseOver(false);
     };
-    buttonRef.current?.addEventListener("mouseenter", mouseEnterHandler);
-    buttonRef.current?.addEventListener("mouseleave", mouseLeaveHandler);
+    buttonRef.current?.addEventListener('mouseenter', mouseEnterHandler);
+    buttonRef.current?.addEventListener('mouseleave', mouseLeaveHandler);
 
     return () => {
-      buttonRef.current?.removeEventListener("mouseenter", mouseEnterHandler);
-      buttonRef.current?.removeEventListener("mouseleave", mouseLeaveHandler);
+      buttonRef.current?.removeEventListener('mouseenter', mouseEnterHandler);
+      buttonRef.current?.removeEventListener('mouseleave', mouseLeaveHandler);
     };
   }, []);
   return (
@@ -35,7 +35,7 @@ function InitialPage() {
             className="relative -top-14 -left-16"
             style={{
               width: 500,
-              height: 500,
+              height: 500
             }}
           />
           // <Background word="fingerspelling" />

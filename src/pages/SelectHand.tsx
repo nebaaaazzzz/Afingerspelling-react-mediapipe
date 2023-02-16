@@ -1,47 +1,47 @@
-import { createRef, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import BackButton from "../components/BackButton";
+import { createRef, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import BackButton from '../components/BackButton';
 
 function SelectHand() {
   const [isLeftMouseOver, setIsLeftMouseOver] = useState(false);
   const [iseRightMouseOver, setIsRightMouseOver] = useState(false);
   const leftAnchorRef = createRef<HTMLAnchorElement>();
   const rightAnchorRef = createRef<HTMLAnchorElement>();
-  const mouseEnterHandler = (e: MouseEvent, handDir: "LEFT" | "RIGHT") => {
-    if (handDir == "LEFT") {
+  const mouseEnterHandler = (e: MouseEvent, handDir: 'LEFT' | 'RIGHT') => {
+    if (handDir == 'LEFT') {
       setIsLeftMouseOver(true);
     } else {
       setIsRightMouseOver(true);
     }
   };
-  const mouseLeaveHandler = (e: MouseEvent, handDir: "LEFT" | "RIGHT") => {
-    if (handDir == "LEFT") {
+  const mouseLeaveHandler = (e: MouseEvent, handDir: 'LEFT' | 'RIGHT') => {
+    if (handDir == 'LEFT') {
       setIsLeftMouseOver(false);
     } else {
       setIsRightMouseOver(false);
     }
   };
   useEffect(() => {
-    leftAnchorRef.current?.addEventListener("mouseover", (e) =>
-      mouseEnterHandler(e, "LEFT")
+    leftAnchorRef.current?.addEventListener('mouseover', (e) =>
+      mouseEnterHandler(e, 'LEFT')
     );
-    rightAnchorRef.current?.addEventListener("mouseover", (e) =>
-      mouseEnterHandler(e, "RIGHT")
+    rightAnchorRef.current?.addEventListener('mouseover', (e) =>
+      mouseEnterHandler(e, 'RIGHT')
     );
-    leftAnchorRef.current?.addEventListener("mouseleave", (e) =>
-      mouseLeaveHandler(e, "LEFT")
+    leftAnchorRef.current?.addEventListener('mouseleave', (e) =>
+      mouseLeaveHandler(e, 'LEFT')
     );
-    rightAnchorRef.current?.addEventListener("mouseleave", (e) =>
-      mouseLeaveHandler(e, "RIGHT")
+    rightAnchorRef.current?.addEventListener('mouseleave', (e) =>
+      mouseLeaveHandler(e, 'RIGHT')
     );
     return () => {
       [leftAnchorRef, rightAnchorRef].map((anchorElement) => {
         anchorElement.current?.removeEventListener(
-          "mouseover",
+          'mouseover',
           mouseEnterHandler
         );
         anchorElement.current?.removeEventListener(
-          "mouseleave",
+          'mouseleave',
           mouseEnterHandler
         );
       });
@@ -91,7 +91,7 @@ function SelectHand() {
         <Link
           ref={leftAnchorRef}
           style={{
-            textTransform: "none",
+            textTransform: 'none'
           }}
           to={`/select-level?hand=left`}
           className="btn my-2 h-14 hover:bg-white hover:text-[#683aff] rounded-3xl text-xl border-none text-white px-20 bg-[#683aff]"
@@ -101,7 +101,7 @@ function SelectHand() {
         <Link
           ref={rightAnchorRef}
           style={{
-            textTransform: "none",
+            textTransform: 'none'
           }}
           to={`/select-level?hand=right`}
           className="btn my-2 h-14 text-xl hover:bg-white  hover:text-[#683aff] rounded-3xl bg-[#683aff] border-none px-20 text-white"

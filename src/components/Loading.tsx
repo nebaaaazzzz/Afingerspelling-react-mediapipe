@@ -1,6 +1,6 @@
-import React from "react";
-import Bgloading from "./Background";
-import { ScaleLoader } from "react-spinners";
+import React from 'react';
+import Bgloading from './Background';
+import { ScaleLoader } from 'react-spinners';
 function Loading({ word }: { word: string }) {
   return (
     <div

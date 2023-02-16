@@ -2,9 +2,9 @@
 import {
   Finger,
   FingerCurl,
-  FingerDirection,
-} from "../FingerUtils/FingerDescription";
-import { Coords3D } from "@tensorflow-models/handpose/dist/pipeline";
+  FingerDirection
+} from '../FingerUtils/FingerDescription';
+import { Coords3D } from '@tensorflow-models/handpose/dist/pipeline';
 
 export class HandAnalyzer {
   public getHandRotation(landmarks: Coords3D) {
@@ -64,7 +64,7 @@ export class HandAnalyzer {
       ringToPinky: this.findDistanceBetweenTwoLandMarks(ring, pinky),
       indexToPinky:
         this.findDistanceBetweenTwoLandMarks(index, pinky) -
-        this.findDistanceBetweenTwoLandMarks(indexFirstPos, pinkyFirstPos),
+        this.findDistanceBetweenTwoLandMarks(indexFirstPos, pinkyFirstPos)
     };
   }
 

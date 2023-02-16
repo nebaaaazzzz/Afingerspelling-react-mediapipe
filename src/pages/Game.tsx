@@ -1,18 +1,18 @@
-import { useState, useRef, useMemo, useEffect, useTransition } from "react";
-import Loading from "../components/Loading";
-import { FingerPoseEstimator } from "../FingerUtils/FingerPostEstimator";
-import reactToDOMCursor from "../HandUtils/temp";
-import { fourLetterWords } from "../data/words";
-import { getLevelWords } from "../utils";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { HandAnalyzer } from "../HandUtils/HandAnalyzer";
-import BackButton from "../components/BackButton";
-import moment from "moment";
-import Modal from "../components/Modal/Modal";
-import ImageAndWordContainer from "../components/ImageAndWordContainer";
-import LeftBottomContainer from "../components/LeftBottomContainer";
-import StartingVideoOverLay from "../components/StartingVideoOverLay";
-import WavingVideo from "../components/WavingVideo";
+import { useState, useRef, useMemo, useEffect, useTransition } from 'react';
+import Loading from '../components/Loading';
+import { FingerPoseEstimator } from '../FingerUtils/FingerPostEstimator';
+import reactToDOMCursor from '../HandUtils/temp';
+import { fourLetterWords } from '../data/words';
+import { getLevelWords } from '../utils';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { HandAnalyzer } from '../HandUtils/HandAnalyzer';
+import BackButton from '../components/BackButton';
+import moment from 'moment';
+import Modal from '../components/Modal/Modal';
+import ImageAndWordContainer from '../components/ImageAndWordContainer';
+import LeftBottomContainer from '../components/LeftBottomContainer';
+import StartingVideoOverLay from '../components/StartingVideoOverLay';
+import WavingVideo from '../components/WavingVideo';
 const handAnalyzer = new HandAnalyzer();
 let ignore = false;
 function Game() {
@@ -22,7 +22,7 @@ function Game() {
   const [currentTime, setCurrentTime] = useState<Date | undefined>();
   const searchParams = useSearchParams();
   const [wordIndex, setWordIndex] = useState(0);
-  const [hand, setHand] = useState<"left" | "right" | null>();
+  const [hand, setHand] = useState<'left' | 'right' | null>();
   const [level, setLevel] = useState<number>();
   const [levelWords, setLevelWords] = useState<Array<string>>([]);
   const [selectedWord, setSelectWord] = useState<string>();
@@ -35,7 +35,7 @@ function Game() {
   let [countPrediction, setCountPrediction] = useState(0);
   const [showModal, setShowModal] = useState(false);
   useEffect(() => {
-    setHand(searchParams[0].get("hand") as "left" | "right");
+    setHand(searchParams[0].get('hand') as 'left' | 'right');
     setLoading(true);
   }, []);
 
@@ -64,7 +64,7 @@ function Game() {
     }
   }, [wordIndex]);
   const onResults = async (results) => {
-    let canvasCtx = canvasElement?.current?.getContext("2d");
+    let canvasCtx = canvasElement?.current?.getContext('2d');
     setCountPrediction(countPrediction++);
     if (countPrediction == 1) {
       setLoading(false);
@@ -92,13 +92,13 @@ function Game() {
           newLandMarks.push([
             currentLandmark.x,
             currentLandmark.y,
-            currentLandmark.z,
+            currentLandmark.z
           ]);
           // For Left hand we are reverting all the positions
           // if (results.multiHandedness[0].label === "Right") {
           //   newLandMarks[i][0] = newLandMarks[i][0] * -1;
           // }
-          if (hand == "right") {
+          if (hand == 'right') {
             newLandMarks[i][0] = newLandMarks[i][0] * -1;
           }
         }
@@ -112,12 +112,12 @@ function Game() {
           ) * 10;
         if (handSize > 0.7) {
           drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
-            color: "#ff00ff",
-            lineWidth: 2,
+            color: '#ff00ff',
+            lineWidth: 2
           });
           drawLandmarks(canvasCtx, landmarks, {
-            color: "transparent",
-            lineWidth: 0,
+            color: 'transparent',
+            lineWidth: 0
           });
           setStarted(true);
           if (selectedLetter && !ignore) {
@@ -139,13 +139,13 @@ function Game() {
     let hands = new window.Hands({
       locateFile: (file) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
-      },
+      }
     });
     hands.setOptions({
       maxNumHands: 1,
       modelComplexity: 1,
       minDetectionConfidence: 0.5,
-      minTrackingConfidence: 0.5,
+      minTrackingConfidence: 0.5
     });
     return hands;
   }, []);
@@ -172,14 +172,14 @@ function Game() {
       const camera = new window.Camera(videoElement.current, {
         onFrame: async () => {
           await hands.send({ image: videoElement.current });
-        },
+        }
       });
       camera.start();
     }
     //1121019492052017
 
     if (started) {
-      const levelIndex = Number(searchParams[0].get("level") as String);
+      const levelIndex = Number(searchParams[0].get('level') as String);
       setStartTime(new Date().getTime());
       setShowModal(true);
 
@@ -200,7 +200,7 @@ function Game() {
           <>
             <BackButton
               url={`/start-level?level=${searchParams[0].get(
-                "level"
+                'level'
               )}&hand=${hand}`}
             />
             <Loading word="Loading" />
@@ -211,7 +211,7 @@ function Game() {
           <>
             <BackButton
               url={`/start-level?level=${searchParams[0].get(
-                "level"
+                'level'
               )}&hand=${hand}`}
             />
             <div className="flex-[1] justify-between items-center p-5 bg-[#fff6df] flex  flex-col relative">
@@ -222,17 +222,17 @@ function Game() {
         <div className="flex-[1]  relative">
           {!loading && <StartingVideoOverLay />}
           <video
-            style={{ width: "50%", height: "100vh" }}
+            style={{ width: '50%', height: '100vh' }}
             ref={videoElement}
             className="input_video hidden"
           ></video>
           <canvas
             className="output_canvas"
             style={{
-              width: "100%",
-              objectFit: "fill",
-              height: "100vh",
-              display: loading ? "none" : "block",
+              width: '100%',
+              objectFit: 'fill',
+              height: '100vh',
+              display: loading ? 'none' : 'block'
             }}
             ref={canvasElement}
           ></canvas>
@@ -275,8 +275,8 @@ function Game() {
       <div className="flex-[1]  relative">
         <span className="absolute text-white text-lg m-10">
           {currentTime && startTime
-            ? moment(currentTime - startTime).format("mm : ss")
-            : ""}
+            ? moment(currentTime - startTime).format('mm : ss')
+            : ''}
         </span>
         {!loading && (
           <div className="flex absolute left-1/2 mt-5">
@@ -287,17 +287,17 @@ function Game() {
         )}
 
         <video
-          style={{ width: "50%", height: "100vh" }}
+          style={{ width: '50%', height: '100vh' }}
           ref={videoElement}
           className="input_video hidden"
         ></video>
         <canvas
           className="output_canvas"
           style={{
-            width: "100%",
-            objectFit: "fill",
-            height: "100vh",
-            display: loading ? "none" : "block",
+            width: '100%',
+            objectFit: 'fill',
+            height: '100vh',
+            display: loading ? 'none' : 'block'
           }}
           ref={canvasElement}
         ></canvas>

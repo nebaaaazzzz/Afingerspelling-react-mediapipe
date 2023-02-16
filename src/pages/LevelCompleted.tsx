@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import Background from "../components/Background";
-import SpellingSvg from "../components/SpellingSvg";
+import { useEffect, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import Background from '../components/Background';
+import SpellingSvg from '../components/SpellingSvg';
 
 function LevelCompleted() {
   const searchParams = useSearchParams()[0];
@@ -9,9 +9,9 @@ function LevelCompleted() {
   const [level, setLevel] = useState<string | null>();
   const [points, setPoints] = useState<string | null>();
   useEffect(() => {
-    setHand(searchParams.get("hand"));
-    setLevel(searchParams.get("level"));
-    setPoints(searchParams.get("points"));
+    setHand(searchParams.get('hand'));
+    setLevel(searchParams.get('level'));
+    setPoints(searchParams.get('points'));
   }, []);
   return (
     <div className="flex flex-col h-[100vh] items-center justify-center bg-[#683aff] gap-1">
@@ -30,7 +30,7 @@ function LevelCompleted() {
         >
           Try Again
         </Link>
-        {!(level == "4") && (
+        {!(level == '4') && (
           <Link
             to={`/start-level?hand=${hand}&level=${Number(level) + 1}`}
             className="btn px-10 h-14 text-xl  hover:border-[#683aff] rounded-3xl hover:bg-[#ffffa0] bg-[#fff] text-[#683aff] border-none my-2"

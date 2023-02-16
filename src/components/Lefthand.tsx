@@ -1,5 +1,5 @@
-import { Fade } from "react-slideshow-image";
-import "react-slideshow-image/dist/styles.css";
+import { Fade } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
 
 function Left({ word }: { word: string }) {
   return (
@@ -11,11 +11,13 @@ function Left({ word }: { word: string }) {
         infinite
         canSwipe={false}
       >
-        {word.split("").map((letter) => {
-          
+        {word.split('').map((letter) => {
           return (
             <div className="each-fade">
-              <img src={`/spelling/lefthand/` + letter.toUpperCase() + ".png"} alt="F" />
+              <img
+                src={`/spelling/lefthand/` + letter.toUpperCase() + '.png'}
+                alt="F"
+              />
             </div>
           );
         })}
@@ -24,4 +26,4 @@ function Left({ word }: { word: string }) {
   );
 }
 
-export default Left
+export default Left;
