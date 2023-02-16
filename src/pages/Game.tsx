@@ -1,7 +1,7 @@
-import { useState, useRef, useMemo, useEffect, useTransition } from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 import Loading from '../components/Loading';
 import { FingerPoseEstimator } from '../FingerUtils/FingerPostEstimator';
-import reactToDOMCursor from '../HandUtils/temp';
+import reactToDOMCursor from '../HandUtils/reactToDom';
 import { fourLetterWords } from '../data/words';
 import { getLevelWords } from '../utils';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -15,29 +15,27 @@ import StartingVideoOverLay from '../components/StartingVideoOverLay';
 import WavingVideo from '../components/WavingVideo';
 const handAnalyzer = new HandAnalyzer();
 let ignore = false;
+type handDirection = 'left' | 'right';
 function Game() {
-  const [started, setStarted] = useState(false);
   const navigate = useNavigate();
+  const searchParams = useSearchParams();
+  const hand = searchParams[0].get('hand') as handDirection;
+  const [level, setLevel] = useState<number>();
+  const [started, setStarted] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [startTime, setStartTime] = useState<Date | undefined>();
   const [currentTime, setCurrentTime] = useState<Date | undefined>();
-  const searchParams = useSearchParams();
   const [wordIndex, setWordIndex] = useState(0);
-  const [hand, setHand] = useState<'left' | 'right' | null>();
-  const [level, setLevel] = useState<number>();
   const [levelWords, setLevelWords] = useState<Array<string>>([]);
+  const [wordLength, setWordLength] = useState(1);
   const [selectedWord, setSelectWord] = useState<string>();
   const [selectedLetter, setSelectedLetter] = useState<string>();
-  const [wordLength, setWordLength] = useState(1);
-  const [loading, setLoading] = useState<boolean>(false);
   const [score, setScore] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+
+  let [countPrediction, setCountPrediction] = useState(0);
   const videoElement = useRef(null);
   const canvasElement = useRef<HTMLCanvasElement>(null);
-  let [countPrediction, setCountPrediction] = useState(0);
-  const [showModal, setShowModal] = useState(false);
-  useEffect(() => {
-    setHand(searchParams[0].get('hand') as 'left' | 'right');
-    setLoading(true);
-  }, []);
 
   const handleSkip = () => {
     //level compelted go to level completed page
@@ -55,14 +53,7 @@ function Game() {
       setWordLength(wordLength + 1);
     }
   };
-  useEffect(() => {
-    if (wordIndex !== 0 && wordIndex !== 9) {
-      setShowModal(true);
-      setTimeout(() => {
-        setShowModal(false);
-      }, 1000);
-    }
-  }, [wordIndex]);
+
   const onResults = async (results) => {
     let canvasCtx = canvasElement?.current?.getContext('2d');
     setCountPrediction(countPrediction++);
@@ -111,6 +102,7 @@ function Game() {
             newLandMarks[5]
           ) * 10;
         if (handSize > 0.7) {
+          setStarted(true);
           drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
             color: '#ff00ff',
             lineWidth: 2
@@ -119,15 +111,21 @@ function Game() {
             color: 'transparent',
             lineWidth: 0
           });
-          setStarted(true);
           if (selectedLetter && !ignore) {
-            let bool =
-              5 ==
-              reactToDOMCursor(fingerPoseResults, newLandMarks, selectedLetter);
-            if (bool) {
+            const response = reactToDOMCursor(
+              fingerPoseResults,
+              newLandMarks,
+              selectedLetter
+            );
+
+            if (response.countCorrectFingers == 5) {
               ignore = true;
-              setScore((prevScore) => prevScore + 1);
-              handleSkip();
+              setTimeout(() => {
+                setScore((prevScore) => prevScore + 1);
+                handleSkip();
+              }, 500);
+            } else if (response.message) {
+              console.log(response.message);
             }
           }
         }
@@ -150,22 +148,31 @@ function Game() {
     return hands;
   }, []);
   useEffect(() => {
+    if (wordIndex !== 0 && wordIndex !== 9) {
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 1000);
+    }
+  }, [wordIndex]);
+  useEffect(() => {
     if (hands) {
       setStartTime(new Date().getTime());
       hands.onResults(onResults);
     }
-  }, [selectedLetter, wordLength]);
-  useEffect(() => {
     if (countPrediction != 0) {
       setTimeout(() => {
         ignore = false;
       }, 2000);
     }
-    setInterval(() => {
+    let intervalId = setInterval(() => {
       if (startTime) {
         setCurrentTime(new Date());
       }
     }, 1000);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [selectedLetter, wordLength]);
   useEffect(() => {
     if (videoElement.current) {

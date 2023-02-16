@@ -1,16 +1,19 @@
+import Left from '../components/Lefthand';
+import { AlphabetDefinationI } from '../type';
+
 export class Alphabet {
-  private alphabetArray = [];
+  private alphabetArray: AlphabetDefinationI[] = [];
 
   private _helpTexts = { straight: 'Straigthen it', bend: 'Bend it' };
 
   constructor() {
-    var noCurl = 180;
-    var halfCurlMin = 130;
-    var fullCurlMinMoreForgiving = 90;
-    var fullCurlMin = 60;
-    var fullCurlMax = 0;
+    let noCurl = 180;
+    let halfCurlMin = 130;
+    let fullCurlMinMoreForgiving = 90;
+    let fullCurlMin = 60;
+    let fullCurlMax = 0;
 
-    var a = {
+    let a: AlphabetDefinationI = {
       letterNumber: 1,
       letter: 'a',
       rotation: 'up',
@@ -55,7 +58,7 @@ export class Alphabet {
         helpText: this._helpTexts.bend
       }
     };
-    var b = {
+    let b: AlphabetDefinationI = {
       letterNumber: 2,
       letter: 'b',
       rotation: 'up',
@@ -100,7 +103,7 @@ export class Alphabet {
         helpText: this._helpTexts.straight
       }
     };
-    var c = {
+    let c: AlphabetDefinationI = {
       letterNumber: 3,
       letter: 'c',
       rotation: 'up',
@@ -145,7 +148,7 @@ export class Alphabet {
         helpText: this._helpTexts.bend
       }
     };
-    var d = {
+    let d: AlphabetDefinationI = {
       letterNumber: 4,
       letter: 'd',
       rotation: 'up',
@@ -193,7 +196,7 @@ export class Alphabet {
     /*
           changed this 'thumbBendOverOtherFingersAndUnderOtherFingers' to something else
            */
-    var e = {
+    let e: AlphabetDefinationI = {
       letterNumber: 5,
       letter: 'e',
       rotation: 'up',
@@ -238,7 +241,7 @@ export class Alphabet {
         helpText: this._helpTexts.bend
       }
     };
-    var f = {
+    let f: AlphabetDefinationI = {
       letterNumber: 6,
       letter: 'f',
       rotation: 'up',
@@ -289,7 +292,7 @@ export class Alphabet {
           Removed from thumb:
                   special: 'thumbPointerAlignOnYAxis',
            */
-    var g = {
+    let g: AlphabetDefinationI = {
       letterNumber: 7,
       letter: 'g',
       rotation: 'side',
@@ -334,7 +337,7 @@ export class Alphabet {
         helpText: this._helpTexts.bend
       }
     };
-    var h = {
+    let h: AlphabetDefinationI = {
       letterNumber: 8,
       letter: 'h',
       rotation: 'side',
@@ -374,7 +377,7 @@ export class Alphabet {
         currentAngle: null
       }
     };
-    var i = {
+    let i: AlphabetDefinationI = {
       letterNumber: 9,
       letter: 'i',
       rotation: 'up',
@@ -415,7 +418,7 @@ export class Alphabet {
       }
     };
     // FIXME - add motion detection on the J
-    var j = {
+    let j: AlphabetDefinationI = {
       letterNumber: 10,
       letter: 'j',
       rotation: 'up',
@@ -456,7 +459,7 @@ export class Alphabet {
         currentAngle: null
       }
     };
-    var k = {
+    let k: AlphabetDefinationI = {
       letterNumber: 11,
       letter: 'k',
       rotation: 'up',
@@ -497,7 +500,7 @@ export class Alphabet {
       }
     };
 
-    var l = {
+    let l: AlphabetDefinationI = {
       letterNumber: 12,
       letter: 'l',
       rotation: 'up',
@@ -538,7 +541,7 @@ export class Alphabet {
       }
     };
 
-    var m = {
+    let m: AlphabetDefinationI = {
       letterNumber: 13,
       letter: 'm',
       rotation: 'up',
@@ -579,7 +582,7 @@ export class Alphabet {
       }
     };
 
-    var n = {
+    let n: AlphabetDefinationI = {
       letterNumber: 14,
       letter: 'n',
       rotation: 'up',
@@ -620,7 +623,7 @@ export class Alphabet {
       }
     };
 
-    var o = {
+    let o: AlphabetDefinationI = {
       letterNumber: 15,
       letter: 'o',
       rotation: 'up',
@@ -661,7 +664,7 @@ export class Alphabet {
       }
     };
 
-    var p = {
+    let p: AlphabetDefinationI = {
       letterNumber: 16,
       letter: 'p',
       rotation: 'down',
@@ -702,7 +705,7 @@ export class Alphabet {
       }
     };
 
-    var q = {
+    let q: AlphabetDefinationI = {
       letterNumber: 17,
       letter: 'q',
       rotation: 'down',
@@ -743,7 +746,7 @@ export class Alphabet {
       }
     };
 
-    var r = {
+    let r: AlphabetDefinationI = {
       letterNumber: 17,
       letter: 'r',
       rotation: 'up',
@@ -784,7 +787,7 @@ export class Alphabet {
       }
     };
 
-    var s = {
+    let s: AlphabetDefinationI = {
       letterNumber: 18,
       letter: 's',
       rotation: 'up',
@@ -825,7 +828,7 @@ export class Alphabet {
       }
     };
 
-    var t = {
+    let t: AlphabetDefinationI = {
       letterNumber: 18,
       letter: 't',
       rotation: 'up',
@@ -866,7 +869,7 @@ export class Alphabet {
       }
     };
 
-    var u = {
+    let u: AlphabetDefinationI = {
       letterNumber: 19,
       letter: 'u',
       rotation: 'up',
@@ -907,7 +910,7 @@ export class Alphabet {
       }
     };
 
-    var v = {
+    let v: AlphabetDefinationI = {
       letterNumber: 20,
       letter: 'v',
       rotation: 'up',
@@ -948,7 +951,7 @@ export class Alphabet {
       }
     };
 
-    var w = {
+    let w: AlphabetDefinationI = {
       letterNumber: 21,
       letter: 'w',
       rotation: 'up',
@@ -989,7 +992,7 @@ export class Alphabet {
       }
     };
 
-    var x = {
+    let x: AlphabetDefinationI = {
       letterNumber: 22,
       letter: 'x',
       rotation: 'up',
@@ -1030,7 +1033,7 @@ export class Alphabet {
       }
     };
 
-    var y = {
+    let y: AlphabetDefinationI = {
       letterNumber: 23,
       letter: 'y',
       rotation: 'up',
@@ -1072,7 +1075,7 @@ export class Alphabet {
     };
 
     // FIXME : Needs a movement in a Z shape
-    var z = {
+    let z: AlphabetDefinationI = {
       letterNumber: 24,
       letter: 'z',
       rotation: 'up',
@@ -1145,14 +1148,12 @@ export class Alphabet {
     ];
   }
 
-  public getLetter = () => {};
-
   public getRandomLetter = () => {
     var getRandom = Math.floor(Math.random() * this.alphabetArray.length);
     return this.alphabetArray[getRandom];
   };
 
-  public getSpecificLetter = (findLetter) => {
+  public getSpecificLetter = (findLetter: string) => {
     var length = this.alphabetArray.length;
     for (var i = 0; i < length; i++) {
       var currentLetter = this.alphabetArray[i];

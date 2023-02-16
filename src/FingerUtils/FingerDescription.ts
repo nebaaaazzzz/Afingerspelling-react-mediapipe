@@ -1,4 +1,7 @@
 // From Fingerpose - https://www.npmjs.com/package/fingerpose
+type fingersName = 'Thumb' | 'Index' | 'Middle' | 'Ring' | 'Pinky';
+type fingerIndex = 0 | 1 | 2 | 3 | 4;
+type finger = Record<fingerIndex, fingersName>;
 const Finger = {
   Thumb: 0,
   Index: 1,
@@ -60,13 +63,13 @@ const Finger = {
     ]
   },
 
-  getName: function (value) {
+  getName: function (value: string) {
     return typeof this.nameMapping[value] !== undefined
       ? this.nameMapping[value]
       : false;
   },
 
-  getPoints: function (value) {
+  getPoints: function (value: string) {
     return typeof this.pointsMapping[value] !== undefined
       ? this.pointsMapping[value]
       : false;
@@ -84,7 +87,7 @@ const FingerCurl = {
     2: 'Full Curl'
   },
 
-  getName: function (value) {
+  getName: function (value: string) {
     return typeof this.nameMapping[value] !== undefined
       ? this.nameMapping[value]
       : false;
@@ -112,7 +115,7 @@ const FingerDirection = {
     7: 'Diagonal Down Left'
   },
 
-  getName: function (value) {
+  getName: function (value: string) {
     return typeof this.nameMapping[value] !== undefined
       ? this.nameMapping[value]
       : false;

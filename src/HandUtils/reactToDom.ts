@@ -1,23 +1,20 @@
 import { Coords3D } from '@tensorflow-models/handpose/dist/pipeline';
 import { Alphabet } from '../data/Alphabet';
+import { FingerDefinationI } from '../type';
 import { HandAnalyzer } from './HandAnalyzer';
 
 const handAnalyzer = new HandAnalyzer();
 const alphabet = new Alphabet();
-const reactToDOMCursor = (fingerPoseResults, result: Coords3D, letter) => {
+const reactToDOMCursor = (
+  fingerPoseResults: any,
+  result: Coords3D,
+  letter: any
+): { countCorrectFingers: number; message: string } => {
   let lookForLetter = alphabet.getSpecificLetter(letter);
-  // if (this._lookForMotion === true) {
-  //   this.reactToHandPosChanges(result[0]);
-  // }
-
-  // if (this._checkForNewLetter === false) {
-  //   return;
-  // }
-
-  //console.log(fingerPoseResults);
-  //var isPalmPointing = Globals.HAND_ANALYZER.isRightHandPalmPointingTowardsYourself(result);
-  //var isClicking = Globals.HAND_ANALYZER.isClicking(fingerPoseResults, result, 0);
-  var fingerData = {
+  if (!lookForLetter) {
+    return { countCorrectFingers: 0, message: 'Letter not founnd' };
+  }
+  let fingerData = {
     handSize: 0,
     handRotation: 0
   };
@@ -25,43 +22,19 @@ const reactToDOMCursor = (fingerPoseResults, result: Coords3D, letter) => {
   fingerData.handSize =
     handAnalyzer.findDistanceBetweenTwoLandMarks(result[0], result[5]) * 10;
 
-  //	fingerData.handRotation = Globals.HAND_ANALYZER.getHandRotation(result);
-  // Better way of getting the hand rotation
   fingerData.handRotation = handAnalyzer.getHandRotationFromIndex(result);
-
-  //console.log(fingerData.handRotation);
-
-  // if (this._lookForRaisedHand === true) {
-  //   //	console.log(fingerData.handSize);
-  //   //if (fingerData.handSize > 0.7) {
-
-  //   this.foundRaisedHand();
-  //   this._lookForRaisedHand = false;
-  //   this._checkForNewLetter = false;
-  //   //}
-
-  //   return;
-  // }
-
-  //console.log('_checkForNewLetter : ' + this._checkForNewLetter);
-
-  // Try to make sure we dont get to many false positives
   if (fingerData.handSize < 0.7) {
-    return 0;
+    return {
+      countCorrectFingers: 0,
+      message: 'put your hand close to the camera'
+    };
   }
-
-  //	console.log(fingerPoseResults);
-  //	console.log(fingerData);
 
   let thumbAngle = fingerPoseResults.curls[0].angle;
   let indexFingerAngle = fingerPoseResults.curls[1].angle;
   let middleFingerAngle = fingerPoseResults.curls[2].angle;
   let ringFingerAngle = fingerPoseResults.curls[3].angle;
   let littleFingerAngle = fingerPoseResults.curls[4].angle;
-
-  //	console.log('handRotation : ' + handRotation);
-
-  //console.log(lookForLetter);
 
   lookForLetter.thumb.currentAngle = thumbAngle;
   lookForLetter.index.currentAngle = indexFingerAngle;
@@ -76,7 +49,10 @@ const reactToDOMCursor = (fingerPoseResults, result: Coords3D, letter) => {
     if (fingerData.handRotation < 30 && fingerData.handRotation > -30) {
       isHandAngleCorrect = true;
     } else {
-      return 0;
+      return {
+        countCorrectFingers: 0,
+        message: 'your hand rotation must be up'
+      };
     }
   }
 
@@ -84,7 +60,10 @@ const reactToDOMCursor = (fingerPoseResults, result: Coords3D, letter) => {
     if (fingerData.handRotation > 80 && fingerData.handRotation < 220) {
       isHandAngleCorrect = true;
     } else {
-      return 0;
+      return {
+        countCorrectFingers: 0,
+        message: 'your hand rotation must be down'
+      };
     }
   }
 
@@ -92,14 +71,15 @@ const reactToDOMCursor = (fingerPoseResults, result: Coords3D, letter) => {
     if (fingerData.handRotation > 40 && fingerData.handRotation < 140) {
       isHandAngleCorrect = true;
     } else {
-      return 0;
+      return {
+        countCorrectFingers: 0,
+        message: 'your hand rotation must be side'
+      };
     }
   }
-  //og(result)
-  //console.log('isHandAngleCorrect : ' + isHandAngleCorrect)
   if (isHandAngleCorrect === true) {
-    for (var i = 0; i < 5; i++) {
-      var lookFor;
+    for (let i = 0; i < 5; i++) {
+      let lookFor;
       if (i == 0) {
         lookFor = lookForLetter.thumb;
       } else if (i == 1) {
@@ -112,7 +92,7 @@ const reactToDOMCursor = (fingerPoseResults, result: Coords3D, letter) => {
         lookFor = lookForLetter.little;
       }
 
-      var angle = lookFor.currentAngle;
+      let angle = lookFor.currentAngle;
 
       if (angle < lookFor.curlMin && angle > lookFor.curlMax) {
         lookFor.percentageCorrect = 1;
@@ -200,7 +180,7 @@ const reactToDOMCursor = (fingerPoseResults, result: Coords3D, letter) => {
               }
             }
           } else if (lookFor.special === 'betweenIndexAndMiddleLetterT') {
-            var distanceWithHandSize = 0.004 * fingerData.handSize;
+            let distanceWithHandSize = 0.004 * fingerData.handSize;
 
             if (
               result[4][0] > result[7][0] - distanceWithHandSize &&
@@ -215,7 +195,7 @@ const reactToDOMCursor = (fingerPoseResults, result: Coords3D, letter) => {
               }
             }
           } else if (lookFor.special === 'betweenIndexAndMiddleLetterS') {
-            var distanceWithHandSize = 0.004 * fingerData.handSize;
+            let distanceWithHandSize = 0.004 * fingerData.handSize;
 
             if (result[4][0] > result[7][0] && result[4][0] < result[15][0]) {
               // Check its pos on the Y axis too
@@ -229,20 +209,17 @@ const reactToDOMCursor = (fingerPoseResults, result: Coords3D, letter) => {
             }
           } else if (lookFor.special === 'thumbToTheLeft') {
             // Used for the letter A - make sure the thumb is all the way to the left - but also not to far from the hand
-            var distanceWithHandSize = 0.03 * fingerData.handSize;
+            let distanceWithHandSize = 0.03 * fingerData.handSize;
             if (result[4][0] < result[5][0]) {
               // && result[4][0] + distanceWithHandSize > result[8][0]
               lookFor.percentageCorrect = 1;
             }
           } else if (lookFor.special === 'distanceBetweenThumbAndPointer') {
-            var distancePinch = handAnalyzer.findDistanceBetweenTwoLandMarks(
+            let distancePinch = handAnalyzer.findDistanceBetweenTwoLandMarks(
               result[4],
               result[8]
             );
-            var distanceWithHandSize = 0.02 * fingerData.handSize;
-
-            //	console.log('distancePinch : ' + distancePinch);
-            //	console.log('distanceWithHandSize : ' + distanceWithHandSize);
+            let distanceWithHandSize = 0.02 * fingerData.handSize;
 
             if (distancePinch > distanceWithHandSize) {
               lookFor.percentageCorrect = 1;
@@ -250,133 +227,113 @@ const reactToDOMCursor = (fingerPoseResults, result: Coords3D, letter) => {
               lookFor.percentageCorrect = distancePinch / distanceWithHandSize;
             }
           } else if (lookFor.special === 'pinchThumbAndPointer') {
-            var distancePinch = handAnalyzer.findDistanceBetweenTwoLandMarks(
+            let distancePinch = handAnalyzer.findDistanceBetweenTwoLandMarks(
               result[4],
               result[8]
             );
-            var distanceWithHandSize = 0.045 * fingerData.handSize;
-
-            //	console.log('distancePinch : ' + distancePinch);
-            //	console.log('distanceWithHandSize : ' + distanceWithHandSize);
+            let distanceWithHandSize = 0.045 * fingerData.handSize;
 
             if (distancePinch < distanceWithHandSize) {
               lookFor.percentageCorrect = 1;
             } else {
               lookFor.percentageCorrect = distanceWithHandSize / distancePinch;
-              //	console.log('lookFor.percentageCorrect : ' + lookFor.percentageCorrect);
             }
           } else if (lookFor.special === 'thumbPointerAlignOnYAxis') {
-            var distancePointerAndThumbOnY = result[4][1] - result[8][1];
+            let distancePointerAndThumbOnY = result[4][1] - result[8][1];
             if (distancePointerAndThumbOnY < 0) {
               distancePointerAndThumbOnY = distancePointerAndThumbOnY * -1;
             }
-
-            //	console.log('distancePointerAndThumbOnY : ' + distancePointerAndThumbOnY);
 
             if (distancePointerAndThumbOnY < 0.07) {
               lookFor.percentageCorrect = 1;
             }
           } else if (lookFor.special === 'crossIndexAndMiddle') {
             // Used on R
-            var distanceIndexAndMiddle = result[12][0] - result[8][0];
+            let distanceIndexAndMiddle = result[12][0] - result[8][0];
             if (distanceIndexAndMiddle < 0.0 + 0.01 * fingerData.handSize) {
               lookFor.percentageCorrect = 1;
             }
           } else if (lookFor.special === 'indexAndMiddleMustBeClose') {
             // Used on U
-            var distanceIndexAndMiddle =
+            let distanceIndexAndMiddle =
               handAnalyzer.findDistanceBetweenTwoLandMarks(
                 result[12],
                 result[8]
               );
-            var distanceWithHandSize = 0.045 * fingerData.handSize;
-            //	console.log('distanceIndexAndMiddle : ' + distanceIndexAndMiddle);
-            //	console.log('distanceWithHandSize : ' + distanceWithHandSize);
+            let distanceWithHandSize = 0.045 * fingerData.handSize;
             if (distanceIndexAndMiddle < distanceWithHandSize) {
               lookFor.percentageCorrect = 1;
             }
           } else if (lookFor.special === 'indexAndMiddleMustBeApart') {
             // Used on V
-            var distanceIndexAndMiddle =
+            let distanceIndexAndMiddle =
               handAnalyzer.findDistanceBetweenTwoLandMarks(
                 result[12],
                 result[8]
               );
-            var distanceWithHandSize = 0.02 * fingerData.handSize;
-            //	console.log('distanceIndexAndMiddle : ' + distanceIndexAndMiddle);
-            //	console.log('distanceWithHandSize : ' + distanceWithHandSize);
+            let distanceWithHandSize = 0.02 * fingerData.handSize;
             if (distanceIndexAndMiddle > distanceWithHandSize) {
               lookFor.percentageCorrect = 1;
             }
           } else if (lookFor.special === 'indexAndMiddleAndRingMustBeApart') {
             // Used on W
-            var distanceIndexAndMiddle =
+            let distanceIndexAndMiddle =
               handAnalyzer.findDistanceBetweenTwoLandMarks(
                 result[16],
                 result[12]
               );
-            var distanceWithHandSize = 0.015 * fingerData.handSize;
+            let distanceWithHandSize = 0.015 * fingerData.handSize;
 
-            //	console.log('distanceIndexAndMiddle : ' + distanceIndexAndMiddle);
-            //	console.log('distanceWithHandSize : ' + distanceWithHandSize);
             if (distanceIndexAndMiddle > distanceWithHandSize) {
               lookFor.percentageCorrect = 1;
             } else {
               lookFor.percentageCorrect =
                 (distanceIndexAndMiddle - 0.01) / distanceWithHandSize;
-              //		console.log('lookFor.percentageCorrect : ' + lookFor.percentageCorrect);
             }
           }
         }
       } else {
         if (angle > lookFor.curlMin) {
           // Needs more bend
-          //console.log('lookForLetter.index.curlMin : ' + lookFor.curlMin)
-
           // 60 / 180
-          var maxDistance = 180 - lookFor.curlMin; // 120 (is also the max distance
-          var calculateExactDistance = angle - lookFor.curlMin; // 60 - 180
+          let maxDistance = 180 - lookFor.curlMin; // 120 (is also the max distance
+          let calculateExactDistance = angle - lookFor.curlMin; // 60 - 180
           lookFor.percentageCorrect =
             (maxDistance - calculateExactDistance) / maxDistance;
-
-          if (i === 1) {
-            /*	console.log('angle : ' + angle);
-							console.log('maxDistance : ' + maxDistance);
-							console.log('calculateExactDistance : ' + calculateExactDistance);
-							console.log('Angle Over : ' + lookFor.percentageCorrect);*/
-          }
-          //	lookFor.percentageCorrect = 0;
         } else if (angle < lookFor.curlMax) {
           // Needs to be bend less
           //indexPercentageCorrect = indexFingerAngle / lookForLetter.index.curlMax;
           lookFor.percentageCorrect = angle / lookFor.curlMax;
-          //	lookFor.percentageCorrect = 0;
-          if (i === 1) {
-            //console.log('Angle Less : ' + lookFor.percentageCorrect);
-          }
         }
       }
-
-      /*	if (i === 4) {
-				console.log('lookFor.percentageCorrect : ' + lookFor.percentageCorrect)
-			}*/
 
       if (lookFor.percentageCorrect === 1) {
         countCorrectFingers += 1;
       }
     }
+  } else {
+    //If the hand rotaion is wrong - on fingers are correct
+    lookForLetter.thumb.percentageCorrect = 0;
+    lookForLetter.index.percentageCorrect = 0;
+    lookForLetter.middle.percentageCorrect = 0;
+    lookForLetter.ring.percentageCorrect = 0;
+    lookForLetter.thumb.percentageCorrect = 0;
   }
-  return countCorrectFingers;
-  /*	if (this._sameLetterInARow === false && countCorrectFingers === 5) {
-			if (this._hasFoundLetter === false) {
-				//this._foundLetterTimeout = setInterval(this.setNewLetter, 1000)
-				//	gsap.to(Globals.INNER_BOUNDING_BOX, 1, { scaleX: 1, onComplete: this.letterMatch, onCompleteParams: [result] });
-			}
-			this._hasFoundLetter = true;
-		} else {
-			this._hasFoundLetter = false;
-			gsap.killTweensOf(Globals.INNER_BOUNDING_BOX);
-			gsap.set(Globals.INNER_BOUNDING_BOX, {scaleX: 0, transformOrigin: '0px 0px'});
-		}*/
+  if (lookForLetter.thumb.percentageCorrect === 1) {
+  } else if (lookForLetter.thumb.percentageCorrect !== 1) {
+  }
+  if (lookForLetter.index.percentageCorrect === 1) {
+  } else if (lookForLetter.index.percentageCorrect !== 1) {
+  }
+  if (lookForLetter.middle.percentageCorrect === 1) {
+  } else if (lookForLetter.middle.percentageCorrect !== 1) {
+  }
+  if (lookForLetter.ring.percentageCorrect === 1) {
+  } else if (lookForLetter.ring.percentageCorrect !== 1) {
+  }
+  if (lookForLetter.little.percentageCorrect === 1) {
+  } else if (lookForLetter.little.percentageCorrect !== 1) {
+  }
+  return { countCorrectFingers, message: '' };
 };
 export default reactToDOMCursor;
