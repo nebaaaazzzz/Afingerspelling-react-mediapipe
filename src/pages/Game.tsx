@@ -18,6 +18,7 @@ import { Alphabet } from '../data/Alphabet';
 import Percentage from '../components/Percentage';
 const handAnalyzer = new HandAnalyzer();
 let ignore = false;
+let score = 0;
 type handDirection = 'left' | 'right';
 function Game() {
   const navigate = useNavigate();
@@ -35,7 +36,6 @@ function Game() {
   const [wordLength, setWordLength] = useState(1);
   const [selectedWord, setSelectWord] = useState<string>();
   const [selectedLetter, setSelectedLetter] = useState<string>();
-  const [score, setScore] = useState(0);
   const [showModal, setShowModal] = useState(false);
 
   let [countPrediction, setCountPrediction] = useState(0);
@@ -43,6 +43,7 @@ function Game() {
   const canvasElement = useRef<HTMLCanvasElement>(null);
 
   const handleSkip = () => {
+    score++;
     //level compelted go to level completed page
     if (wordIndex == 9) {
       navigate(`/level-completed?hand=${hand}&level=${level}&points=${score}`);
@@ -124,13 +125,13 @@ function Game() {
             );
 
             if (response.countCorrectFingers == 5) {
-              ignore = true; //stop detecting hand this value change after a delay
+              //stop detecting hand this value change after a delay
 
+              ignore = true;
               //this time out to delay change of current letter after detecting the hand
               setTimeout(() => {
-                setScore((prevScore) => prevScore + 1);
                 handleSkip();
-              }, 500);
+              }, 200);
             } else if (response.message) {
               // console.log(response.message);
             }
@@ -306,7 +307,7 @@ function Game() {
             </p>
           </div>
         )}
-        <Percentage lookForLetter={lookForLetter} />
+        <Percentage ignore={ignore} lookForLetter={lookForLetter} />
 
         <video
           style={{ width: '50%', height: '100vh' }}
