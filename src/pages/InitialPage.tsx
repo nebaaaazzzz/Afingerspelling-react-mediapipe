@@ -36,11 +36,7 @@ function InitialPage() {
             className="relative -top-14 -left-16"
             style={{
               width: 700,
-<<<<<<< Updated upstream
               height: 700,
-=======
-              height: 700
->>>>>>> Stashed changes
             }}
           />
           // <Background word="fingerspelling" />
