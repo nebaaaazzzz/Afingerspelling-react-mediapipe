@@ -1,5 +1,5 @@
 // From Fingerpose - https://www.npmjs.com/package/fingerpose
-import { Finger, FingerCurl, FingerDirection } from "./FingerDescription";
+import { Finger, FingerCurl, FingerDirection } from './FingerDescription';
 
 export class FingerPoseEstimator {
   constructor(options) {
@@ -12,9 +12,9 @@ export class FingerPoseEstimator {
         // direction estimation
         DISTANCE_VOTE_POWER: 1.1,
         SINGLE_ANGLE_VOTE_POWER: 0.9,
-        TOTAL_ANGLE_VOTE_POWER: 1.6,
+        TOTAL_ANGLE_VOTE_POWER: 1.6
       },
-      ...options,
+      ...options
     };
   }
   estimate(landmarks) {

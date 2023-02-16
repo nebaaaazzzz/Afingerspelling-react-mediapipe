@@ -1,6 +1,6 @@
-import React from "react";
-import { Fade } from "react-slideshow-image";
-import "react-slideshow-image/dist/styles.css";
+import React from 'react';
+import { Fade } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
 
 function Background({ word }: { word: string }) {
   return (
@@ -11,10 +11,10 @@ function Background({ word }: { word: string }) {
         arrows={false}
         canSwipe={false}
       >
-        {word.split("").map((letter) => {
+        {word.split('').map((letter) => {
           return (
             <div className="each-fade">
-              <img src={`/spelling/` + letter.toUpperCase() + ".png"} alt="F" />
+              <img src={`/spelling/` + letter.toUpperCase() + '.png'} alt="F" />
             </div>
           );
         })}

@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
 function StartingVideoOverLay() {
   return (
     <div
-      style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
+      style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}
       className="absolute w-full h-full flex items-center justify-center"
     >
       <div className="bg-[#683aff] h-1/2 w-9/12 flex items-center justify-center gap-10 flex-col px-14">
