@@ -1,9 +1,4 @@
-// import { Finger, FingerCurl, FingerDirection } from "./FingerDescription";
-import {
-  Finger,
-  FingerCurl,
-  FingerDirection
-} from '../FingerUtils/FingerDescription';
+import { FingerCurl } from '../FingerUtils/FingerDescription';
 import { Coords3D } from '@tensorflow-models/handpose/dist/pipeline';
 
 export class HandAnalyzer {
@@ -47,7 +42,7 @@ export class HandAnalyzer {
     return zPosition;
   }
 
-  public getFingerSpread(fingerPoseResults, landmarks: Coords3D) {
+  public getFingerSpread(fingerPoseResults: any, landmarks: Coords3D) {
     let indexFirstPos = landmarks[5];
     let middleFirstPos = landmarks[9];
     let ringFirstPos = landmarks[13];
@@ -68,7 +63,7 @@ export class HandAnalyzer {
     };
   }
 
-  public findDistanceBetweenThreeDLandMarks(landmarkA, landmarkB) {
+  public findDistanceBetweenThreeDLandMarks(landmarkA: any, landmarkB: any) {
     let a = landmarkA[0] - landmarkB[0];
     let b = landmarkA[1] - landmarkB[1];
     let c = landmarkA[2] - landmarkB[2];
@@ -76,14 +71,14 @@ export class HandAnalyzer {
     return Math.sqrt(a * a + b * b + c * c);
   }
 
-  public findDistanceBetweenTwoLandMarks(landmarkA, landmarkB) {
+  public findDistanceBetweenTwoLandMarks(landmarkA: any, landmarkB: any) {
     let a = landmarkA[0] - landmarkB[0];
     let b = landmarkA[1] - landmarkB[1];
 
     return Math.sqrt(a * a + b * b);
   }
 
-  public isClicking(fingerPoseResults, landmarks, handRotation) {
+  public isClicking(fingerPoseResults: any, landmarks: any, handRotation: any) {
     // FIXME: Normalize values so distance etc doesnt care about what the video input size is. Maybe always resize the video to 100px width?
     // New way of detecting click - look at if the thumb and pointer angle are close to each other
     let isClicking = false;
@@ -125,7 +120,7 @@ export class HandAnalyzer {
     return isClicking;
   }
 
-  public isGrabbing(fingerPoseResults) {
+  public isGrabbing(fingerPoseResults: any) {
     let customCurl = 1; //FingerCurl.FullCurl;
     customCurl = 100;
     let grabCount = 0;
@@ -158,7 +153,7 @@ export class HandAnalyzer {
     return isPoitingTowardsYourself;
   }
 
-  public isThumbsUp(fingerPoseResults, handRotation) {
+  public isThumbsUp(fingerPoseResults: any, handRotation: any) {
     let thumpUp = false;
 
     var customCurl = 100;

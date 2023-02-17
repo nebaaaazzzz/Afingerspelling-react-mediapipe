@@ -6,7 +6,7 @@ import { levels } from '../utils';
 
 function StartLevel() {
   const [isMouseOver, setIsMouseOver] = useState(false);
-  const buttonRef = createRef<HTMLButtonElement>();
+  const buttonRef = createRef<HTMLAnchorElement>();
   useEffect(() => {
     const mouseEnterHandler = async (e: MouseEvent) => {
       setIsMouseOver(true);

@@ -22,32 +22,26 @@ function SelectHand() {
     }
   };
   useEffect(() => {
-    leftAnchorRef.current?.addEventListener('mouseover', (e) =>
-      mouseEnterHandler(e, 'LEFT')
-    );
-    rightAnchorRef.current?.addEventListener('mouseover', (e) =>
-      mouseEnterHandler(e, 'RIGHT')
-    );
-    leftAnchorRef.current?.addEventListener('mouseleave', (e) =>
-      mouseLeaveHandler(e, 'LEFT')
-    );
-    rightAnchorRef.current?.addEventListener('mouseleave', (e) =>
-      mouseLeaveHandler(e, 'RIGHT')
-    );
+    const leftHandler = (e: MouseEvent) => {
+      mouseEnterHandler(e, 'LEFT');
+    };
+    const rightHandler = (e: MouseEvent) => {
+      mouseEnterHandler(e, 'RIGHT');
+    };
+    leftAnchorRef.current?.addEventListener('mouseover', leftHandler);
+    rightAnchorRef.current?.addEventListener('mouseover', rightHandler);
+    leftAnchorRef.current?.addEventListener('mouseleave', leftHandler);
+    rightAnchorRef.current?.addEventListener('mouseleave', rightHandler);
     return () => {
-      [leftAnchorRef, rightAnchorRef].map((anchorElement) => {
-        anchorElement.current?.removeEventListener(
-          'mouseover',
-          mouseEnterHandler
-        );
-        anchorElement.current?.removeEventListener(
-          'mouseleave',
-          mouseEnterHandler
-        );
+      [
+        { anchorElement: leftAnchorRef, hanler: leftHandler },
+        { anchorElement: rightAnchorRef, handler: rightHandler }
+      ].map(({ anchorElement, handler }) => {
+        anchorElement.current?.removeEventListener('mouseover', handler);
+        anchorElement.current?.removeEventListener('mouseleave', handler);
       });
     };
   });
-  // bg-[url('/Screenshot_2023-02-08_at_07-07-59_Fingerspelling_with_Machine_Learning-removebg-preview(1).png')]
   return (
     <div className="flex flex-col relative h-[100vh] bg-[#ffe090]  bg-top   bg-no-repeat bg-center items-center justify-center gap-10">
       {!isLeftMouseOver && !iseRightMouseOver && (

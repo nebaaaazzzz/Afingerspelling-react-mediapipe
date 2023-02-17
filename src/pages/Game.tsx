@@ -14,7 +14,6 @@ import LeftBottomContainer from '../components/LeftBottomContainer';
 import StartingVideoOverLay from '../components/StartingVideoOverLay';
 import WavingVideo from '../components/WavingVideo';
 import { AlphabetDefinationI } from '../type';
-import { Alphabet } from '../data/Alphabet';
 import Percentage from '../components/Percentage';
 const handAnalyzer = new HandAnalyzer();
 let ignore = false;
@@ -41,9 +40,25 @@ function Game() {
   let [countPrediction, setCountPrediction] = useState(0);
   const videoElement = useRef(null);
   const canvasElement = useRef<HTMLCanvasElement>(null);
-
+  const calculateScore = () => {
+    const scoreValue = 1;
+    const time = currentTime.getTime() - startTime.getTime();
+    if (time < 30) {
+      score += scoreValue;
+    } else {
+      if (time >= 30 && time < 60) {
+        score += scoreValue - 0.2;
+      } else if (time >= 60 && time < 90) {
+        score += scoreValue - 0.4;
+      } else if (time >= 90 && time < 120) {
+        score += scoreValue - 0.6;
+      } else {
+        score += scoreValue - 0.8;
+      }
+    }
+  };
   const handleSkip = () => {
-    score++;
+    calculateScore();
     //level compelted go to level completed page
     if (wordIndex == 9) {
       navigate(`/level-completed?hand=${hand}&level=${level}&points=${score}`);
@@ -202,9 +217,8 @@ function Game() {
 
     if (started) {
       const levelIndex = Number(searchParams[0].get('level') as String);
-      setStartTime(new Date().getTime());
+      setStartTime(new Date());
       setShowModal(true);
-
       setLevel(levelIndex);
       const returnedLevelWords = getLevelWords(fourLetterWords, levelIndex);
       setLevelWords(returnedLevelWords);

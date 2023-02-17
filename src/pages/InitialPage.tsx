@@ -1,19 +1,15 @@
-import React, { createRef, useEffect, useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Background from '../components/Background';
 import SpellingSvg from '../components/SpellingSvg';
 
 function InitialPage() {
   const [isMouseOver, setIsMouseOver] = useState(false);
-  const buttonRef = createRef<HTMLButtonElement>();
+  const buttonRef = createRef<HTMLAnchorElement>();
   useEffect(() => {
     const mouseEnterHandler = async (e: MouseEvent) => {
-      console.log('entering the button');
-
       setIsMouseOver(true);
     };
     const mouseLeaveHandler = async (e: MouseEvent) => {
-      console.log('leaving the button');
       setIsMouseOver(false);
     };
     buttonRef.current?.addEventListener('mouseenter', mouseEnterHandler);
@@ -38,7 +34,6 @@ function InitialPage() {
               height: 500
             }}
           />
-          // <Background word="fingerspelling" />
         )}
       </div>
       <div className="absolute inset-x-auto inset-y-60 z-40 ">
