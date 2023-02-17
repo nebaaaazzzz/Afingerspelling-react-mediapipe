@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useState, useRef, useMemo, useEffect } from 'react';
 import Loading from '../components/Loading';
 import { FingerPoseEstimator } from '../FingerUtils/FingerPostEstimator';

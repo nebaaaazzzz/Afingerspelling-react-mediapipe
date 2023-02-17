@@ -1,3 +1,4 @@
+//@ts-nocheck
 // From Fingerpose - https://www.npmjs.com/package/fingerpose
 import { Finger, FingerCurl, FingerDirection } from './FingerDescription';
 
