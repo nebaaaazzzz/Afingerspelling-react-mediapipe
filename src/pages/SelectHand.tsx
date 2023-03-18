@@ -87,7 +87,7 @@ function SelectHand() {
           style={{
             textTransform: 'none'
           }}
-          to={`/select-level?hand=left`}
+          to={`/select-language?hand=left`}
           className="btn my-2 h-14 hover:bg-white hover:text-[#683aff] rounded-3xl text-xl border-none text-white px-20 bg-[#683aff]"
         >
           Left
@@ -97,7 +97,7 @@ function SelectHand() {
           style={{
             textTransform: 'none'
           }}
-          to={`/select-level?hand=right`}
+          to={`/select-language?hand=right`}
           className="btn my-2 h-14 text-xl hover:bg-white  hover:text-[#683aff] rounded-3xl bg-[#683aff] border-none px-20 text-white"
         >
           Right

@@ -1,12 +1,13 @@
 import { Coords3D } from '@tensorflow-models/handpose/dist/pipeline';
 import { Alphabet } from '../data/Alphabet';
+import { AmharicAlphabet } from '../data/AmharicAlphabet';
 import { AlphabetDefinationI, FingerDefinationI } from '../type';
 import { HandAnalyzer } from './HandAnalyzer';
 
 const handAnalyzer = new HandAnalyzer();
 const alphabet = new Alphabet();
-type fingerT = ['thumb', 'index', 'middle', 'ring', 'little'];
-const fingers: fingerT = ['thumb', 'index', 'middle', 'ring', 'little'];
+const amharicAlphabet = new AmharicAlphabet();
+const fingers = ['thumb', 'index', 'middle', 'ring', 'little'];
 const reactToDOMCursor = (
   fingerPoseResults: any,
   result: Coords3D,
@@ -16,7 +17,10 @@ const reactToDOMCursor = (
   message: string;
   lookForLetter?: AlphabetDefinationI;
 } => {
-  let lookForLetter = alphabet.getSpecificLetter(letter);
+  console.log(letter);
+
+  // let lookForLetter = alphabet.getSpecificLetter(letter);
+  let lookForLetter = amharicAlphabet.getSpecificLetter(letter);
   if (!lookForLetter) {
     return {
       countCorrectFingers: 0,

@@ -6,7 +6,6 @@ type levelsI = 1 | 2 | 3 | 4;
 const levels: levelsI[] = [1, 2, 3, 4];
 function SelectLevel() {
   const searchParams = useSearchParams();
-  const selectedHand = searchParams[0].get('hand');
   const [imageUrl, setImageUrl] = useState('level.png');
   const mouseEnterHandler = (e: any, level: levelsI) => {
     setImageUrl('L' + level + '.png');
@@ -29,7 +28,9 @@ function SelectLevel() {
               style={{
                 textTransform: 'none'
               }}
-              to={`/start-level?level=${item}&hand=${selectedHand}`}
+              to={`/start-level?level=${item}&hand=${searchParams[0].get(
+                'hand'
+              )}&lang=${searchParams[0].get('lang')}`}
               className={`btn my-4 w-11/12 text-3xl  rounded-3xl ${
                 i == 1 ? 'ml-20' : ''
               } ${

@@ -3,7 +3,6 @@ import { useState, useRef, useMemo, useEffect } from 'react';
 import Loading from '../components/Loading';
 import { FingerPoseEstimator } from '../FingerUtils/FingerPostEstimator';
 import reactToDOMCursor from '../HandUtils/reactToDom';
-import { fourLetterWords } from '../data/words';
 import { getLevelWords } from '../utils';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { HandAnalyzer } from '../HandUtils/HandAnalyzer';
@@ -16,6 +15,7 @@ import StartingVideoOverLay from '../components/StartingVideoOverLay';
 import WavingVideo from '../components/WavingVideo';
 import { AlphabetDefinationI } from '../type';
 import Percentage from '../components/Percentage';
+import getLanguageWords from '../data';
 const handAnalyzer = new HandAnalyzer();
 let ignore = false;
 let score = 0;
@@ -37,7 +37,6 @@ function Game() {
   const [selectedWord, setSelectWord] = useState<string>();
   const [selectedLetter, setSelectedLetter] = useState<string>();
   const [showModal, setShowModal] = useState(false);
-
   let [countPrediction, setCountPrediction] = useState(0);
   const videoElement = useRef(null);
   const canvasElement = useRef<HTMLCanvasElement>(null);
@@ -77,6 +76,7 @@ function Game() {
   };
 
   const onResults = async (results) => {
+    console.log('hello world');
     let canvasCtx = canvasElement?.current?.getContext('2d');
     setCountPrediction(countPrediction++);
     if (countPrediction == 1) {
@@ -221,7 +221,12 @@ function Game() {
       setStartTime(new Date());
       setShowModal(true);
       setLevel(levelIndex);
-      const returnedLevelWords = getLevelWords(fourLetterWords, levelIndex);
+      const languageWords = getLanguageWords(
+        String(searchParams[0].get('lang'))
+      );
+      //FIXME dont call getLevelWors for
+      // const returnedLevelWords = getLevelWords(languageWords, levelIndex);
+      const returnedLevelWords = languageWords;
       setLevelWords(returnedLevelWords);
       setSelectWord(returnedLevelWords[0]);
       setSelectedLetter(returnedLevelWords[0][0]);
