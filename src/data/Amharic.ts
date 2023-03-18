@@ -182,9 +182,9 @@ export class Alphabet {
         currentAngle: null
       }
     };
-    let ሰ: AlphabetDefinationI = {
+    let ሠ: AlphabetDefinationI = {
       letterNumber: 5,
-      letter: 'ሰ',
+      letter: 'ሠ',
       rotation: 'up',
       thumb: {
         curlMin: 180,
@@ -224,8 +224,179 @@ export class Alphabet {
         currentAngle: null
       }
     };
+    let ረ: AlphabetDefinationI = {
+      letterNumber: 6,
+      letter: 'ረ',
+      rotation: 'up',
+      thumb: {
+        curlMin: noCurl,
+        curlMax: noCurl - 30,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      index: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'indexAndMiddleMustBeClose',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      middle: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'indexAndMiddleMustBeClose',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      ring: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      little: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      }
+    };
+    let ሰ: AlphabetDefinationI = {
+      letterNumber: 7,
+      letter: 'ሰ',
+      rotation: 'up',
+      thumb: {
+        curlMin: noCurl,
+        curlMax: fullCurlMax,
+        special: 'thumbBendOverOtherFingers',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: 'Bend it so its inside your palm'
+      },
+      index: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      },
+      middle: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      },
+      ring: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      },
+      little: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.bend
+      }
+    };
+    let ሽ: AlphabetDefinationI = {
+      letterNumber: 8,
+      letter: 'ሽ',
+      rotation: 'up',
+      thumb: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'thumbToTheLeft',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: 'Straigten it - and make sure it is close to index finger'
+      },
+      index: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      },
+      middle: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      },
+      ring: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      },
+      little: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      }
+    };
+    let ቀ: AlphabetDefinationI = {
+      letterNumber: 9,
+      letter: 'ቀ',
+      rotation: 'up',
+      thumb: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'thumbBendOverOtherFingers',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      index: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      middle: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.bend
+      },
+      ring: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      little: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      }
+    };
 
-    this.alphabetArray = [];
+    this.alphabetArray = [ሀ, ለ, ሐ, መ, ሠ, ረ, ሰ, ሽ, ቀ];
   }
 
   public getRandomLetter = () => {
