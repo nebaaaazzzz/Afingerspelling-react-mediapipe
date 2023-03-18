@@ -395,8 +395,90 @@ export class Alphabet {
         currentAngle: null
       }
     };
+    let በ: AlphabetDefinationI = {
+      letterNumber: 10,
+      letter: 'በ',
+      rotation: 'up',
+      thumb: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'thumbBendOverOtherFingers',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      index: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      },
+      middle: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      },
+      ring: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      little: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      }
+    };
+    let ተ: AlphabetDefinationI = {
+      letterNumber: 11,
+      letter: 'ተ',
+      rotation: 'left',
+      thumb: {
+        curlMin: noCurl,
+        curlMax: fullCurlMax,
+        special: 'betweenIndexAndMiddleLetterT',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      index: {
+        curlMin: halfCurlMin,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      middle: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      ring: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      little: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      }
+    };
 
-    this.alphabetArray = [ሀ, ለ, ሐ, መ, ሠ, ረ, ሰ, ሽ, ቀ];
+    this.alphabetArray = [ሀ, ለ, ሐ, መ, ሠ, ረ, ሰ, ሽ, ቀ, በ, ተ];
   }
 
   public getRandomLetter = () => {
