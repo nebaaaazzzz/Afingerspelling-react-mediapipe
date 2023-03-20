@@ -56,7 +56,7 @@ export class AmharicAlphabet {
       }
     };
     let ለ: AlphabetDefinationI = {
-      letterNumber: 1,
+      letterNumber: 2,
       letter: 'ለ',
       rotation: 'up',
       thumb: {
@@ -142,7 +142,7 @@ export class AmharicAlphabet {
       }
     };
     let መ: AlphabetDefinationI = {
-      letterNumber: 14,
+      letterNumber: 4,
       letter: 'መ',
       rotation: 'up',
       thumb: {
@@ -183,7 +183,7 @@ export class AmharicAlphabet {
     };
 
     let ገ: AlphabetDefinationI = {
-      letterNumber: 1,
+      letterNumber: 26,
       letter: 'ge',
       rotation: 'up',
       thumb: {
@@ -228,7 +228,7 @@ export class AmharicAlphabet {
     };
 
     let ዘ: AlphabetDefinationI = {
-      letterNumber: 2,
+      letterNumber: 21,
       letter: 'ዘ',
       rotation: 'up',
       thumb: {
@@ -439,8 +439,176 @@ export class AmharicAlphabet {
         currentAngle: null
       }
     };
+    let ነ: AlphabetDefinationI = {
+      letterNumber: 14,
+      letter: 'ነ',
+      rotation: 'up',
+      thumb: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'thumbToTheLeft',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: 'Straigten it - and make sure it is close to index finger'
+      },
+      index: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      middle: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      ring: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      little: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      }
+    };
+    let ዠ: AlphabetDefinationI = {
+      letterNumber: 2,
+      letter: 'ዠ ',
+      rotation: 'up',
+      thumb: {
+        curlMin: noCurl,
+        curlMax: fullCurlMax,
+        special: 'thumbBendOverOtherFingers',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      index: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      },
+      middle: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.bend
+      },
+      ring: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      },
+      little: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      }
+    };
+    let አ: AlphabetDefinationI = {
+      letterNumber: 8,
+      letter: 'አ',
+      rotation: 'side',
+      thumb: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      index: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      middle: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      ring: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      little: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      }
+    };
+    let ኘ: AlphabetDefinationI = {
+      letterNumber: 8,
+      letter: 'ኘ',
+      rotation: 'side',
+      thumb: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'thumbToTheLeft',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: 'Straigten it - and make sure it is close to index finger'
+      },
+      index: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      },
+      middle: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      },
+      ring: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      little: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      }
+    };
     // Missing z,p,q,j,h
-    this.alphabetArray = [ሀ, ለ, ሐ, መ, ረ, ሰ, ሽ, ቀ, ዘ, ገ];
+    this.alphabetArray = [ሀ, ለ, ሐ, መ, ረ, ሰ, ሽ, ቀ, ዘ, ገ, ነ, ዠ, አ, ኘ];
   }
 
   public getRandomLetter = () => {

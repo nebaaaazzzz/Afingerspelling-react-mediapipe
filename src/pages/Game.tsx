@@ -59,6 +59,7 @@ function Game() {
   };
 
   const onResults = async (results) => {
+    console.log('hello world');
     let canvasCtx = canvasElement?.current?.getContext('2d');
     setCountPrediction(countPrediction++);
     if (countPrediction == 1) {
@@ -171,6 +172,7 @@ function Game() {
   useEffect(() => {
     if (hands) {
       setStartTime(new Date().getTime());
+      console.log('hand dected');
       hands.onResults(onResults);
     }
     if (countPrediction != 0) {
