@@ -40,25 +40,8 @@ function Game() {
   let [countPrediction, setCountPrediction] = useState(0);
   const videoElement = useRef(null);
   const canvasElement = useRef<HTMLCanvasElement>(null);
-  const calculateScore = () => {
-    const scoreValue = 1;
-    const time = currentTime.getTime() - startTime.getTime();
-    if (time < 30) {
-      score += scoreValue;
-    } else {
-      if (time >= 30 && time < 60) {
-        score += scoreValue - 0.2;
-      } else if (time >= 60 && time < 90) {
-        score += scoreValue - 0.4;
-      } else if (time >= 90 && time < 120) {
-        score += scoreValue - 0.6;
-      } else {
-        score += scoreValue - 0.8;
-      }
-    }
-  };
+
   const handleSkip = () => {
-    calculateScore();
     //level compelted go to level completed page
     if (wordIndex == 9) {
       navigate(`/level-completed?hand=${hand}&level=${level}&points=${score}`);
@@ -76,7 +59,6 @@ function Game() {
   };
 
   const onResults = async (results) => {
-    console.log('hello world');
     let canvasCtx = canvasElement?.current?.getContext('2d');
     setCountPrediction(countPrediction++);
     if (countPrediction == 1) {
@@ -225,8 +207,10 @@ function Game() {
         String(searchParams[0].get('lang'))
       );
       //FIXME dont call getLevelWors for
-      // const returnedLevelWords = getLevelWords(languageWords, levelIndex);
-      const returnedLevelWords = languageWords;
+      let returnedLevelWords = languageWords;
+      if (searchParams[0].get('lang') == 'en') {
+        returnedLevelWords = getLevelWords(languageWords, levelIndex);
+      }
       setLevelWords(returnedLevelWords);
       setSelectWord(returnedLevelWords[0]);
       setSelectedLetter(returnedLevelWords[0][0]);
