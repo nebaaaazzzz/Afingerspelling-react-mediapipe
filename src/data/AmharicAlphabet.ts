@@ -607,8 +607,50 @@ export class AmharicAlphabet {
         currentAngle: null
       }
     };
+
+    let የ: AlphabetDefinationI = {
+      letterNumber: 8,
+      letter: 'የ',
+      rotation: 'side',
+      thumb: {
+        curlMin: noCurl,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      index: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      middle: {
+        curlMin: halfCurlMin,
+        curlMax: 10,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      ring: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      little: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      }
+    };
+
     // Missing z,p,q,j,h
-    this.alphabetArray = [ሀ, ለ, ሐ, መ, ረ, ሰ, ሽ, ቀ, ዘ, ገ, ነ, ዠ, አ, ኘ];
+    this.alphabetArray = [ሀ, ለ, ሐ, መ, ረ, ሰ, ሽ, ቀ, ዘ, ገ, ነ, ዠ, አ, ኘ, የ];
   }
 
   public getRandomLetter = () => {
