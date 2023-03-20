@@ -182,7 +182,7 @@ export class AmharicAlphabet {
       }
     };
 
-    let ge: AlphabetDefinationI = {
+    let ገ: AlphabetDefinationI = {
       letterNumber: 1,
       letter: 'ge',
       rotation: 'up',
@@ -227,9 +227,9 @@ export class AmharicAlphabet {
       }
     };
 
-    let ze: AlphabetDefinationI = {
+    let ዘ: AlphabetDefinationI = {
       letterNumber: 2,
-      letter: 'ze',
+      letter: 'ዘ',
       rotation: 'up',
       thumb: {
         curlMin: noCurl,
@@ -440,7 +440,7 @@ export class AmharicAlphabet {
       }
     };
     // Missing z,p,q,j,h
-    this.alphabetArray = [ሀ, ለ, ሐ, መ, ረ, ሰ, ሽ, ቀ];
+    this.alphabetArray = [ሀ, ለ, ሐ, መ, ረ, ሰ, ሽ, ቀ, ዘ, ገ];
   }
 
   public getRandomLetter = () => {
