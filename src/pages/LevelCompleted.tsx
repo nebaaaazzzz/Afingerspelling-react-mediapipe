@@ -1,18 +1,11 @@
-import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import Background from '../components/Background';
 import SpellingSvg from '../components/SpellingSvg';
 
 function LevelCompleted() {
   const searchParams = useSearchParams()[0];
-  const [hand, setHand] = useState<string | null>();
-  const [level, setLevel] = useState<string | null>();
-  const [points, setPoints] = useState<string | null>();
-  useEffect(() => {
-    setHand(searchParams.get('hand'));
-    setLevel(searchParams.get('level'));
-    setPoints(searchParams.get('points'));
-  }, []);
+  const hand = searchParams.get('hand');
+  const level = searchParams.get('level');
+  const points = searchParams.get('points');
   return (
     <div className="flex flex-col h-[100vh] items-center justify-center bg-[#683aff] gap-1">
       <SpellingSvg />
@@ -30,6 +23,7 @@ function LevelCompleted() {
         >
           Try Again
         </Link>
+        {/* if 4 reached not to show Next level button */}
         {!(level == '4') && (
           <Link
             to={`/start-level?hand=${hand}&level=${Number(level) + 1}`}

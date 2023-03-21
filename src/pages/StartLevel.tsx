@@ -6,7 +6,7 @@ import { levels } from '../utils';
 
 function StartLevel() {
   const [isMouseOver, setIsMouseOver] = useState(false);
-  const buttonRef = createRef<HTMLButtonElement>();
+  const buttonRef = createRef<HTMLAnchorElement>();
   useEffect(() => {
     const mouseEnterHandler = async (e: MouseEvent) => {
       setIsMouseOver(true);
@@ -25,7 +25,6 @@ function StartLevel() {
 
   const searchParams = useSearchParams();
   const level = Number(searchParams[0].get('level'));
-  const hand = searchParams[0].get('hand') as string;
   return (
     <div
       className={`flex flex-col h-[100vh] bg-[#ffe090] 
@@ -36,13 +35,11 @@ function StartLevel() {
     } 
     bg-top   bg-no-repeat bg-center items-center justify-center gap-10`}
     >
-      <BackButton url={`/select-level?hand=${hand}`} />
+      <BackButton url={`/select-level?hand=${searchParams[0].get('hand')}`} />
       <div className="circleTop bg-[#ffebb8] w-[230px] h-[432px] rounded-tr-full rounded-br-full absolute inset-x-0"></div>
       <div className="circleTop bg-[#ffebb8] w-[230px] h-[432px] rounded-tl-full rounded-bl-full absolute right-0 "></div>
 
-      <h1 className="text-8xl text-[#683aff]">
-        Level {searchParams[0].get('level')}
-      </h1>
+      <h1 className="text-8xl text-[#683aff]">Level {level}</h1>
       <h1 className="text-xl  text-[#683aff]">
         Get ready to learn the letters{' '}
         <span className="text-[#683aff] ml-5">
@@ -59,7 +56,9 @@ function StartLevel() {
             textTransform: 'none'
           }}
           ref={buttonRef}
-          to={`/game?level=${level}&hand=${hand}`}
+          to={`/game?level=${level}&hand=${searchParams[0].get(
+            'hand'
+          )}&lang=${searchParams[0].get('lang')}`}
           className="btn my-2 h-14 hover:bg-white hover:text-[#683aff] rounded-3xl text-xl border-none text-white px-20 bg-[#683aff]"
         >
           Turn On Webcam

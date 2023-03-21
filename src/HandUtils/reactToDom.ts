@@ -1,10 +1,12 @@
 import { Coords3D } from '@tensorflow-models/handpose/dist/pipeline';
 import { Alphabet } from '../data/Alphabet';
+import { AmharicAlphabet } from '../data/AmharicAlphabet';
 import { AlphabetDefinationI, FingerDefinationI } from '../type';
 import { HandAnalyzer } from './HandAnalyzer';
 
 const handAnalyzer = new HandAnalyzer();
 const alphabet = new Alphabet();
+const amharicAlphabet = new AmharicAlphabet();
 const fingers = ['thumb', 'index', 'middle', 'ring', 'little'];
 const reactToDOMCursor = (
   fingerPoseResults: any,
@@ -15,7 +17,10 @@ const reactToDOMCursor = (
   message: string;
   lookForLetter?: AlphabetDefinationI;
 } => {
-  let lookForLetter = alphabet.getSpecificLetter(letter);
+  console.log(letter);
+
+  // let lookForLetter = alphabet.getSpecificLetter(letter);
+  let lookForLetter = amharicAlphabet.getSpecificLetter(letter);
   if (!lookForLetter) {
     return {
       countCorrectFingers: 0,
@@ -92,11 +97,12 @@ const reactToDOMCursor = (
   }
   if (isHandAngleCorrect === true) {
     for (let i = 0; i < 5; i++) {
-      let lookFor = lookForLetter[fingers[i]];
+      const finger = fingers[i];
+      let lookFor = lookForLetter[finger];
 
       let angle = lookFor.currentAngle;
 
-      if (angle < lookFor.curlMin && angle > lookFor.curlMax) {
+      if (angle && angle < lookFor.curlMin && angle > lookFor.curlMax) {
         lookFor.percentageCorrect = 1;
 
         if (lookFor.special !== 'none') {
@@ -285,14 +291,14 @@ const reactToDOMCursor = (
           }
         }
       } else {
-        if (angle > lookFor.curlMin) {
+        if (angle && angle > lookFor.curlMin) {
           // Needs more bend
           // 60 / 180
           let maxDistance = 180 - lookFor.curlMin; // 120 (is also the max distance
           let calculateExactDistance = angle - lookFor.curlMin; // 60 - 180
           lookFor.percentageCorrect =
             (maxDistance - calculateExactDistance) / maxDistance;
-        } else if (angle < lookFor.curlMax) {
+        } else if (angle && angle < lookFor.curlMax) {
           // Needs to be bend less
           //indexPercentageCorrect = indexFingerAngle / lookForLetter.index.curlMax;
           lookFor.percentageCorrect = angle / lookFor.curlMax;

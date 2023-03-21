@@ -15,7 +15,6 @@ function LeftBottomContainer({
         <h1 className="text-6xl text-[#683aff]  capitalize ">
           {selectedWord?.slice(0, wordLength - 1)}
         </h1>
-
         <h1 className="text-6xl text-[#683aff] opacity-70 ">
           {selectedWord?.slice(wordLength - 1)}
         </h1>

@@ -1,6 +1,6 @@
 import { AlphabetDefinationI } from '../type';
 
-export class Alphabet {
+export class AmharicAlphabet {
   private alphabetArray: AlphabetDefinationI[] = [];
 
   private _helpTexts = { straight: 'Straigthen it', bend: 'Bend it' };
@@ -11,7 +11,6 @@ export class Alphabet {
     let fullCurlMinMoreForgiving = 90;
     let fullCurlMin = 60;
     let fullCurlMax = 0;
-
     let ሀ: AlphabetDefinationI = {
       letterNumber: 1,
       letter: 'ሀ',
@@ -57,7 +56,7 @@ export class Alphabet {
       }
     };
     let ለ: AlphabetDefinationI = {
-      letterNumber: 1,
+      letterNumber: 2,
       letter: 'ለ',
       rotation: 'up',
       thumb: {
@@ -143,7 +142,7 @@ export class Alphabet {
       }
     };
     let መ: AlphabetDefinationI = {
-      letterNumber: 14,
+      letterNumber: 4,
       letter: 'መ',
       rotation: 'up',
       thumb: {
@@ -182,46 +181,91 @@ export class Alphabet {
         currentAngle: null
       }
     };
-    let ሠ: AlphabetDefinationI = {
-      letterNumber: 5,
-      letter: 'ሠ',
+
+    let ገ: AlphabetDefinationI = {
+      letterNumber: 26,
+      letter: 'ge',
       rotation: 'up',
       thumb: {
-        curlMin: 180,
-        curlMax: 110,
-        special: 'pinchThumbAndPointer',
+        curlMin: noCurl,
+        curlMax: halfCurlMin - 20,
+        special: 'none',
         percentageCorrect: 0,
-        currentAngle: null,
-        helpText: 'Pinch the thumb and pointer finger together'
+        currentAngle: null
       },
       index: {
         curlMin: noCurl,
-        curlMax: fullCurlMax,
-        special: 'pinchThumbAndPointer',
+        curlMax: halfCurlMin,
+        special: 'none',
         percentageCorrect: 0,
         currentAngle: null,
-        helpText: this._helpTexts.bend
+        helpText: this._helpTexts.straight
       },
       middle: {
         curlMin: noCurl,
         curlMax: halfCurlMin,
-        special: 'littleAndMiddleAndRingMustBeApart',
+        special: 'none',
         percentageCorrect: 0,
-        currentAngle: null
+        currentAngle: null,
+        helpText: this._helpTexts.straight
       },
       ring: {
         curlMin: noCurl,
         curlMax: halfCurlMin,
-        special: 'littleAndMiddleAndRingMustBeApart',
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      },
+      little: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      }
+    };
+
+    let ዘ: AlphabetDefinationI = {
+      letterNumber: 21,
+      letter: 'ዘ',
+      rotation: 'up',
+      thumb: {
+        curlMin: noCurl,
+        curlMax: fullCurlMax,
+        special: 'thumbBendOverOtherFingers',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      index: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      middle: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      ring: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
         percentageCorrect: 0,
         currentAngle: null
       },
       little: {
         curlMin: noCurl,
         curlMax: halfCurlMin,
-        special: 'littleAndMiddleAndRingMustBeApart',
+        special: 'none',
         percentageCorrect: 0,
-        currentAngle: null
+        currentAngle: null,
+        helpText: this._helpTexts.straight
       }
     };
     let ረ: AlphabetDefinationI = {
@@ -395,16 +439,142 @@ export class Alphabet {
         currentAngle: null
       }
     };
-    let በ: AlphabetDefinationI = {
-      letterNumber: 10,
-      letter: 'በ',
+    let ነ: AlphabetDefinationI = {
+      letterNumber: 14,
+      letter: 'ነ',
       rotation: 'up',
       thumb: {
         curlMin: noCurl,
         curlMax: halfCurlMin,
+        special: 'thumbToTheLeft',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: 'Straigten it - and make sure it is close to index finger'
+      },
+      index: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      middle: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      ring: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      little: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      }
+    };
+    let ዠ: AlphabetDefinationI = {
+      letterNumber: 2,
+      letter: 'ዠ ',
+      rotation: 'up',
+      thumb: {
+        curlMin: noCurl,
+        curlMax: fullCurlMax,
         special: 'thumbBendOverOtherFingers',
         percentageCorrect: 0,
         currentAngle: null
+      },
+      index: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      },
+      middle: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.bend
+      },
+      ring: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      },
+      little: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: this._helpTexts.straight
+      }
+    };
+    let አ: AlphabetDefinationI = {
+      letterNumber: 8,
+      letter: 'አ',
+      rotation: 'side',
+      thumb: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      index: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      middle: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      ring: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
+      little: {
+        curlMin: fullCurlMinMoreForgiving,
+        curlMax: fullCurlMax,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      }
+    };
+    let ኘ: AlphabetDefinationI = {
+      letterNumber: 8,
+      letter: 'ኘ',
+      rotation: 'side',
+      thumb: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'thumbToTheLeft',
+        percentageCorrect: 0,
+        currentAngle: null,
+        helpText: 'Straigten it - and make sure it is close to index finger'
       },
       index: {
         curlMin: noCurl,
@@ -437,27 +607,28 @@ export class Alphabet {
         currentAngle: null
       }
     };
-    let ተ: AlphabetDefinationI = {
-      letterNumber: 11,
-      letter: 'ተ',
-      rotation: 'left',
+
+    let የ: AlphabetDefinationI = {
+      letterNumber: 8,
+      letter: 'የ',
+      rotation: 'side',
       thumb: {
         curlMin: noCurl,
-        curlMax: fullCurlMax,
-        special: 'betweenIndexAndMiddleLetterT',
-        percentageCorrect: 0,
-        currentAngle: null
-      },
-      index: {
-        curlMin: halfCurlMin,
         curlMax: fullCurlMax,
         special: 'none',
         percentageCorrect: 0,
         currentAngle: null
       },
+      index: {
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'none',
+        percentageCorrect: 0,
+        currentAngle: null
+      },
       middle: {
-        curlMin: fullCurlMinMoreForgiving,
-        curlMax: fullCurlMax,
+        curlMin: halfCurlMin,
+        curlMax: 10,
         special: 'none',
         percentageCorrect: 0,
         currentAngle: null
@@ -478,7 +649,8 @@ export class Alphabet {
       }
     };
 
-    this.alphabetArray = [ሀ, ለ, ሐ, መ, ሠ, ረ, ሰ, ሽ, ቀ, በ, ተ];
+    // Missing z,p,q,j,h
+    this.alphabetArray = [ሀ, ለ, ሐ, መ, ረ, ሰ, ሽ, ቀ, ዘ, ገ, ነ, ዠ, አ, ኘ, የ];
   }
 
   public getRandomLetter = () => {

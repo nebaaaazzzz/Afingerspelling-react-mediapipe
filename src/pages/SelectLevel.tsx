@@ -1,30 +1,18 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import BackButton from '../components/BackButton';
-import {
-  useEffect,
-  useState,
-  createRef,
-  RefObject,
-  MouseEventHandler
-} from 'react';
+import { useState } from 'react';
 import SpellingSvg from '../components/SpellingSvg';
-import Background from '../components/Background';
 type levelsI = 1 | 2 | 3 | 4;
 const levels: levelsI[] = [1, 2, 3, 4];
 function SelectLevel() {
   const searchParams = useSearchParams();
-  const [selectedHand, setSelectedHand] = useState<string | null>('');
   const [imageUrl, setImageUrl] = useState('level.png');
-  useEffect(() => {
-    setSelectedHand(searchParams[0].get('hand'));
-  });
   const mouseEnterHandler = (e: any, level: levelsI) => {
     setImageUrl('L' + level + '.png');
   };
   const mouseLeaveHandler = (e: any, level: levelsI) => {
     setImageUrl('level.png');
   };
-  // bg-[url('/spelling/B.png')] hover:bg-[url('/spelling/U.png')]
   return (
     <div className="flex relative flex-col bg-[#683aff]  bg-no-repeat  bg-top h-[100vh] items-center justify-center gap-10">
       <BackButton url="/select-hand" />
@@ -40,7 +28,9 @@ function SelectLevel() {
               style={{
                 textTransform: 'none'
               }}
-              to={`/start-level?level=${item}&hand=${selectedHand}`}
+              to={`/start-level?level=${item}&hand=${searchParams[0].get(
+                'hand'
+              )}&lang=${searchParams[0].get('lang')}`}
               className={`btn my-4 w-11/12 text-3xl  rounded-3xl ${
                 i == 1 ? 'ml-20' : ''
               } ${
