@@ -682,7 +682,7 @@ export class AmharicAlphabet {
         percentageCorrect: 0,
         currentAngle: null
       }
-    };
+    }; //need tumb fix
     let ከ: AlphabetDefinationI = {
       letterNumber: 17,
       letter: 'ከ',
@@ -722,7 +722,7 @@ export class AmharicAlphabet {
         percentageCorrect: 0,
         currentAngle: null
       }
-    };
+    }; //need some fix
     let ኸ: AlphabetDefinationI = {
       letterNumber: 18,
       letter: 'ኸ',

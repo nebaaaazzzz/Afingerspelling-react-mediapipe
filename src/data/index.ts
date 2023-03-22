@@ -1,4 +1,4 @@
-import amharicWords from './amharicWords';
+import amharicWords from './amharicwords';
 import { fourLetterWords } from './words';
 
 function getLanguageWords(lang: string) {
