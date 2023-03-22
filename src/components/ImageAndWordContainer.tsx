@@ -11,7 +11,7 @@ function ImageAndWordContainer({
     <div className="flex items-center gap-10">
       <img
         draggable="false"
-        src={`/spelling/${imgPath}.png`}
+        src={`public/sign.png`}
         className="w-11/12 h-96 object-contain "
       />
       <h1 className="text-[20rem] text-primary font-light leading-10 ">

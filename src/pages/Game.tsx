@@ -16,6 +16,7 @@ import WavingVideo from '../components/WavingVideo';
 import { AlphabetDefinationI } from '../type';
 import Percentage from '../components/Percentage';
 import getLanguageWords from '../data';
+
 const handAnalyzer = new HandAnalyzer();
 let ignore = false;
 let score = 0;
@@ -46,7 +47,7 @@ function Game() {
     if (wordIndex == 9) {
       navigate(`/level-completed?hand=${hand}&level=${level}&points=${score}`);
     }
-    if (wordLength == 4 && selectedWord) {
+    if (wordLength == 3 && selectedWord) {
       setSelectWord(levelWords[wordIndex + 1]);
       setWordLength(1);
       setWordIndex((prevWordIndex) => prevWordIndex + 1);
@@ -292,6 +293,7 @@ function Game() {
               selectedLetter={selectedLetter?.toUpperCase()}
               imgPath={selectedLetter?.toUpperCase()}
             />
+
             <LeftBottomContainer
               selectedWord={selectedWord}
               handleSkip={handleSkip}

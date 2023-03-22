@@ -648,9 +648,9 @@ export class AmharicAlphabet {
       letter: 'አ',
       rotation: 'side',
       thumb: {
-        curlMin: fullCurlMinMoreForgiving,
-        curlMax: fullCurlMax,
-        special: 'none',
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'thumbBendOverOtherFingers',
         percentageCorrect: 0,
         currentAngle: null
       },
