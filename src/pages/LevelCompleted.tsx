@@ -18,7 +18,9 @@ function LevelCompleted() {
       </h1>
       <div className="flex mt-10 gap-10">
         <Link
-          to={`/game?hand=${hand}&level=${level}`}
+          to={`/game?hand=${hand}&level=${level}&lang=${searchParams.get(
+            'lang'
+          )}`}
           className="btn px-10 h-14 text-xl border-white  hover:border-[#683aff] hover:text-[#683aff] rounded-3xl hover:bg-[#ffffa0] bg-[transparent] text-[#fff]  my-2"
         >
           Try Again
@@ -26,7 +28,9 @@ function LevelCompleted() {
         {/* if 4 reached not to show Next level button */}
         {!(level == '4') && (
           <Link
-            to={`/start-level?hand=${hand}&level=${Number(level) + 1}`}
+            to={`/start-level?hand=${hand}&level=${
+              Number(level) + 1
+            }&lang=${searchParams.get('lang')}`}
             className="btn px-10 h-14 text-xl  hover:border-[#683aff] rounded-3xl hover:bg-[#ffffa0] bg-[#fff] text-[#683aff] border-none my-2"
           >
             Next Level

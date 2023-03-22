@@ -17,10 +17,11 @@ export class AmharicAlphabet {
       rotation: 'up',
       thumb: {
         curlMin: noCurl,
-        curlMax: halfCurlMin,
-        special: 'thumbBendOverOtherFingers',
+        curlMax: fullCurlMax,
+        special: 'distanceBetweenThumbAndPointer',
         percentageCorrect: 0,
-        currentAngle: null
+        currentAngle: null,
+        helpText: "Bend it - but make sure it doesn't touch your pointer finger"
       },
       index: {
         curlMin: noCurl,
@@ -736,28 +737,28 @@ export class AmharicAlphabet {
       },
       index: {
         curlMin: noCurl,
-        curlMax: halfCurlMin - 20,
+        curlMax: noCurl,
         special: 'none',
         percentageCorrect: 0,
         currentAngle: null
       },
       middle: {
-        curlMin: halfCurlMin + 20,
-        curlMax: fullCurlMin + 20,
+        curlMin: fullCurlMax,
+        curlMax: fullCurlMinMoreForgiving,
         special: 'none',
         percentageCorrect: 0,
         currentAngle: null
       },
       ring: {
-        curlMin: halfCurlMin + 20,
-        curlMax: fullCurlMin + 20,
+        curlMin: fullCurlMax,
+        curlMax: fullCurlMinMoreForgiving,
         special: 'none',
         percentageCorrect: 0,
         currentAngle: null
       },
       little: {
-        curlMin: halfCurlMin + 30,
-        curlMax: fullCurlMin + 30,
+        curlMin: noCurl,
+        curlMax: noCurl,
         special: 'none',
         percentageCorrect: 0,
         currentAngle: null
@@ -857,7 +858,8 @@ export class AmharicAlphabet {
         curlMax: fullCurlMax,
         special: 'thumbBendOverOtherFingers',
         percentageCorrect: 0,
-        currentAngle: null
+        currentAngle: null,
+        helpText: 'Bend it so its inside your palm'
       },
       index: {
         curlMin: noCurl,
@@ -1057,7 +1059,7 @@ export class AmharicAlphabet {
     };
     let ገ: AlphabetDefinationI = {
       letterNumber: 26,
-      letter: 'ge',
+      letter: 'ገ',
       rotation: 'up',
       thumb: {
         curlMin: noCurl,
