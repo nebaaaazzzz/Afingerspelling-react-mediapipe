@@ -2,7 +2,7 @@ import React, { createRef, useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import BackButton from '../components/BackButton';
 import SpellingSvg from '../components/SpellingSvg';
-import { levels } from '../utils';
+import { levels } from '../utils/amharicindex';
 
 function StartLevel() {
   const [isMouseOver, setIsMouseOver] = useState(false);
@@ -40,15 +40,14 @@ function StartLevel() {
       <div className="circleTop bg-[#ffebb8] w-[230px] h-[432px] rounded-tl-full rounded-bl-full absolute right-0 "></div>
 
       <h1 className="text-8xl text-[#683aff]">Level {level}</h1>
-      <h1 className="text-xl  text-[#683aff]">
-        Get ready to learn the letters{' '}
+      <h1 className="text-xl  text-[rgb(104,58,255)]">
+        እነዢን የአማርኛ ሆሄ ይማሩ{' '}
         <span className="text-[#683aff] ml-5">
           {levels[level - 1].join(' , ').toUpperCase()}
         </span>
       </h1>
       <h1 className="text-xl text-[#683aff] text-center ">
-        When you start the game, look at the hand and copy the{' '}
-        <h2>handshape with your own hand</h2>
+        ጨዋታዉ ሲጀምር ምስሉን ተመክተዉ <h2>እጆትን እንደ ምስሉ ያርጉ</h2>
       </h1>
       <div className="card">
         <Link

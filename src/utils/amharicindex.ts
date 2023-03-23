@@ -1,5 +1,5 @@
 export const levels = [
-  ['ሀ', 'ለ', 'ነ', 'ረ', 'ከ', 'በ'],
+  ['ሀ', 'ለ', 'ነ', 'ረ', 'ከ', 'በ', 'አ', 'መ'],
   ['ሐ', 'ቀ', 'ቸ', 'ዘ', 'አ', 'ገ', 'ጠ'],
 
   ['ፐ', 'ደ', 'ፈ', 'ጀ', 'ተ'],
@@ -24,21 +24,19 @@ export function getLevelAmharicWords(
 ): string[] {
   const words = [...passedWords];
   let levelWords: string[] = []; //to hold all words in levelIndex
-  let levelLetters: string[] =
-    []; /*contain level word from levelIndex to 0 concatinated */
-
-  for (let i = 0; i < levelIndex; i++) {
-    levelLetters = levelLetters.concat(levels[i]);
-  }
+  let levelLetters = levels[levelIndex - 1];
+  console.log(levelLetters);
+  /*contain level word from levelIndex to 0 concatinated */
 
   for (let wordIndex in words) {
     let skip = false;
     for (let letter of words[wordIndex]) {
-      if (!levelLetters.includes(letter)) {
+      if (levelLetters.includes(letter)) {
         skip = true;
+        break;
       }
     }
-    if (!skip) {
+    if (skip) {
       levelWords.push(words[wordIndex]);
       words.splice(Number(wordIndex), 1);
     }

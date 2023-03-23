@@ -9,12 +9,15 @@ import { HandAnalyzer } from '../HandUtils/HandAnalyzer';
 import BackButton from '../components/BackButton';
 import Modal from '../components/Modal/Modal';
 import ImageAndWordContainer from '../components/ImageAndWordContainer';
+import ImageAndWordContainerAmharic from '../components/ImageAndWordContainerAmharic';
 import GameMetaInfo from '../components/GameMetaInfo';
 import LeftBottomContainer from '../components/LeftBottomContainer';
 import StartingVideoOverLay from '../components/StartingVideoOverLay';
 import WavingVideo from '../components/WavingVideo';
 import { AlphabetDefinationI } from '../type';
 import getLanguageWords from '../data';
+import sign from '../../public/sign.png';
+import { getLevelAmharicWords } from '../utils/amharicindex';
 const handAnalyzer = new HandAnalyzer();
 let skipPrediction = false;
 let score = 0;
@@ -61,8 +64,14 @@ function Game() {
 
   const handleSkip = () => {
     //level compelted go to level completed page
+
     if (wordIndex == 9) {
-      navigate(`/level-completed?hand=${hand}&level=${level}&points=${score}`);
+      navigate(
+        `/level-completed?hand=${hand}&level=${level}&points=${score}&lang=${searchParams[0].get(
+          'lang'
+        )}`
+      );
+      score = 0;
     }
     if (currentWordLength == selectedWord.length && selectedWord) {
       score++;
@@ -142,7 +151,7 @@ function Game() {
 
             if (response.countCorrectFingers == 5) {
               //stop detecting hand this value change after a delay
-
+              score++;
               skipPrediction = true;
               //this time out to delay change of current letter after detecting the hand
               setTimeout(() => {
@@ -224,10 +233,12 @@ function Game() {
       const languageWords = getLanguageWords(
         String(searchParams[0].get('lang'))
       );
-      //FIXME dont call getLevelWors for
-      let returnedLevelWords = languageWords;
+      let returnedLevelWords;
       if (searchParams[0].get('lang') == 'en') {
         returnedLevelWords = getLevelWords(languageWords, levelIndex);
+      }
+      if (searchParams[0].get('lang') == 'am') {
+        returnedLevelWords = getLevelAmharicWords(languageWords, levelIndex);
       }
       setLevelWords(returnedLevelWords);
       setSelectWord(returnedLevelWords[0]);
@@ -266,10 +277,18 @@ function Game() {
               </span> */}
             </div>
             <div></div>
-            <ImageAndWordContainer
-              selectedLetter={selectedLetter?.toUpperCase()}
-              imgPath={selectedLetter?.toUpperCase()}
-            />
+            {searchParams[0].get('lang') == 'am' ? (
+              <ImageAndWordContainerAmharic
+                selectedLetter={selectedLetter?.toUpperCase()}
+                imgPath={selectedLetter?.toUpperCase()}
+              />
+            ) : (
+              <ImageAndWordContainer
+                selectedLetter={selectedLetter?.toUpperCase()}
+                imgPath={selectedLetter?.toUpperCase()}
+              />
+            )}
+
             <LeftBottomContainer
               selectedWord={selectedWord}
               handleSkip={handleSkip}

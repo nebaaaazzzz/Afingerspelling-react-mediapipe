@@ -649,9 +649,9 @@ export class AmharicAlphabet {
       letter: 'አ',
       rotation: 'side',
       thumb: {
-        curlMin: fullCurlMinMoreForgiving,
-        curlMax: fullCurlMax,
-        special: 'none',
+        curlMin: noCurl,
+        curlMax: halfCurlMin,
+        special: 'thumbBendOverOtherFingers',
         percentageCorrect: 0,
         currentAngle: null
       },
@@ -683,7 +683,7 @@ export class AmharicAlphabet {
         percentageCorrect: 0,
         currentAngle: null
       }
-    };
+    }; //need tumb fix
     let ከ: AlphabetDefinationI = {
       letterNumber: 17,
       letter: 'ከ',
@@ -723,7 +723,7 @@ export class AmharicAlphabet {
         percentageCorrect: 0,
         currentAngle: null
       }
-    };
+    }; //need some fix
     let ኸ: AlphabetDefinationI = {
       letterNumber: 18,
       letter: 'ኸ',
@@ -737,28 +737,28 @@ export class AmharicAlphabet {
       },
       index: {
         curlMin: noCurl,
-        curlMax: halfCurlMin - 20,
+        curlMax: noCurl,
         special: 'none',
         percentageCorrect: 0,
         currentAngle: null
       },
       middle: {
-        curlMin: halfCurlMin + 20,
-        curlMax: fullCurlMin + 20,
+        curlMin: fullCurlMax,
+        curlMax: fullCurlMinMoreForgiving,
         special: 'none',
         percentageCorrect: 0,
         currentAngle: null
       },
       ring: {
-        curlMin: halfCurlMin + 20,
-        curlMax: fullCurlMin + 20,
+        curlMin: fullCurlMax,
+        curlMax: fullCurlMinMoreForgiving,
         special: 'none',
         percentageCorrect: 0,
         currentAngle: null
       },
       little: {
-        curlMin: halfCurlMin + 30,
-        curlMax: fullCurlMin + 30,
+        curlMin: noCurl,
+        curlMax: noCurl,
         special: 'none',
         percentageCorrect: 0,
         currentAngle: null
@@ -858,7 +858,8 @@ export class AmharicAlphabet {
         curlMax: fullCurlMax,
         special: 'thumbBendOverOtherFingers',
         percentageCorrect: 0,
-        currentAngle: null
+        currentAngle: null,
+        helpText: 'Bend it so its inside your palm'
       },
       index: {
         curlMin: noCurl,
@@ -1058,7 +1059,7 @@ export class AmharicAlphabet {
     };
     let ገ: AlphabetDefinationI = {
       letterNumber: 26,
-      letter: 'ge',
+      letter: 'ገ',
       rotation: 'up',
       thumb: {
         curlMin: noCurl,
