@@ -15,10 +15,14 @@ const reactToDOMCursor = (
 ): {
   countCorrectFingers: number;
   message: string;
-  lookForLetter?: AlphabetDefinationI;
+  lookForLetter?: AlphabetDefinationI | any;
 } => {
-  console.log(letter);
-
+  if (amharicAlphabet.specialCharacterArray[letter]) {
+    return specialCharacterDetection(
+      letter,
+      amharicAlphabet.specialCharacterArray[letter]
+    );
+  }
   // let lookForLetter = alphabet.getSpecificLetter(letter);
   let lookForLetter = amharicAlphabet.getSpecificLetter(letter);
   if (!lookForLetter) {
@@ -320,4 +324,24 @@ const reactToDOMCursor = (
 
   return { countCorrectFingers, lookForLetter, message: '' };
 };
+
+function specialCharacterDetection(
+  letterToCompare: any,
+  letter: any
+): {
+  countCorrectFingers: number;
+  lookForLetter: any;
+  message: string;
+} {
+  let sum = 0;
+  for (let i = 0; i < 21; i++) {
+    let z0 = letterToCompare[i][0] - letter[i][1];
+    let z1 = letterToCompare[i][1] - letter[i][2];
+    let z2 = letterToCompare[i][2] - letter[i][2];
+    let avg = (z0 + z1 + z2) / 3;
+    sum += avg;
+  }
+  console.log(sum / 21);
+  return { countCorrectFingers: 1, lookForLetter: {}, message: '' };
+}
 export default reactToDOMCursor;

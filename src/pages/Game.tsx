@@ -46,12 +46,13 @@ function Game() {
     if (wordIndex == 9) {
       navigate(`/level-completed?hand=${hand}&level=${level}&points=${score}`);
     }
-    if (wordLength == 4 && selectedWord) {
+    if (wordLength == selectedWord.length && selectedWord) {
+      score++;
       setSelectWord(levelWords[wordIndex + 1]);
       setWordLength(1);
       setWordIndex((prevWordIndex) => prevWordIndex + 1);
       setSelectedLetter(levelWords[wordIndex + 1][0]);
-    } else if (wordLength != 4 && selectedWord) {
+    } else if (wordLength != selectedWord.length && selectedWord) {
       setWordLength(wordLength + 1);
       setSelectedLetter(selectedWord[wordLength]);
       setWordLength(wordLength + 1);
@@ -59,7 +60,6 @@ function Game() {
   };
 
   const onResults = async (results) => {
-    console.log('hello world');
     let canvasCtx = canvasElement?.current?.getContext('2d');
     setCountPrediction(countPrediction++);
     if (countPrediction == 1) {
@@ -134,8 +134,8 @@ function Game() {
             } else if (response.message) {
               // console.log(response.message);
             }
-            if (response.lookForLetter) {
-              setLookForLetter(response.lookForLetter);
+            if (response?.lookForLetter) {
+              setLookForLetter(response?.lookForLetter);
             }
           }
         } else {

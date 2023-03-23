@@ -16,11 +16,11 @@ function Percentage({
     );
   }
   let sum =
-    lookForLetter.thumb.percentageCorrect +
-    lookForLetter.index.percentageCorrect +
-    lookForLetter.middle.percentageCorrect +
-    lookForLetter.ring.percentageCorrect +
-    lookForLetter.little.percentageCorrect;
+    lookForLetter?.thumb?.percentageCorrect +
+    lookForLetter?.index?.percentageCorrect +
+    lookForLetter?.middle?.percentageCorrect +
+    lookForLetter?.ring?.percentageCorrect +
+    lookForLetter?.little?.percentageCorrect;
   let avg = sum / 5;
   return (
     <div className="absolute top-80">
