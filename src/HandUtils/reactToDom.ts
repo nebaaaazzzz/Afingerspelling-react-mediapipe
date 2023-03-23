@@ -19,7 +19,6 @@ const reactToDOMCursor = (
 } => {
   if (amharicAlphabet.specialCharacterArray[letter]) {
     return specialCharacterDetection(
-      result,
       amharicAlphabet.specialCharacterArray[letter],
       fingerPoseResults
     );
@@ -327,8 +326,7 @@ const reactToDOMCursor = (
 };
 
 function specialCharacterDetection(
-  letterToCompare: any,
-  letter: any,
+  letter: number[],
   fingerPoseResults
 ): {
   countCorrectFingers: number;
@@ -340,22 +338,40 @@ function specialCharacterDetection(
   let middleFingerAngle = fingerPoseResults.curls[2].angle;
   let ringFingerAngle = fingerPoseResults.curls[3].angle;
   let littleFingerAngle = fingerPoseResults.curls[4].angle;
-  let c = [
+  let fingerAngles = [
     thumbAngle,
     indexFingerAngle,
     middleFingerAngle,
     ringFingerAngle,
     littleFingerAngle
   ];
-  console.log(c);
-  let te = [144, 132, 142, 144, 130];
-  // let che = []
+
   let count = 0;
+  //FIXME improve the percentage
+  let lookForLetter = {
+    thumb: {
+      percentageCorrect: 0
+    },
+    index: {
+      percentageCorrect: 0
+    },
+    middle: {
+      percentageCorrect: 0
+    },
+    ring: {
+      percentageCorrect: 0
+    },
+    little: {
+      percentageCorrect: 0
+    }
+  };
+  let fingers = ['thumb', 'index', 'middle', 'ring', 'little'];
   for (let i = 0; i < 5; i++) {
-    if (c[i] > te[i] - 5 && c[i] < te[i] + 5) {
+    if (fingerAngles[i] > letter[i] - 5 && fingerAngles[i] < letter[i] + 5) {
+      lookForLetter[fingers[i]].percentageCorrect = 1;
       count++;
     }
   }
-  return { countCorrectFingers: count, lookForLetter: {}, message: '' };
+  return { countCorrectFingers: count, lookForLetter, message: '' };
 }
 export default reactToDOMCursor;

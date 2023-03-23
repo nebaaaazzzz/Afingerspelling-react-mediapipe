@@ -16,7 +16,7 @@ import StartingVideoOverLay from '../components/StartingVideoOverLay';
 import WavingVideo from '../components/WavingVideo';
 import { AlphabetDefinationI } from '../type';
 import getLanguageWords from '../data';
-import sign from '../../public/sign.png';
+import sign from '/sign.png';
 import { getLevelAmharicWords } from '../utils/amharicindex';
 const handAnalyzer = new HandAnalyzer();
 let skipPrediction = false;
@@ -74,7 +74,6 @@ function Game() {
       score = 0;
     }
     if (currentWordLength == selectedWord.length && selectedWord) {
-      score++;
       setSelectWord(levelWords[wordIndex + 1]);
       setCurrentWordLength(1);
       setWordIndex((prevWordIndex) => prevWordIndex + 1);
@@ -151,6 +150,7 @@ function Game() {
 
             if (response.countCorrectFingers == 5) {
               //stop detecting hand this value change after a delay
+              skipPrediction = true;
               score++;
               skipPrediction = true;
               //this time out to delay change of current letter after detecting the hand
@@ -158,11 +158,11 @@ function Game() {
                 handleSkip();
               }, 200);
             } else if (response?.message) {
-              // console.log(response.message);
+              console.log(response.message);
             }
-            // if (response?.lookForLetter) {
-            //   setLookForLetter(response?.lookForLetter);
-            // }
+            if (response?.lookForLetter) {
+              setLookForLetter(response?.lookForLetter);
+            }
           }
         } else {
           setLookForLetter(null);
@@ -297,7 +297,9 @@ function Game() {
           </div>
         </>
       )}
-      <div className="flex-[1]  relative">
+      <div
+        className={`${isMediaPipeModelLoading ? 'w-0' : 'flex-[1]'}  relative`}
+      >
         {isGameStarted && (
           <GameMetaInfo
             skipPrediction={skipPrediction}
@@ -308,7 +310,7 @@ function Game() {
           />
         )}
 
-        {!isGameStarted && <StartingVideoOverLay />}
+        {!isGameStarted && !isMediaPipeModelLoading && <StartingVideoOverLay />}
         <video
           style={{ width: '50%', height: '100vh' }}
           ref={videoElement}

@@ -4,7 +4,7 @@ import { ScaleLoader } from 'react-spinners';
 function Loading({ word }: { word: string }) {
   return (
     <div
-      className="h-[100vh] w-full gap-20 flex flex-col justify-center items-center bg-[#683aff]  
+      className="h-[100vh]  w-full gap-20 flex flex-col justify-center items-center bg-[#683aff]  
     bg-auto bg-no-repeat bg-center "
     >
       <Bgloading word={word} />
