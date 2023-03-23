@@ -19,8 +19,9 @@ const reactToDOMCursor = (
 } => {
   if (amharicAlphabet.specialCharacterArray[letter]) {
     return specialCharacterDetection(
-      letter,
-      amharicAlphabet.specialCharacterArray[letter]
+      result,
+      amharicAlphabet.specialCharacterArray[letter],
+      fingerPoseResults
     );
   }
   // let lookForLetter = alphabet.getSpecificLetter(letter);
@@ -327,21 +328,34 @@ const reactToDOMCursor = (
 
 function specialCharacterDetection(
   letterToCompare: any,
-  letter: any
+  letter: any,
+  fingerPoseResults
 ): {
   countCorrectFingers: number;
   lookForLetter: any;
   message: string;
 } {
-  let sum = 0;
-  for (let i = 0; i < 21; i++) {
-    let z0 = letterToCompare[i][0] - letter[i][1];
-    let z1 = letterToCompare[i][1] - letter[i][2];
-    let z2 = letterToCompare[i][2] - letter[i][2];
-    let avg = (z0 + z1 + z2) / 3;
-    sum += avg;
+  let thumbAngle = fingerPoseResults.curls[0].angle;
+  let indexFingerAngle = fingerPoseResults.curls[1].angle;
+  let middleFingerAngle = fingerPoseResults.curls[2].angle;
+  let ringFingerAngle = fingerPoseResults.curls[3].angle;
+  let littleFingerAngle = fingerPoseResults.curls[4].angle;
+  let c = [
+    thumbAngle,
+    indexFingerAngle,
+    middleFingerAngle,
+    ringFingerAngle,
+    littleFingerAngle
+  ];
+  console.log(c);
+  let te = [144, 132, 142, 144, 130];
+  // let che = []
+  let count = 0;
+  for (let i = 0; i < 5; i++) {
+    if (c[i] > te[i] - 5 && c[i] < te[i] + 5) {
+      count++;
+    }
   }
-  console.log(sum / 21);
-  return { countCorrectFingers: 1, lookForLetter: {}, message: '' };
+  return { countCorrectFingers: count, lookForLetter: {}, message: '' };
 }
 export default reactToDOMCursor;

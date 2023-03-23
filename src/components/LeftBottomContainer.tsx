@@ -2,21 +2,21 @@ import React, { MouseEventHandler } from 'react';
 
 function LeftBottomContainer({
   selectedWord,
-  wordLength,
+  currentWordLength,
   handleSkip
 }: {
   selectedWord: string;
-  wordLength: number;
+  currentWordLength: number;
   handleSkip: MouseEventHandler;
 }) {
   return (
     <div className="flex flex-col items-center ">
       <div className="flex">
         <h1 className="text-6xl text-[#683aff]  capitalize ">
-          {selectedWord?.slice(0, wordLength - 1)}
+          {selectedWord?.slice(0, currentWordLength - 1)}
         </h1>
         <h1 className="text-6xl text-[#683aff] opacity-70 ">
-          {selectedWord?.slice(wordLength - 1)}
+          {selectedWord?.slice(currentWordLength - 1)}
         </h1>
       </div>
 

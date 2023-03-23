@@ -1255,8 +1255,9 @@ export class AmharicAlphabet {
       [0.7359614968299866, 0.43606477975845337, -0.07728888094425201],
       [0.7131798267364502, 0.3834681510925293, -0.07749918103218079]
     ];
+    this.specialCharacterArray = { ጰ, ፈ, ጠ, ጨ, ፐ };
     // Missing z,p,q,j,h
-    this.alphabetArray = [ሀ, ለ, ሐ, መ, ረ, ሰ, ሽ, ቀ, ዘ, ገ, ነ, ዠ, አ, ኘ, የ];
+    this.alphabetArray = [ሀ, ለ, ሐ, መ, ረ, ሰ, ቀ, ዘ, ገ, ነ, ዠ, አ, ኘ, የ];
   }
 
   public getRandomLetter = () => {

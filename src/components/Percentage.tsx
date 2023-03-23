@@ -3,12 +3,12 @@ import { AlphabetDefinationI } from '../type';
 
 function Percentage({
   lookForLetter,
-  ignore
+  skipPrediction
 }: {
   lookForLetter: AlphabetDefinationI | null;
-  ignore: boolean;
+  skipPrediction: boolean;
 }) {
-  if (!lookForLetter || ignore) {
+  if (!lookForLetter || skipPrediction) {
     return (
       <div className="absolute top-80">
         <p className="text-white text-xl">{0}%</p>

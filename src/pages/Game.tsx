@@ -7,17 +7,16 @@ import { getLevelWords } from '../utils';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { HandAnalyzer } from '../HandUtils/HandAnalyzer';
 import BackButton from '../components/BackButton';
-import moment from 'moment';
 import Modal from '../components/Modal/Modal';
 import ImageAndWordContainer from '../components/ImageAndWordContainer';
+import GameMetaInfo from '../components/GameMetaInfo';
 import LeftBottomContainer from '../components/LeftBottomContainer';
 import StartingVideoOverLay from '../components/StartingVideoOverLay';
 import WavingVideo from '../components/WavingVideo';
 import { AlphabetDefinationI } from '../type';
-import Percentage from '../components/Percentage';
 import getLanguageWords from '../data';
 const handAnalyzer = new HandAnalyzer();
-let ignore = false;
+let skipPrediction = false;
 let score = 0;
 type handDirection = 'left' | 'right';
 function Game() {
@@ -27,17 +26,36 @@ function Game() {
     useState<AlphabetDefinationI | null>(null);
   const hand = searchParams[0].get('hand') as handDirection;
   const [level, setLevel] = useState<number>();
-  const [started, setStarted] = useState(false);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isGameStarted, setIsGameStarted] = useState(false);
+  const [isMediaPipeModelLoading, setIsMediaPipeModelLoading] =
+    useState<boolean>(true);
+
   const [startTime, setStartTime] = useState<Date | undefined>();
   const [currentTime, setCurrentTime] = useState<Date | undefined>();
+
+  /**
+   * @description TO track current index from level words it is from 0 - 10
+   */
   const [wordIndex, setWordIndex] = useState(0);
+
+  /**
+   * @description TO track current current letter from selected word
+   */
+  const [currentWordLength, setCurrentWordLength] = useState(1);
   const [levelWords, setLevelWords] = useState<Array<string>>([]);
-  const [wordLength, setWordLength] = useState(1);
   const [selectedWord, setSelectWord] = useState<string>();
   const [selectedLetter, setSelectedLetter] = useState<string>();
+
+  /**
+   * @description TO to show modal after each word completion
+   */
   const [showModal, setShowModal] = useState(false);
+
+  /**
+   * @description just to count number of frame media pipe detected
+   */
   let [countPrediction, setCountPrediction] = useState(0);
+
   const videoElement = useRef(null);
   const canvasElement = useRef<HTMLCanvasElement>(null);
 
@@ -46,24 +64,23 @@ function Game() {
     if (wordIndex == 9) {
       navigate(`/level-completed?hand=${hand}&level=${level}&points=${score}`);
     }
-    if (wordLength == selectedWord.length && selectedWord) {
+    if (currentWordLength == selectedWord.length && selectedWord) {
       score++;
       setSelectWord(levelWords[wordIndex + 1]);
-      setWordLength(1);
+      setCurrentWordLength(1);
       setWordIndex((prevWordIndex) => prevWordIndex + 1);
       setSelectedLetter(levelWords[wordIndex + 1][0]);
-    } else if (wordLength != selectedWord.length && selectedWord) {
-      setWordLength(wordLength + 1);
-      setSelectedLetter(selectedWord[wordLength]);
-      setWordLength(wordLength + 1);
+    } else if (currentWordLength != selectedWord.length && selectedWord) {
+      setCurrentWordLength(currentWordLength + 1);
+      setSelectedLetter(selectedWord[currentWordLength]);
+      setCurrentWordLength(currentWordLength + 1);
     }
   };
-
   const onResults = async (results) => {
     let canvasCtx = canvasElement?.current?.getContext('2d');
     setCountPrediction(countPrediction++);
     if (countPrediction == 1) {
-      setLoading(false);
+      setIsMediaPipeModelLoading(false);
     }
 
     canvasCtx?.save();
@@ -107,7 +124,7 @@ function Game() {
             newLandMarks[5]
           ) * 10;
         if (handSize > 0.7) {
-          setStarted(true);
+          setIsGameStarted(true);
           drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
             color: '#ff00ff',
             lineWidth: 2
@@ -116,7 +133,7 @@ function Game() {
             color: 'transparent',
             lineWidth: 0
           });
-          if (selectedLetter && !ignore) {
+          if (selectedLetter && !skipPrediction) {
             const response = reactToDOMCursor(
               fingerPoseResults,
               newLandMarks,
@@ -126,17 +143,17 @@ function Game() {
             if (response.countCorrectFingers == 5) {
               //stop detecting hand this value change after a delay
 
-              ignore = true;
+              skipPrediction = true;
               //this time out to delay change of current letter after detecting the hand
               setTimeout(() => {
                 handleSkip();
               }, 200);
-            } else if (response.message) {
+            } else if (response?.message) {
               // console.log(response.message);
             }
-            if (response?.lookForLetter) {
-              setLookForLetter(response?.lookForLetter);
-            }
+            // if (response?.lookForLetter) {
+            //   setLookForLetter(response?.lookForLetter);
+            // }
           }
         } else {
           setLookForLetter(null);
@@ -172,12 +189,11 @@ function Game() {
   useEffect(() => {
     if (hands) {
       setStartTime(new Date().getTime());
-      console.log('hand dected');
       hands.onResults(onResults);
     }
     if (countPrediction != 0) {
       setTimeout(() => {
-        ignore = false;
+        skipPrediction = false;
       }, 2000);
     }
     let intervalId = setInterval(() => {
@@ -188,7 +204,7 @@ function Game() {
     return () => {
       clearInterval(intervalId);
     };
-  }, [selectedLetter, wordLength]);
+  }, [selectedLetter, currentWordLength]);
   useEffect(() => {
     if (videoElement.current) {
       const camera = new window.Camera(videoElement.current, {
@@ -200,7 +216,7 @@ function Game() {
     }
     //1121019492052017
 
-    if (started) {
+    if (isGameStarted) {
       const levelIndex = Number(searchParams[0].get('level') as String);
       setStartTime(new Date());
       setShowModal(true);
@@ -220,64 +236,26 @@ function Game() {
         setShowModal(false);
       }, 1000);
     }
-  }, [started]);
-  if (!started) {
-    return (
-      <div className="flex w-full">
-        {loading && (
-          <>
-            <BackButton
-              url={`/start-level?level=${searchParams[0].get(
-                'level'
-              )}&hand=${hand}`}
-            />
-            <Loading word="Loading" />
-          </>
-        )}
-
-        {!loading && (
-          <>
-            <BackButton
-              url={`/start-level?level=${searchParams[0].get(
-                'level'
-              )}&hand=${hand}`}
-            />
-            <div className="flex-[1] justify-between items-center p-5 bg-[#fff6df] flex  flex-col relative">
-              <WavingVideo />
-            </div>
-          </>
-        )}
-        <div className="flex-[1]  relative">
-          {!loading && <StartingVideoOverLay />}
-          <video
-            style={{ width: '50%', height: '100vh' }}
-            ref={videoElement}
-            className="input_video hidden"
-          ></video>
-          <canvas
-            className="output_canvas"
-            style={{
-              width: '100%',
-              objectFit: 'fill',
-              height: '100vh',
-              display: loading ? 'none' : 'block'
-            }}
-            ref={canvasElement}
-          ></canvas>
-        </div>
-      </div>
-    );
-  }
+  }, [isGameStarted]);
   return (
-    <div className="flex w-full">
-      {loading && (
+    <div className="flex w-full overflow-hidden">
+      <BackButton
+        url={`/start-level?level=${searchParams[0].get('level')}&hand=${hand}`}
+      />
+      {isMediaPipeModelLoading && (
         <>
-          <BackButton url={`/start-level?level=${level}&hand=${hand}`} />
           <Loading word="Loading" />
         </>
       )}
 
-      {!loading && (
+      {!isGameStarted && (
+        <>
+          <div className="flex-[1] justify-between items-center p-5 bg-[#fff6df] flex  flex-col relative">
+            <WavingVideo />
+          </div>
+        </>
+      )}
+      {isGameStarted && (
         <>
           {showModal && <Modal wordIndex={wordIndex} nextWord={selectedWord} />}
           <BackButton url={`/start-level?level=${level}&hand=${hand}`} />
@@ -295,26 +273,23 @@ function Game() {
             <LeftBottomContainer
               selectedWord={selectedWord}
               handleSkip={handleSkip}
-              wordLength={wordLength}
+              currentWordLength={currentWordLength}
             />
           </div>
         </>
       )}
       <div className="flex-[1]  relative">
-        <span className="absolute text-white text-lg m-10">
-          {currentTime && startTime
-            ? moment(currentTime - startTime).format('mm : ss')
-            : ''}
-        </span>
-        {!loading && (
-          <div className="flex absolute left-1/2 mt-5">
-            <p className="font-medium text-white m-2 text-2xl">
-              {score} Points
-            </p>
-          </div>
+        {isGameStarted && (
+          <GameMetaInfo
+            skipPrediction={skipPrediction}
+            lookForLetter={lookForLetter}
+            score={score}
+            currentTime={currentTime}
+            startTime={startTime}
+          />
         )}
-        <Percentage ignore={ignore} lookForLetter={lookForLetter} />
 
+        {!isGameStarted && <StartingVideoOverLay />}
         <video
           style={{ width: '50%', height: '100vh' }}
           ref={videoElement}
@@ -326,7 +301,7 @@ function Game() {
             width: '100%',
             objectFit: 'fill',
             height: '100vh',
-            display: loading ? 'none' : 'block'
+            display: isMediaPipeModelLoading ? 'none' : 'block'
           }}
           ref={canvasElement}
         ></canvas>
