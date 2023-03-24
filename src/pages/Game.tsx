@@ -9,7 +9,7 @@ import { HandAnalyzer } from '../HandUtils/HandAnalyzer';
 import BackButton from '../components/BackButton';
 import moment from 'moment';
 import Modal from '../components/Modal/Modal';
-// import ImageAndWordContainer from '../components/ImageAndWordContainer';
+import ImageAndWordContainer from '../components/ImageAndWordContainer';
 // import ImageAndWordContainerAmharic from '../components/ImageAndWordContainerAmharic';
 import LeftBottomContainer from '../components/LeftBottomContainer';
 import StartingVideoOverLay from '../components/StartingVideoOverLay';
@@ -298,11 +298,11 @@ function Game() {
               </span> */}
             </div>
             <div></div>
-            {/* <ImageAndWordContainer
+            <ImageAndWordContainer
               selectedLetter={selectedLetter?.toUpperCase()}
               // imgPath={selectedLetter?.toUpperCase()}
               imgPath={(src = 'public/sign.png')}
-            /> */}
+            />
             {/* <ImageAndWordContainerAmharic
               selectedLetter={selectedLetter?.toUpperCase()}
               imgPath={selectedLetter?.toUpperCase()}

@@ -2,7 +2,7 @@ import React, { createRef, useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import BackButton from '../components/BackButton';
 import SpellingSvg from '../components/SpellingSvg';
-import { levels } from '../utils/amharicindex';
+import { levels } from '../utils/index';
 
 function StartLevel() {
   const [isMouseOver, setIsMouseOver] = useState(false);
