@@ -22,6 +22,7 @@ function Percentage({
     lookForLetter?.ring?.percentageCorrect +
     lookForLetter?.little?.percentageCorrect;
   let avg = sum / 5;
+
   return (
     <div className="absolute top-80">
       <p className="text-white text-xl">{(avg * 100).toFixed(2)}%</p>

@@ -16,7 +16,6 @@ import StartingVideoOverLay from '../components/StartingVideoOverLay';
 import WavingVideo from '../components/WavingVideo';
 import { AlphabetDefinationI } from '../type';
 import getLanguageWords from '../data';
-import sign from '/sign.png';
 import { getLevelAmharicWords } from '../utils/amharicindex';
 const handAnalyzer = new HandAnalyzer();
 let skipPrediction = false;
@@ -158,7 +157,7 @@ function Game() {
                 handleSkip();
               }, 200);
             } else if (response?.message) {
-              console.log(response.message);
+              // console.log(response.message);
             }
             if (response?.lookForLetter) {
               setLookForLetter(response?.lookForLetter);

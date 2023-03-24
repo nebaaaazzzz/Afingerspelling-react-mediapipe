@@ -1,17 +1,22 @@
 export const levels = [
   ['ሀ', 'ለ', 'ነ', 'ረ', 'ከ', 'በ', 'አ', 'መ'],
-  ['ሐ', 'ቀ', 'ቸ', 'ዘ', 'አ', 'ገ', 'ጠ'],
-
+  ['ሐ', 'ቀ', 'ቸ', 'ዘ', 'አ', 'ገ', 'ጠ', 'ፈ'],
   ['ፐ', 'ደ', 'ፈ', 'ጀ', 'ተ'],
 
-  ['ወ', 'ከ', 'ዐ', 'ዠ']
+  ['ወ', 'ከ', 'ዐ', 'ዠ', 'ጨ', 'ጰ']
 ];
 function getRandomWordFromLevelAmharicWords(levelWords: string[]): string[] {
+  if (levelWords.length < 10) {
+    return levelWords;
+  }
   const levelWordsLength = levelWords.length;
-  let randomWordIndexArr: number[] = [];
   let randomWordArr: string[] = [];
-  for (let i = 0; i < 10; i++) {
-    randomWordIndexArr.push(Math.floor(Math.random() * levelWordsLength));
+  const set = new Set();
+  let randomWordIndexArr = [];
+  let numberToCompare = levelWords.length > 9 ? 10 : levelWords.length;
+  while (randomWordIndexArr.length < numberToCompare) {
+    set.add(Math.floor(Math.random() * levelWordsLength));
+    randomWordIndexArr = Array.from(set);
   }
   for (let i of randomWordIndexArr) {
     randomWordArr.push(levelWords[i]);
@@ -25,7 +30,6 @@ export function getLevelAmharicWords(
   const words = [...passedWords];
   let levelWords: string[] = []; //to hold all words in levelIndex
   let levelLetters = levels[levelIndex - 1];
-  console.log(levelLetters);
   /*contain level word from levelIndex to 0 concatinated */
 
   for (let wordIndex in words) {
@@ -44,23 +48,3 @@ export function getLevelAmharicWords(
 
   return getRandomWordFromLevelAmharicWords(levelWords);
 }
-// if (!words[wordIndex].includes(letter)) {
-//   levelWords.push(words[wordIndex]);
-//   words.splice(wordIndex, 1);
-// }
-// export function getAllWordsLeveled() {
-//   let allLevelWords = [];
-//   for (let level of levels) {
-//     let currentLevelWords = [];
-//     for (let letter of level) {
-//       for (let word in fourLetterWords) {
-//         console.log(fourLetterWords[word]);
-//         if (fourLetterWords[word].includes(letter)) {
-//           currentLevelWords.push(fourLetterWords[word]);
-//           fourLetterWords.splice(word, 1);
-//         }
-//       }
-//     }
-//     allLevelWords.push(currentLevelWords);
-//   }
-// }
