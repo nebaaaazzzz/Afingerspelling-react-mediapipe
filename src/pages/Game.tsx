@@ -9,15 +9,14 @@ import { HandAnalyzer } from '../HandUtils/HandAnalyzer';
 import BackButton from '../components/BackButton';
 import moment from 'moment';
 import Modal from '../components/Modal/Modal';
-import ImageAndWordContainer from '../components/ImageAndWordContainer';
-import ImageAndWordContainerAmharic from '../components/ImageAndWordContainerAmharic';
+// import ImageAndWordContainer from '../components/ImageAndWordContainer';
+// import ImageAndWordContainerAmharic from '../components/ImageAndWordContainerAmharic';
 import LeftBottomContainer from '../components/LeftBottomContainer';
 import StartingVideoOverLay from '../components/StartingVideoOverLay';
 import WavingVideo from '../components/WavingVideo';
 import { AlphabetDefinationI } from '../type';
 import Percentage from '../components/Percentage';
 import getLanguageWords from '../data';
-import sign from '../../public/sign.png';
 import { getLevelAmharicWords } from '../utils/amharicindex';
 const handAnalyzer = new HandAnalyzer();
 let ignore = false;
@@ -304,10 +303,10 @@ function Game() {
               // imgPath={selectedLetter?.toUpperCase()}
               imgPath={(src = 'public/sign.png')}
             /> */}
-            <ImageAndWordContainerAmharic
+            {/* <ImageAndWordContainerAmharic
               selectedLetter={selectedLetter?.toUpperCase()}
               imgPath={selectedLetter?.toUpperCase()}
-            />
+            /> */}
 
             <LeftBottomContainer
               selectedWord={selectedWord}
