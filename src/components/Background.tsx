@@ -11,9 +11,9 @@ function Background({ word }: { word: string }) {
         arrows={false}
         canSwipe={false}
       >
-        {word.split('').map((letter) => {
+        {word.split('').map((letter, i) => {
           return (
-            <div className="each-fade">
+            <div className="each-fade" key={i}>
               <img src={`/spelling/` + letter.toUpperCase() + '.png'} alt="F" />
             </div>
           );
