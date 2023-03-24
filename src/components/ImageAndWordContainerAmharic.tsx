@@ -11,10 +11,10 @@ function ImageAndWordContainer({
     <div className="flex items-center gap-10">
       <img
         draggable="false"
-        src={`public/sign.png`}
-        className="w-8/12 h-52 object-contain "
+        src={`/sign.png`}
+        className="w-8/12 object-contain"
       />
-      <h1 className="text-[20rem] text-primary font-light leading-10 ">
+      <h1 className="text-[15rem] text-primary font-light leading-10 ">
         {selectedLetter}
       </h1>
     </div>
