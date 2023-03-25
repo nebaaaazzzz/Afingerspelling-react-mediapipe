@@ -1216,15 +1216,12 @@ export class AmharicAlphabet {
       ከ,
       ኸ,
       ወ,
-      ዐ,
       ዘ,
       ዠ,
       የ,
       ደ,
       ጀ,
-      ገ,
-      ጸ,
-      ፀ
+      ገ
     ];
   }
 

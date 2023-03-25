@@ -1,10 +1,9 @@
 export const levels = [
-  ['ሀ', 'ለ', 'ነ', 'ረ', 'ከ', 'በ', 'አ', 'መ'],
-  ['ሐ', 'ቀ', 'ቸ', 'ዘ', 'አ', 'ገ', 'ጠ'],
+  ['ሀ', 'ሰ', 'ነ', 'ረ', 'ኘ', 'የ', 'ተ'],
+  ['ሠ', 'ነ', 'ረ', 'ገ', 'የ', 'በ'],
+  ['መ', 'ለ', 'ሸ', 'ቸ'],
 
-  ['ፐ', 'ደ', 'ፈ', 'ጀ', 'ተ'],
-
-  ['ወ', 'ከ', 'ዐ', 'ዠ']
+  ['ጠ', 'ጨ', 'መ', 'ሐ']
 ];
 function getRandomWordFromLevelAmharicWords(levelWords: string[]): string[] {
   const levelWordsLength = levelWords.length;

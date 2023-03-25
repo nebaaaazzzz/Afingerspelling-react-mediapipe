@@ -7,7 +7,6 @@ import SelectHand from './pages/SelectHand';
 import StartLevel from './pages/StartLevel';
 import LevelCompleted from './pages/LevelCompleted';
 import SelectLanguage from './pages/SelectLanguage';
-// import StartLevelAmharics from './pages/StartLevelAmharics';
 
 function App() {
   return (
