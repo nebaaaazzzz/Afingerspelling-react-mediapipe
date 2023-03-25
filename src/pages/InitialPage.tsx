@@ -52,8 +52,8 @@ function InitialPage() {
               ref={buttonRef}
               to={`/select-hand`}
               className={`${
-                configuration?.level ? 'left-80' : 'left-48'
-              } btn rounded-full w-80 h-16 absolute  inset-y-7 bg-[#FFE090] text-[#683aff] hover:bg-white text-3xl leading-8 normal-case font-normal`}
+                configuration?.level ? 'left-96' : 'left-48'
+              } btn rounded-full w-48 h-16 absolute  inset-y-7 bg-[#FFE090] text-[#683aff] hover:bg-white text-3xl leading-8 normal-case font-normal`}
             >
               Let's go
             </Link>
@@ -61,9 +61,7 @@ function InitialPage() {
               <Link
                 ref={buttonRef}
                 to={`/start-level?level=${configuration?.level}&lang=${configuration?.lang}&hand=${configuration?.hand}`}
-                className="btn rounded-full w-80 h-16 absolute -left-20 inset-y-7 bg-[#FFE090] text-[#683aff] hover:bg-white text-3xl leading-8 normal-case font-normal
-          
-          "
+                className="btn rounded-full w-48 h-16 absolute left-28 inset-y-7 bg-[#FFE090] text-[#683aff] hover:bg-white text-3xl leading-8 normal-case font-normal"
               >
                 Continue
               </Link>

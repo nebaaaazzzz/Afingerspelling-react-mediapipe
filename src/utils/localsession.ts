@@ -13,7 +13,15 @@ export const storeSessionInfo = async (
   await localforage.setItem('hand', hand);
   await localforage.setItem('level', level);
 };
-
+export const storeLevelScore = async (
+  level: string,
+  score: number
+): Promise<void> => {
+  await localforage.setItem(level, score);
+};
+export const getLevelScore = async (level: string) => {
+  return localforage.getItem(level);
+};
 export const getSessionInfo = async (): Promise<{
   hand: unknown;
   lang: unknown;

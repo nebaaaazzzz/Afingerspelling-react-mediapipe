@@ -1,8 +1,9 @@
 import React, { createRef, useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import BackButton from '../components/BackButton';
 import SpellingSvg from '../components/SpellingSvg';
 import { levels } from '../utils/amharicindex';
+import { storeLevelScore } from '../utils/localsession';
 
 function StartLevel() {
   const [isMouseOver, setIsMouseOver] = useState(false);
@@ -40,7 +41,7 @@ function StartLevel() {
           'hand'
         )}&lang=${searchParams[0].get('lang')}`}
       />
-      <div className="circleTop bg-[#ffebb8] w-[230px] h-[432px] rounded-tr-full rounded-br-full absolute inset-x-0"></div>
+      <div className="circle  Top bg-[#ffebb8] w-[230px] h-[432px] rounded-tr-full rounded-br-full absolute inset-x-0"></div>
       <div className="circleTop bg-[#ffebb8] w-[230px] h-[432px] rounded-tl-full rounded-bl-full absolute right-0 "></div>
 
       <h1 className="text-8xl text-[#683aff]">Level {level}</h1>
