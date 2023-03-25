@@ -50,19 +50,23 @@ function InitialPage() {
           <div className="card">
             <Link
               ref={buttonRef}
-              to={`${
-                configuration
-                  ? `/start-level?level=${configuration?.level}&lang=${configuration?.lang}&hand=${configuration?.hand}`
-                  : '/select-hand'
-              }`}
-              className="btn rounded-full w-80 h-16 absolute left-48 inset-y-7 bg-[#FFE090] text-[#683aff] hover:bg-white text-3xl leading-8 normal-case font-normal
-          
-          
-          "
+              to={`/select-hand`}
+              className="btn rounded-full w-80 h-16 absolute left-48 inset-y-7 bg-[#FFE090] text-[#683aff] hover:bg-white text-3xl leading-8 normal-case font-normal"
             >
               Let's go
             </Link>
-            <div className="text-[14px] absolute top-32 left-40 font-[LabilGroteskRegular sans-serif] leading-5">
+            {configuration?.level && (
+              <Link
+                ref={buttonRef}
+                to={`/start-level?level=${configuration?.level}&lang=${configuration?.lang}&hand=${configuration?.hand}`}
+                className="btn rounded-full w-80 h-16 absolute -left-36 inset-y-7 bg-[#FFE090] text-[#683aff] hover:bg-white text-3xl leading-8 normal-case font-normal
+          
+          "
+              >
+                Continue
+              </Link>
+            )}
+            <div className="text-[14px] absolute top-32 left-44 font-[LabilGroteskRegular sans-serif] leading-5">
               <p>This game will using your webcam and machine learning to</p>
               <p>
                 analyze your handshapes.Everything is processed locally and
