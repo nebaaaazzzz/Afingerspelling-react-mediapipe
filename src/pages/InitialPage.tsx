@@ -1,11 +1,16 @@
 import { createRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SpellingSvg from '../components/SpellingSvg';
+import { getSessionInfo } from '../utils/localsession';
 
 function InitialPage() {
   const [isMouseOver, setIsMouseOver] = useState(false);
+  const [configuration, setConfiguration] = useState<any>();
   const buttonRef = createRef<HTMLAnchorElement>();
   useEffect(() => {
+    (async () => {
+      setConfiguration(await getSessionInfo());
+    })();
     const mouseEnterHandler = async (e: MouseEvent) => {
       setIsMouseOver(true);
     };
@@ -21,7 +26,7 @@ function InitialPage() {
     };
   }, []);
   return (
-    <div className="flex flex-col h-[100vh] overflow-hidden items-center justify-center bg-[#683aff]  gap-1 ">
+    <div className="flex w-screen flex-col h-screen overflow-hidden items-center justify-center bg-[#683aff]  gap-1 ">
       <div className="absolute  z-0 ">
         {isMouseOver ? (
           <img src="/hover.png" width="470" height="100" />
@@ -45,7 +50,11 @@ function InitialPage() {
           <div className="card">
             <Link
               ref={buttonRef}
-              to="/select-hand"
+              to={`${
+                configuration
+                  ? `/start-level?level=${configuration?.level}&lang=${configuration?.lang}&hand=${configuration?.hand}`
+                  : '/select-hand'
+              }`}
               className="btn rounded-full w-80 h-16 absolute left-48 inset-y-7 bg-[#FFE090] text-[#683aff] hover:bg-white text-3xl leading-8 normal-case font-normal
           
           

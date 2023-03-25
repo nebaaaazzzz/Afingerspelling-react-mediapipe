@@ -35,7 +35,11 @@ function StartLevel() {
     } 
     bg-top   bg-no-repeat bg-center items-center justify-center gap-10`}
     >
-      <BackButton url={`/select-level?hand=${searchParams[0].get('hand')}`} />
+      <BackButton
+        url={`/select-level?hand=${searchParams[0].get(
+          'hand'
+        )}&lang=${searchParams[0].get('lang')}`}
+      />
       <div className="circleTop bg-[#ffebb8] w-[230px] h-[432px] rounded-tr-full rounded-br-full absolute inset-x-0"></div>
       <div className="circleTop bg-[#ffebb8] w-[230px] h-[432px] rounded-tl-full rounded-bl-full absolute right-0 "></div>
 

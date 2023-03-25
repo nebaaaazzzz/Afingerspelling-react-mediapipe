@@ -1,17 +1,11 @@
 import React from 'react';
 
-function ImageAndWordContainer({
-  imgPath,
-  selectedLetter
-}: {
-  imgPath: string;
-  selectedLetter: string;
-}) {
+function ImageAndWordContainer({ selectedLetter }: { selectedLetter: string }) {
   return (
     <div className="flex items-center gap-10">
       <img
         draggable="false"
-        src={`/spelling/${imgPath}.png`}
+        src={`/spelling/${selectedLetter}.png`}
         className="w-11/12 h-96 object-contain "
       />
       <h1 className="text-[20rem] text-primary font-light leading-10 ">

@@ -17,6 +17,7 @@ import WavingVideo from '../components/WavingVideo';
 import { AlphabetDefinationI } from '../type';
 import getLanguageWords from '../data';
 import { getLevelAmharicWords } from '../utils/amharicindex';
+import { storeSessionInfo } from '../utils/localsession';
 const handAnalyzer = new HandAnalyzer();
 let skipPrediction = false;
 let score = 0;
@@ -214,6 +215,12 @@ function Game() {
     };
   }, [selectedLetter, currentWordLength]);
   useEffect(() => {
+    storeSessionInfo(
+      searchParams[0].get('lang'),
+      searchParams[0].get('hand'),
+      searchParams[0].get('level')
+    );
+
     if (videoElement.current) {
       const camera = new window.Camera(videoElement.current, {
         onFrame: async () => {
@@ -250,7 +257,9 @@ function Game() {
   return (
     <div className="flex w-full overflow-hidden">
       <BackButton
-        url={`/start-level?level=${searchParams[0].get('level')}&hand=${hand}`}
+        url={`/start-level?level=${searchParams[0].get(
+          'level'
+        )}&hand=${hand}&lang=${searchParams[0].get('lang')}`}
       />
       {isMediaPipeModelLoading && (
         <>
@@ -284,7 +293,6 @@ function Game() {
             ) : (
               <ImageAndWordContainer
                 selectedLetter={selectedLetter?.toUpperCase()}
-                imgPath={selectedLetter?.toUpperCase()}
               />
             )}
 
@@ -297,7 +305,9 @@ function Game() {
         </>
       )}
       <div
-        className={`${isMediaPipeModelLoading ? 'w-0' : 'flex-[1]'}  relative`}
+        className={`${
+          isMediaPipeModelLoading ? 'bg-[#683aff]' : 'flex-[1]'
+        }  relative`}
       >
         {isGameStarted && (
           <GameMetaInfo
