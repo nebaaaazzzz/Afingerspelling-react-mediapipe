@@ -17,11 +17,12 @@ function LevelCompleted() {
   useEffect(() => {
     (async () => {
       if (Number(level) == 4) {
-        storeSessionInfo(
-          searchParams[0].get('lang'),
-          searchParams[0].get('hand'),
-          searchParams[0].get('level')
+        await storeSessionInfo(
+          searchParams.get('lang'),
+          searchParams.get('hand'),
+          searchParams.get('level')
         );
+        console.log('hello world');
         let levelScores = {};
         for (let i = 1; i < 4; i++) {
           const levelScore = await getLevelScore(String(i));
@@ -29,7 +30,10 @@ function LevelCompleted() {
             levelScores[i] = levelScore;
           }
         }
-        levelScores[4] = searchParams.get('points');
+        levelScores[4] = (
+          (Number(searchParams.get('points')) * 10) /
+          3
+        ).toFixed(2);
         let s = Object.values(levelScores); // array of level scores
         setPoints(
           Number(
@@ -38,14 +42,17 @@ function LevelCompleted() {
             }, 0)
           ) / s.length
         );
+        setPoints(0);
+        // let va = ((Number(searchParams.get('points')) * 10) / 3).toFixed(1);
+
         setLevelsScore(levelScores);
-        setPoints(searchParams.get('points'));
+        setPoints(levelScores[4]);
         await clearAllScore();
       } else {
         await storeSessionInfo(
           searchParams.get('lang'),
           searchParams.get('hand'),
-          searchParams.get('level') + 1
+          Number(searchParams.get('level')) + 1
         );
         let va = ((Number(searchParams.get('points')) * 10) / 3).toFixed(1);
         storeLevelScore(level, va);
@@ -61,7 +68,7 @@ function LevelCompleted() {
         Object.entries(levelesScore).map((l) => {
           return (
             <p>
-              Level {l[0]} : {l[1] * 10}%
+              Level {l[0]} : {((l[1] * 10) / 3).toFixed(2)}%
             </p>
           );
         })}
@@ -73,7 +80,15 @@ function LevelCompleted() {
       </h1>
       <div className="flex mt-10 gap-10">
         {/* if 4 reached not to show Next level button */}
-        {!(level == '4') || (
+        <Link
+          to={`/start-level?hand=${hand}&level=${Number(
+            level
+          )}&lang=${searchParams.get('lang')}`}
+          className="btn px-10 h-14 text-xl  hover:border-[#683aff] rounded-3xl hover:bg-[#ffffa0] bg-[#fff] text-[#683aff] border-none my-2"
+        >
+          Retry
+        </Link>
+        {!(level == '4') && (
           <Link
             to={`/start-level?hand=${hand}&level=${
               Number(level) + 1

@@ -7,7 +7,7 @@ export const configLocalForage = () => {
 export const storeSessionInfo = async (
   lang: string,
   hand: string,
-  level: string
+  level: string | number
 ): Promise<void> => {
   await localforage.setItem('lang', lang);
   await localforage.setItem('hand', hand);
