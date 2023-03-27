@@ -229,7 +229,6 @@ function Game() {
       });
       camera.start();
     }
-    //1121019492052017
 
     if (isGameStarted) {
       const levelIndex = Number(searchParams[0].get('level') as String);

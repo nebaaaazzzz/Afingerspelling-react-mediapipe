@@ -1,17 +1,27 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import SpellingSvg from '../components/SpellingSvg';
-import { getLevelScore } from '../utils/localsession';
+import {
+  getLevelScore,
+  clearAllScore,
+  storeSessionInfo,
+  storeLevelScore
+} from '../utils/localsession';
 
 function LevelCompleted() {
   const searchParams = useSearchParams()[0];
   const hand = searchParams.get('hand');
   const level = searchParams.get('level');
-  const [points, setPoints] = useState<number>();
+  const [points, setPoints] = useState<number | string>();
   const [levelesScore, setLevelsScore] = useState<Record<string, number>>();
   useEffect(() => {
     (async () => {
       if (Number(level) == 4) {
+        storeSessionInfo(
+          searchParams[0].get('lang'),
+          searchParams[0].get('hand'),
+          searchParams[0].get('level')
+        );
         let levelScores = {};
         for (let i = 0; i < 3; i++) {
           const levelScore = await getLevelScore(String(i + 1));
@@ -31,8 +41,16 @@ function LevelCompleted() {
             10
         );
         setLevelsScore(levelScores);
+        await clearAllScore();
       } else {
-        setPoints(Number(searchParams.get('points')) * 10);
+        storeSessionInfo(
+          searchParams[0].get('lang'),
+          searchParams[0].get('hand'),
+          searchParams[0].get('level') + 1
+        );
+        let o = ((Number(searchParams.get('points')) * 10) / 3).toFixed(2);
+        storeLevelScore(level, o);
+        setPoints(o);
       }
     })();
   }, []);
@@ -55,26 +73,17 @@ function LevelCompleted() {
         fingerspelling vocabulary
       </h1>
       <div className="flex mt-10 gap-10">
-        <Link
-          to={`/game?hand=${hand}&level=${level}&lang=${searchParams.get(
-            'lang'
-          )}`}
-          className="btn px-10 h-14 text-xl border-white  hover:border-[#683aff] hover:text-[#683aff] rounded-3xl hover:bg-[#ffffa0] bg-[transparent] text-[#fff]  my-2"
-        >
-          Try Again
-        </Link>
         {/* if 4 reached not to show Next level button */}
-        {!(level == '4') ||
-          (points > 50 && (
-            <Link
-              to={`/start-level?hand=${hand}&level=${
-                Number(level) + 1
-              }&lang=${searchParams.get('lang')}`}
-              className="btn px-10 h-14 text-xl  hover:border-[#683aff] rounded-3xl hover:bg-[#ffffa0] bg-[#fff] text-[#683aff] border-none my-2"
-            >
-              Next Level
-            </Link>
-          ))}
+        {!(level == '4') || (
+          <Link
+            to={`/start-level?hand=${hand}&level=${
+              Number(level) + 1
+            }&lang=${searchParams.get('lang')}`}
+            className="btn px-10 h-14 text-xl  hover:border-[#683aff] rounded-3xl hover:bg-[#ffffa0] bg-[#fff] text-[#683aff] border-none my-2"
+          >
+            Next Level
+          </Link>
+        )}
       </div>
     </div>
   );

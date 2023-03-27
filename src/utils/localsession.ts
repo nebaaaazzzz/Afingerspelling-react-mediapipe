@@ -15,9 +15,15 @@ export const storeSessionInfo = async (
 };
 export const storeLevelScore = async (
   level: string,
-  score: number
+  score: number | string
 ): Promise<void> => {
   await localforage.setItem(level, score);
+};
+export const clearAllScore = async () => {
+  await localforage.removeItem('1');
+  await localforage.removeItem('2');
+  await localforage.removeItem('3');
+  await localforage.removeItem('4');
 };
 export const getLevelScore = async (level: string) => {
   return localforage.getItem(level);

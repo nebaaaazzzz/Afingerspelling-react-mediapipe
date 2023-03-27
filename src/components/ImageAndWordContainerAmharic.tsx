@@ -14,7 +14,7 @@ function ImageAndWordContainer({
         src={`/sign.png`}
         className="w-8/12 object-contain"
       />
-      <h1 className="text-[15rem] text-primary font-light leading-10 ">
+      <h1 className="text-[12rem] text-primary font-light leading-10 ">
         {selectedLetter}
       </h1>
     </div>
