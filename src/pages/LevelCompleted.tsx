@@ -23,34 +23,33 @@ function LevelCompleted() {
           searchParams[0].get('level')
         );
         let levelScores = {};
-        for (let i = 0; i < 3; i++) {
-          const levelScore = await getLevelScore(String(i + 1));
+        for (let i = 1; i < 4; i++) {
+          const levelScore = await getLevelScore(String(i));
           if (levelScore != undefined) {
-            levelScores[i + 1] = levelScore;
+            levelScores[i] = levelScore;
           }
         }
         levelScores[4] = searchParams.get('points');
         let s = Object.values(levelScores); // array of level scores
         setPoints(
-          (Number(
+          Number(
             s.reduce((prev, current) => {
               return Number(prev) + Number(current);
             }, 0)
-          ) /
-            s.length) *
-            10
+          ) / s.length
         );
         setLevelsScore(levelScores);
+        setPoints(searchParams.get('points'));
         await clearAllScore();
       } else {
-        storeSessionInfo(
-          searchParams[0].get('lang'),
-          searchParams[0].get('hand'),
-          searchParams[0].get('level') + 1
+        await storeSessionInfo(
+          searchParams.get('lang'),
+          searchParams.get('hand'),
+          searchParams.get('level') + 1
         );
-        let o = ((Number(searchParams.get('points')) * 10) / 3).toFixed(2);
-        storeLevelScore(level, o);
-        setPoints(o);
+        let va = ((Number(searchParams.get('points')) * 10) / 3).toFixed(1);
+        storeLevelScore(level, va);
+        setPoints(va);
       }
     })();
   }, []);
