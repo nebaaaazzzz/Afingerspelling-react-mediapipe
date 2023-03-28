@@ -150,39 +150,42 @@ export class AmharicAlphabet {
       rotation: 'up',
       thumb: {
         curlMin: noCurl,
-        curlMax: fullCurlMax,
+        curlMax: halfCurlMin,
         special: 'thumbBendOverOtherFingers',
         percentageCorrect: 0,
         currentAngle: null
       },
-
       index: {
-        curlMin: halfCurlMin,
-        curlMax: fullCurlMinMoreForgiving,
+        curlMin: halfCurlMin + 35,
+        curlMax: 130,
         special: 'none',
         percentageCorrect: 0,
-        currentAngle: null
+        currentAngle: null,
+        helpText: this._helpTexts.bend
       },
       middle: {
-        curlMin: halfCurlMin,
-        curlMax: fullCurlMinMoreForgiving,
+        curlMin: halfCurlMin + 35,
+        curlMax: 130,
         special: 'none',
         percentageCorrect: 0,
-        currentAngle: null
+        currentAngle: null,
+        helpText: this._helpTexts.bend
       },
       ring: {
-        curlMin: halfCurlMin,
-        curlMax: fullCurlMinMoreForgiving,
+        curlMin: halfCurlMin + 35,
+        curlMax: 130,
         special: 'none',
         percentageCorrect: 0,
-        currentAngle: null
+        currentAngle: null,
+        helpText: this._helpTexts.bend
       },
       little: {
-        curlMin: halfCurlMin,
-        curlMax: fullCurlMinMoreForgiving,
+        curlMin: halfCurlMin + 35,
+        curlMax: 130,
         special: 'none',
         percentageCorrect: 0,
-        currentAngle: null
+        currentAngle: null,
+        helpText: this._helpTexts.bend
       }
     };
     let ሠ: AlphabetDefinationI = {
