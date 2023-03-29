@@ -46,6 +46,12 @@ function InitialPage() {
         <div className="text-[#ffe090] text-2xl text-center font-[LabilGroteskRegular sans-serif] tracking-wide leading-7">
           <p>Learn the ABC in American Sign Languge </p>
           <h1>with machine Languge</h1>
+          {configuration?.level && (
+            <h1>
+              You can continue from where you left off last time by pressing
+              Continue
+            </h1>
+          )}
 
           <div className="card">
             <Link

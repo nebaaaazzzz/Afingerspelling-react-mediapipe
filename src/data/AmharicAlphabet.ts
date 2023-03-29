@@ -1135,7 +1135,7 @@ export class AmharicAlphabet {
       135.5633700842473, 153.42394192501627, 168.61671007580182,
       15.774900747594426, 18.509153626720114
     ];
-    this.specialCharacterArray = { ጰ, ፈ, ጠ, ጨ, ፐ };
+    this.specialCharacterArray = { ጰ, ፈ, ፐ, ጠ, ጨ };
     // Missing z,p,q,j,h
     this.alphabetArray = [ሀ, ለ, ሐ, መ, ረ, ሰ, ቀ, ዘ, ገ, ነ, ዠ, አ, ኘ, የ, በ, ተ, ሠ, ሸ];
   }

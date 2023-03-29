@@ -367,7 +367,7 @@ function specialCharacterDetection(
   };
   let fingers = ['thumb', 'index', 'middle', 'ring', 'little'];
   for (let i = 0; i < 5; i++) {
-    if (fingerAngles[i] > letter[i] - 15 && fingerAngles[i] < letter[i] + 15) {
+    if (fingerAngles[i] > letter[i] - 20 && fingerAngles[i] < letter[i] + 20) {
       lookForLetter[fingers[i]].percentageCorrect = 1;
       count++;
     }
