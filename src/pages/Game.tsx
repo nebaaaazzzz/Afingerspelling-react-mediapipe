@@ -286,8 +286,8 @@ function Game() {
             <div></div>
             {searchParams[0].get('lang') == 'am' ? (
               <ImageAndWordContainerAmharic
-                selectedLetter={selectedLetter?.toUpperCase()}
-                imgPath={selectedLetter?.toUpperCase()}
+                selectedLetter={selectedLetter}
+                imgPath={selectedLetter}
               />
             ) : (
               <ImageAndWordContainer
