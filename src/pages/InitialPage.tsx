@@ -47,9 +47,9 @@ function InitialPage() {
           <p>Learn the ABC in American Sign Languge </p>
           <h1>with machine Languge</h1>
           {configuration?.level && (
-            <h1>
+            <h1 className="mt-10">
               You can continue from where you left off last time by pressing
-              Continue
+              Resume
             </h1>
           )}
 
@@ -61,7 +61,7 @@ function InitialPage() {
                 configuration?.level ? 'left-96' : 'left-48'
               } btn rounded-full w-48 h-16 absolute  inset-y-7 bg-[#FFE090] text-[#683aff] hover:bg-white text-3xl leading-8 normal-case font-normal`}
             >
-              Let's go
+              New game
             </Link>
             {configuration?.level && (
               <Link
@@ -69,7 +69,7 @@ function InitialPage() {
                 to={`/start-level?level=${configuration?.level}&lang=${configuration?.lang}&hand=${configuration?.hand}`}
                 className="btn rounded-full w-48 h-16 absolute left-28 inset-y-7 bg-[#FFE090] text-[#683aff] hover:bg-white text-3xl leading-8 normal-case font-normal"
               >
-                Continue
+                Resume
               </Link>
             )}
             <div className="text-[14px] absolute top-32 left-44 font-[LabilGroteskRegular sans-serif] leading-5">

@@ -367,11 +367,18 @@ function specialCharacterDetection(
   };
   let fingers = ['thumb', 'index', 'middle', 'ring', 'little'];
   for (let i = 0; i < 5; i++) {
-    if (fingerAngles[i] > letter[i] - 20 && fingerAngles[i] < letter[i] + 20) {
+    if (fingerAngles[i] > letter[i] - 14 && fingerAngles[i] < letter[i] + 14) {
       lookForLetter[fingers[i]].percentageCorrect = 1;
       count++;
     }
   }
+  // console.log(
+  //   thumbAngle,
+  //   indexFingerAngle,
+  //   middleFingerAngle,
+  //   ringFingerAngle,
+  //   littleFingerAngle
+  // );
   return { countCorrectFingers: count, lookForLetter, message: '' };
 }
 export default reactToDOMCursor;

@@ -144,50 +144,50 @@ export class AmharicAlphabet {
         currentAngle: null
       }
     };
-    let መ: AlphabetDefinationI = {
-      letterNumber: 4,
-      letter: 'መ',
-      rotation: 'up',
-      thumb: {
-        curlMin: noCurl,
-        curlMax: halfCurlMin,
-        special: 'thumbBendOverOtherFingers',
-        percentageCorrect: 0,
-        currentAngle: null
-      },
-      index: {
-        curlMin: halfCurlMin + 35,
-        curlMax: 130,
-        special: 'none',
-        percentageCorrect: 0,
-        currentAngle: null,
-        helpText: this._helpTexts.bend
-      },
-      middle: {
-        curlMin: halfCurlMin + 35,
-        curlMax: 130,
-        special: 'none',
-        percentageCorrect: 0,
-        currentAngle: null,
-        helpText: this._helpTexts.bend
-      },
-      ring: {
-        curlMin: halfCurlMin + 35,
-        curlMax: 130,
-        special: 'none',
-        percentageCorrect: 0,
-        currentAngle: null,
-        helpText: this._helpTexts.bend
-      },
-      little: {
-        curlMin: halfCurlMin + 35,
-        curlMax: 130,
-        special: 'none',
-        percentageCorrect: 0,
-        currentAngle: null,
-        helpText: this._helpTexts.bend
-      }
-    };
+    // let መ: AlphabetDefinationI = {
+    //   letterNumber: 4,
+    //   letter: 'መ',
+    //   rotation: 'up',
+    //   thumb: {
+    //     curlMin: noCurl,
+    //     curlMax: halfCurlMin,
+    //     special: 'thumbBendOverOtherFingers',
+    //     percentageCorrect: 0,
+    //     currentAngle: null
+    //   },
+    //   index: {
+    //     curlMin: halfCurlMin + 35,
+    //     curlMax: 130,
+    //     special: 'none',
+    //     percentageCorrect: 0,
+    //     currentAngle: null,
+    //     helpText: this._helpTexts.bend
+    //   },
+    //   middle: {
+    //     curlMin: halfCurlMin + 35,
+    //     curlMax: 130,
+    //     special: 'none',
+    //     percentageCorrect: 0,
+    //     currentAngle: null,
+    //     helpText: this._helpTexts.bend
+    //   },
+    //   ring: {
+    //     curlMin: halfCurlMin + 35,
+    //     curlMax: 130,
+    //     special: 'none',
+    //     percentageCorrect: 0,
+    //     currentAngle: null,
+    //     helpText: this._helpTexts.bend
+    //   },
+    //   little: {
+    //     curlMin: halfCurlMin + 35,
+    //     curlMax: 130,
+    //     special: 'none',
+    //     percentageCorrect: 0,
+    //     currentAngle: null,
+    //     helpText: this._helpTexts.bend
+    //   }
+    // };
     let ሠ: AlphabetDefinationI = {
       letterNumber: 5,
       letter: 'ሠ',
@@ -1113,12 +1113,24 @@ export class AmharicAlphabet {
       }
     };
 
-    let ጠ = [144, 132, 142, 144, 130];
-
-    let ጨ = [
-      147.96269774432142, 133.13289491885138, 140.6874382534127,
-      140.61500633791286, 129.5329696078979
+    // let  = [144, 132, 142, 144, 130];
+    let ጠ = [
+      136.43863867291532, 112.8296581997838, 121.34471772490016,
+      111.74618467364762, 77.39124118185943
     ];
+    // let ጨ = [
+    //   147.96269774432142, 133.13289491885138, 140.6874382534127,
+    //   140.61500633791286, 129.5329696078979
+    // ];
+    // let ጨ = [
+    //   95.43310396779214, 105.58689604139842, 113.24502860717466,
+    //   97.10791907714743, 49.207297041070454
+    // ];
+    let ጨ = [
+      160.5386797135335, 121.9098790219572, 132.7552131437273, 128.385587349218,
+      106.92028289113992
+    ];
+
     let ፐ = [
       102.75979872486583, 133.4226316739686, 116.22980698771643,
       22.70568401341046, 16.795905531561047
@@ -1135,9 +1147,13 @@ export class AmharicAlphabet {
       135.5633700842473, 153.42394192501627, 168.61671007580182,
       15.774900747594426, 18.509153626720114
     ];
-    this.specialCharacterArray = { ጰ, ፈ, ፐ, ጠ, ጨ };
+    let መ = [
+      145.6628240924694, 148.87699696319558, 146.17509462184796,
+      133.56968857408378, 145.3295550500663
+    ];
+    this.specialCharacterArray = { ጰ, ፈ, ፐ, ጠ, ጨ, መ };
     // Missing z,p,q,j,h
-    this.alphabetArray = [ሀ, ለ, ሐ, መ, ረ, ሰ, ቀ, ዘ, ገ, ነ, ዠ, አ, ኘ, የ, በ, ተ, ሠ, ሸ];
+    this.alphabetArray = [ሀ, ለ, ሐ, ረ, ሰ, ቀ, ዘ, ገ, ነ, ዠ, አ, ኘ, የ, በ, ተ, ሠ, ሸ];
   }
 
   public getRandomLetter = () => {
