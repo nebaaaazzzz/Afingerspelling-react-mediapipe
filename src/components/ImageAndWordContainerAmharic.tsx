@@ -2,11 +2,11 @@ import React from 'react';
 
 function ImageAndWordContainer({ selectedLetter }: { selectedLetter: string }) {
   return (
-    <div className="flex items-center gap-10">
+    <div className="flex items-center gap-0">
       <img
         draggable="false"
         src={`/spellingamharic/${selectedLetter}.png`}
-        className="w-8/12 object-contain"
+        className="w-7/12 object-contain"
       />
       <h1 className="text-[12rem] text-primary font-light leading-10 ">
         {selectedLetter}

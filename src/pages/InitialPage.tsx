@@ -53,7 +53,7 @@ function InitialPage() {
             </h1>
           )}
 
-          <div className="card">
+          <div className="card justify-center">
             <Link
               ref={buttonRef}
               to={`/select-hand`}
@@ -72,7 +72,7 @@ function InitialPage() {
                 Resume
               </Link>
             )}
-            <div className="text-[14px] absolute top-32 left-44 font-[LabilGroteskRegular sans-serif] leading-5">
+            <div className="text-[14px] absolute top-32 left-28 font-[LabilGroteskRegular sans-serif] leading-5">
               <p>This game will using your webcam and machine learning to</p>
               <p>
                 analyze your handshapes.Everything is processed locally and
