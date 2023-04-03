@@ -37,7 +37,7 @@ function SelectLevel() {
                 i == 2 ? 'mr-20' : ''
               } flex items-center text-white bg-transparent hover:bg-[#fff] hover:text-[#683aff] hover:border-white border-white px-20 h-16 text-2xl text-bold`}
             >
-              Level {item}
+              ደረጃ {item}
             </Link>
           );
         })}

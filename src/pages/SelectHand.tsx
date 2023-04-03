@@ -9,16 +9,11 @@ function SelectHand() {
   const rightAnchorRef = createRef<HTMLAnchorElement>();
   const mouseEnterHandler = (e: MouseEvent, handDir: 'LEFT' | 'RIGHT') => {
     if (handDir == 'LEFT') {
+      setIsRightMouseOver(false);
       setIsLeftMouseOver(true);
     } else {
       setIsRightMouseOver(true);
-    }
-  };
-  const mouseLeaveHandler = (e: MouseEvent, handDir: 'LEFT' | 'RIGHT') => {
-    if (handDir == 'LEFT') {
       setIsLeftMouseOver(false);
-    } else {
-      setIsRightMouseOver(false);
     }
   };
   useEffect(() => {
@@ -54,9 +49,9 @@ function SelectHand() {
       )}
       {isLeftMouseOver && (
         <video
-          width={450}
-          height={450}
-          className="absolute top-10"
+          width={320}
+          height={320}
+          className="absolute top-14"
           src="/left.webm"
           autoPlay
         ></video>
