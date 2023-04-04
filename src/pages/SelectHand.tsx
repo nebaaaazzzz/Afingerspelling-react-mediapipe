@@ -1,8 +1,15 @@
 import { createRef, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import {
+  Link,
+  useLocation,
+  useNavigation,
+  useSearchParams
+} from 'react-router-dom';
 import BackButton from '../components/BackButton';
+import LinkwithQuery from '../components/LinkwithQuery';
 
-function SelectHand() {
+function SelectHand(props) {
+  console.log(useLocation());
   const [isLeftMouseOver, setIsLeftMouseOver] = useState(false);
   const [iseRightMouseOver, setIsRightMouseOver] = useState(false);
   const leftAnchorRef = createRef<HTMLAnchorElement>();
@@ -77,26 +84,18 @@ function SelectHand() {
         dominant hand
       </h1>
       <div className="flex gap-10 z-30">
-        <Link
+        <LinkwithQuery
+          path={'/select-language'}
+          query="hand=left"
+          text="Left"
           ref={leftAnchorRef}
-          style={{
-            textTransform: 'none'
-          }}
-          to={`/select-language?hand=left`}
-          className="btn my-2 h-14 hover:bg-white hover:text-[#683aff] rounded-3xl text-xl border-none text-white px-20 bg-[#683aff]"
-        >
-          Left
-        </Link>
-        <Link
+        />
+        <LinkwithQuery
+          path={'/select-language'}
+          query="hand=right"
+          text="Right"
           ref={rightAnchorRef}
-          style={{
-            textTransform: 'none'
-          }}
-          to={`/select-language?hand=right`}
-          className="btn my-2 h-14 text-xl hover:bg-white  hover:text-[#683aff] rounded-3xl bg-[#683aff] border-none px-20 text-white"
-        >
-          Right
-        </Link>
+        />
       </div>
     </div>
   );

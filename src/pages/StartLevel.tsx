@@ -1,9 +1,8 @@
-import React, { createRef, useEffect, useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { createRef, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import BackButton from '../components/BackButton';
-import SpellingSvg from '../components/SpellingSvg';
+import LinkwithQuery from '../components/LinkwithQuery';
 import { levels } from '../utils/amharicindex';
-import { storeLevelScore } from '../utils/localsession';
 
 function StartLevel() {
   const [isMouseOver, setIsMouseOver] = useState(false);
@@ -55,18 +54,12 @@ function StartLevel() {
         ጨዋታዉ ሲጀምር ምስሉን ተመክተዉ <h2>እጆትን እንደ ምስሉ ያርጉ</h2>
       </h1>
       <div className="card">
-        <Link
-          style={{
-            textTransform: 'none'
-          }}
+        <LinkwithQuery
+          query={''}
+          path={'/game'}
+          text={`Turn On Webcam`}
           ref={buttonRef}
-          to={`/game?level=${level}&hand=${searchParams[0].get(
-            'hand'
-          )}&lang=${searchParams[0].get('lang')}`}
-          className="btn my-2 h-14 hover:bg-white hover:text-[#683aff] rounded-3xl text-xl border-none text-white px-20 bg-[#683aff]"
-        >
-          Turn On Webcam
-        </Link>
+        />
       </div>
     </div>
   );

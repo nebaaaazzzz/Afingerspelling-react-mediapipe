@@ -56,7 +56,7 @@ function InitialPage() {
           <div className="card justify-center">
             <Link
               ref={buttonRef}
-              to={`/select-hand`}
+              to={`/select-mode`}
               className={`${
                 configuration?.level ? 'left-96' : 'left-56'
               } btn rounded-full w-48 h-16 absolute  inset-y-7 bg-[#FFE090] text-[#683aff] hover:bg-white text-3xl leading-8 normal-case font-normal`}
