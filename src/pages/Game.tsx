@@ -145,7 +145,8 @@ function Game() {
             const response = reactToDOMCursor(
               fingerPoseResults,
               newLandMarks,
-              selectedLetter
+              selectedLetter,
+              searchParams[0].get('lang')
             );
 
             if (response.countCorrectFingers == 5) {

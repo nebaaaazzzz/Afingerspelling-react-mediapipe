@@ -8,23 +8,33 @@ const handAnalyzer = new HandAnalyzer();
 const alphabet = new Alphabet();
 const amharicAlphabet = new AmharicAlphabet();
 const fingers = ['thumb', 'index', 'middle', 'ring', 'little'];
+
 const reactToDOMCursor = (
   fingerPoseResults: any,
   result: Coords3D,
-  letter: any
+  letter: any,
+  lang: 'am' | 'en'
 ): {
   countCorrectFingers: number;
   message: string;
   lookForLetter?: AlphabetDefinationI | any;
 } => {
-  if (amharicAlphabet.specialCharacterArray[letter]) {
-    return specialCharacterDetection(
-      amharicAlphabet.specialCharacterArray[letter],
-      fingerPoseResults
-    );
+  let lookForLetter;
+  if (lang === 'am') {
+    if (amharicAlphabet.specialCharacterArray[letter]) {
+      return specialCharacterDetection(
+        amharicAlphabet.specialCharacterArray[letter],
+        fingerPoseResults
+      );
+    }
+    // let lookForLetter = alphabet.getSpecificLetter(letter);
+    lookForLetter = amharicAlphabet.getSpecificLetter(letter);
+  } else {
+    lookForLetter = alphabet.getSpecificLetter(letter);
   }
-  // let lookForLetter = alphabet.getSpecificLetter(letter);
-  let lookForLetter = amharicAlphabet.getSpecificLetter(letter);
+  return predict(lookForLetter, fingerPoseResults, result);
+};
+function predict(lookForLetter, fingerPoseResults, result: Coords3D) {
   if (!lookForLetter) {
     return {
       countCorrectFingers: 0,
@@ -323,8 +333,7 @@ const reactToDOMCursor = (
   }
 
   return { countCorrectFingers, lookForLetter, message: '' };
-};
-
+}
 function specialCharacterDetection(
   letter: number[],
   fingerPoseResults
