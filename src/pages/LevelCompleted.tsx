@@ -22,7 +22,6 @@ function LevelCompleted() {
           searchParams.get('hand'),
           searchParams.get('level')
         );
-        console.log('hello world');
         let levelScores = {};
         for (let i = 1; i < 4; i++) {
           const levelScore = await getLevelScore(String(i));
@@ -52,10 +51,10 @@ function LevelCompleted() {
         await storeSessionInfo(
           searchParams.get('lang'),
           searchParams.get('hand'),
-          Number(searchParams.get('level')) + 1
+          Number(level) + 1
         );
         let va = ((Number(searchParams.get('points')) * 10) / 3).toFixed(1);
-        storeLevelScore(level, va);
+        await storeLevelScore(level, va);
         setPoints(va);
       }
     })();

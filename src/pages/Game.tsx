@@ -275,7 +275,7 @@ function Game() {
 
       {!isGameStarted && (
         <>
-          <div className="flex-[1] justify-between items-center p-5 bg-[#fff6df] flex  flex-col relative">
+          <div className="flex-[1] justify-between items-center p-0 bg-[#fff6df] flex  flex-col relative">
             <WavingVideo />
           </div>
         </>
@@ -284,7 +284,7 @@ function Game() {
         <>
           {showModal && <Modal wordIndex={wordIndex} nextWord={selectedWord} />}
           <BackButton url={`/start-level?level=${level}&hand=${hand}`} />
-          <div className="flex-[1] justify-between items-center p-5 bg-[#fff6df] flex  flex-col relative">
+          <div className="flex-[1] justify-between items-center p-0 bg-[#fff6df] flex  flex-col relative">
             <div className="absolute mr-10 text-2xl flex flex-col gap-2 w-2/3">
               {/* <span className="font-bold text-center  text-[#683aff] ">
                 words : {wordIndex + 1}/10
