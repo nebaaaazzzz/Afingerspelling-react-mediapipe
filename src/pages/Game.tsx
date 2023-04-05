@@ -197,27 +197,26 @@ function Game() {
     }
   }, [wordIndex]);
   useEffect(() => {
-    async () => {
-      if (hands) {
-        setStartTime(new Date().getTime());
-        hands.onResults(onResults);
+    if (hands) {
+      setStartTime(new Date().getTime());
+      hands.onResults(onResults);
+    }
+    if (countPrediction != 0) {
+      setTimeout(() => {
+        skipPrediction = false;
+      }, 2000);
+    }
+    let intervalId = setInterval(() => {
+      if (startTime) {
+        setCurrentTime(new Date());
       }
-      if (countPrediction != 0) {
-        setTimeout(() => {
-          skipPrediction = false;
-        }, 2000);
-      }
-      let intervalId = setInterval(() => {
-        if (startTime) {
-          setCurrentTime(new Date());
-        }
-      }, 1000);
-      return () => {
-        clearInterval(intervalId);
-      };
-    },
-      [selectedLetter, currentWordLength];
-    useEffect(() => {
+    }, 1000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [selectedLetter, currentWordLength]);
+  useEffect(() => {
+    (async () => {
       storeSessionInfo(
         searchParams[0].get('lang'),
         searchParams[0].get('hand'),
@@ -238,14 +237,16 @@ function Game() {
         setStartTime(new Date());
         setShowModal(true);
         setLevel(levelIndex);
-        const languageWords = getLanguageWords(
+        const languageWords = await getLanguageWords(
           String(searchParams[0].get('lang')),
           String(searchParams[0].get('mode')),
           levelIndex
         );
+        console.log(languageWords);
         let returnedLevelWords;
         if (searchParams[0].get('lang') == 'en') {
           returnedLevelWords = getLevelWords(languageWords, levelIndex);
+          console.log(returnedLevelWords);
         }
         if (searchParams[0].get('lang') == 'am') {
           returnedLevelWords = getLevelAmharicWords(languageWords, levelIndex);

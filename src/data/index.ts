@@ -1,11 +1,10 @@
 import amharicWords from './amharicwords';
-import { fourLetterWords } from './english/level-4';
 
 async function getLanguageWords(lang, mode, levelIndex) {
   if (lang == 'en') {
     if (mode == 'learn') {
       const { default: words } = await import(
-        `../data/english/level-${levelIndex + 1}.ts`
+        `../data/english/level-${levelIndex}.ts`
       );
       return words;
     } else {

@@ -9,7 +9,6 @@ import BackButton from '../components/BackButton';
 import LinkwithQuery from '../components/LinkwithQuery';
 
 function SelectHand(props) {
-  console.log(useLocation());
   const [isLeftMouseOver, setIsLeftMouseOver] = useState(false);
   const [iseRightMouseOver, setIsRightMouseOver] = useState(false);
   const leftAnchorRef = createRef<HTMLAnchorElement>();

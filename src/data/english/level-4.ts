@@ -1,4 +1,4 @@
-export let fourLetterWords = [
+export default [
   'abet',
   'abut',
   'ache',

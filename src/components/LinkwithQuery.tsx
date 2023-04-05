@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
-
-function LinkwithQuery({ ref, text, path, query, ...rest }) {
+import { forwardRef } from 'react';
+const LinkwithQuery = forwardRef(function LinkwithQuery(props: any, ref) {
+  const { text, path, query, ...rest } = props;
   const { search } = useLocation();
   return (
     <Link
@@ -12,6 +13,6 @@ function LinkwithQuery({ ref, text, path, query, ...rest }) {
       {text}
     </Link>
   );
-}
+});
 
 export default LinkwithQuery;

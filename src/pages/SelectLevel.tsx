@@ -25,7 +25,10 @@ function SelectLevel() {
             <LinkwithQuery
               path={'/start-level'}
               query={`level=${item}`}
-              text={`ደረጃ ${item}`}
+              text={`${getText(
+                searchParams[0].get('lang'),
+                searchParams[0].get('mode')
+              )} ${item}`}
               ref={null}
               key={item}
               style={{
@@ -44,6 +47,17 @@ function SelectLevel() {
       </div>
     </div>
   );
+}
+function getText(lang, mode): string {
+  if (lang == 'en') {
+    if (mode == 'learn') {
+      return 'Phase';
+    } else {
+      return 'Level';
+    }
+  } else {
+    return 'ደረጃ';
+  }
 }
 
 export default SelectLevel;
