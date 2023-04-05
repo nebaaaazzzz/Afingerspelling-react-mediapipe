@@ -10,6 +10,7 @@ import {
 
 function LevelCompleted() {
   const searchParams = useSearchParams()[0];
+  const mode = searchParams.get('game');
   const hand = searchParams.get('hand');
   const level = searchParams.get('level');
   const [points, setPoints] = useState<number | string>();
@@ -24,7 +25,13 @@ function LevelCompleted() {
         );
         let levelScores = {};
         for (let i = 1; i < 4; i++) {
-          const levelScore = await getLevelScore(String(i));
+          let levelScore;
+          if (mode == 'game') {
+            // add prefix to the level
+            levelScore = await getLevelScore('game-' + String(i));
+          } else {
+            levelScore = await getLevelScore(String(i));
+          }
           if (levelScore != undefined) {
             levelScores[i] = levelScore;
           }
@@ -54,7 +61,7 @@ function LevelCompleted() {
           Number(level) + 1
         );
         let va = ((Number(searchParams.get('points')) * 10) / 3).toFixed(1);
-        await storeLevelScore(level, va);
+        await storeLevelScore(level, va, mode);
         setPoints(va);
       }
     })();

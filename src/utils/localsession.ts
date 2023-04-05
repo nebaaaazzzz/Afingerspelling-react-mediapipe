@@ -15,9 +15,15 @@ export const storeSessionInfo = async (
 };
 export const storeLevelScore = async (
   level: string,
-  score: number | string
+  score: number | string,
+  mode
 ): Promise<void> => {
-  await localforage.setItem(level, score);
+  //if the mode is game mode give it a prefix
+  if (mode == 'game') {
+    await localforage.setItem('game-' + level, score);
+  } else {
+    await localforage.setItem(level, score);
+  }
 };
 export const clearAllScore = async () => {
   await localforage.removeItem('1');
