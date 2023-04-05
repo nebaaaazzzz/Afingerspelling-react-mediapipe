@@ -197,62 +197,67 @@ function Game() {
     }
   }, [wordIndex]);
   useEffect(() => {
-    if (hands) {
-      setStartTime(new Date().getTime());
-      hands.onResults(onResults);
-    }
-    if (countPrediction != 0) {
-      setTimeout(() => {
-        skipPrediction = false;
-      }, 2000);
-    }
-    let intervalId = setInterval(() => {
-      if (startTime) {
-        setCurrentTime(new Date());
+    async () => {
+      if (hands) {
+        setStartTime(new Date().getTime());
+        hands.onResults(onResults);
       }
-    }, 1000);
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [selectedLetter, currentWordLength]);
-  useEffect(() => {
-    storeSessionInfo(
-      searchParams[0].get('lang'),
-      searchParams[0].get('hand'),
-      searchParams[0].get('level')
-    );
-
-    if (videoElement.current) {
-      const camera = new window.Camera(videoElement.current, {
-        onFrame: async () => {
-          await hands.send({ image: videoElement.current });
+      if (countPrediction != 0) {
+        setTimeout(() => {
+          skipPrediction = false;
+        }, 2000);
+      }
+      let intervalId = setInterval(() => {
+        if (startTime) {
+          setCurrentTime(new Date());
         }
-      });
-      camera.start();
-    }
-
-    if (isGameStarted) {
-      const levelIndex = Number(searchParams[0].get('level') as String);
-      setStartTime(new Date());
-      setShowModal(true);
-      setLevel(levelIndex);
-      const languageWords = getLanguageWords(
-        String(searchParams[0].get('lang'))
-      );
-      let returnedLevelWords;
-      if (searchParams[0].get('lang') == 'en') {
-        returnedLevelWords = getLevelWords(languageWords, levelIndex);
-      }
-      if (searchParams[0].get('lang') == 'am') {
-        returnedLevelWords = getLevelAmharicWords(languageWords, levelIndex);
-      }
-      setLevelWords(returnedLevelWords);
-      setSelectWord(returnedLevelWords[0]);
-      setSelectedLetter(returnedLevelWords[0][0]);
-      setTimeout(() => {
-        setShowModal(false);
       }, 1000);
-    }
+      return () => {
+        clearInterval(intervalId);
+      };
+    },
+      [selectedLetter, currentWordLength];
+    useEffect(() => {
+      storeSessionInfo(
+        searchParams[0].get('lang'),
+        searchParams[0].get('hand'),
+        searchParams[0].get('level')
+      );
+
+      if (videoElement.current) {
+        const camera = new window.Camera(videoElement.current, {
+          onFrame: async () => {
+            await hands.send({ image: videoElement.current });
+          }
+        });
+        camera.start();
+      }
+
+      if (isGameStarted) {
+        const levelIndex = Number(searchParams[0].get('level') as String);
+        setStartTime(new Date());
+        setShowModal(true);
+        setLevel(levelIndex);
+        const languageWords = getLanguageWords(
+          String(searchParams[0].get('lang')),
+          String(searchParams[0].get('mode')),
+          levelIndex
+        );
+        let returnedLevelWords;
+        if (searchParams[0].get('lang') == 'en') {
+          returnedLevelWords = getLevelWords(languageWords, levelIndex);
+        }
+        if (searchParams[0].get('lang') == 'am') {
+          returnedLevelWords = getLevelAmharicWords(languageWords, levelIndex);
+        }
+        setLevelWords(returnedLevelWords);
+        setSelectWord(returnedLevelWords[0]);
+        setSelectedLetter(returnedLevelWords[0][0]);
+        setTimeout(() => {
+          setShowModal(false);
+        }, 1000);
+      }
+    })();
   }, [isGameStarted]);
   return (
     <div className="flex w-full overflow-hidden">
